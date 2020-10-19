@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  gateway:
+    image:
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${PWD}/GateWay/ssl:/etc/nginx/ssl
+      - ${PWD}/GateWay/logs:/var/log/nginx
+    depends_on:
+       - webapi
+       - sandboxadmin
+       - swaggerui
+    restart: always
+
+  db-admin:
+    image:
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ${PWD}/PSQL-Admin/data:/var/lib/postgresql/data
+    restart: always
+
+  db-ods:
+    image:
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ${PWD}/PSQL-ODS/data:/var/lib/postgresql/data
+    restart: always
+
+  webapi:
+    image:
+      volumes:
+      - ${PWD}/WebApi/appsettings.json:/app/appsettings.json
+      - ${PWD}/WebApi/logs:/app/logs
+    depends_on:
+       - db-ods
+    restart: always
+
+  sandboxadmin:
+    image:
+    volumes:
+      - ${PWD}/SandboxAdmin/appsettings.json:/app/appsettings.json
+      - ${PWD}/SandboxAdmin/logs:/app/logs
+    depends_on:
+       - db-admin
+    restart: always
+
+  swaggerui:
+    image:
+    volumes:
+      - ${PWD}/SwaggerUI/appsettings.json:/app/appsettings.json
+      - ${PWD}/SwaggerUI/logs:/app/logs
+    depends_on:
+       - db-ods
+    restart: always
