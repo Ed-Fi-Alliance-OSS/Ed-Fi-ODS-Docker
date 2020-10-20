@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  gateway:
+    build: GateWay
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${PWD}/GateWay/ssl:/etc/nginx/ssl
+      - ${PWD}/GateWay/logs:/var/log/nginx
+    depends_on:
+       - webapi
+       - sandboxadmin
+       - swaggerui
+    restart: always
+
+  db-admin:
+    build: PSQL-Admin
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ${PWD}/PSQL-Admin/data:/var/lib/postgresql/data
+    restart: always
+
+  db-ods:
+    build: PSQL-ODS
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ${PWD}/PSQL-ODS/data:/var/lib/postgresql/data
+    restart: always
+
+  webapi:
+    build: WebApi
+    volumes:
+      - ${PWD}/WebApi/appsettings.json:/app/appsettings.json
+      - ${PWD}/WebApi/logs:/app/logs
+      - ${PWD}/WebApi/plugins:/mnt/plugins
+    depends_on:
+       - db-ods
+       - db-admin
+    restart: always
+
+  sandboxadmin:
+    build: SandboxAdmin
+    volumes:
+      - ${PWD}/SandboxAdmin/appsettings.json:/app/appsettings.json
+      - ${PWD}/SandboxAdmin/logs:/app/logs
+    depends_on:
+       - db-ods
+       - db-admin
+    restart: always
+
+  swaggerui:
+    build: SwaggerUI
+    volumes:
+      - ${PWD}/SwaggerUI/appsettings.json:/app/appsettings.json
+      - ${PWD}/SwaggerUI/logs:/app/logs
+    restart: always
