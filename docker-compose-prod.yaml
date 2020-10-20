@@ -31,9 +31,10 @@ services:
 
   webapi:
     image:
-      volumes:
+    volumes:
       - ${PWD}/WebApi/appsettings.json:/app/appsettings.json
       - ${PWD}/WebApi/logs:/app/logs
+      - ${PWD}/WebApi/plugins:/mnt/plugins
     depends_on:
        - db-ods
     restart: always
