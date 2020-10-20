@@ -37,4 +37,5 @@ services:
       - ${PWD}/WebApi/plugins:/mnt/plugins
     depends_on:
        - db-ods
+       - db-admin
     restart: always

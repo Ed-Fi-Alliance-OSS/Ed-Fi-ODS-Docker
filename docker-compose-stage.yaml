@@ -39,6 +39,7 @@ services:
       - ${PWD}/WebApi/plugins:/mnt/plugins
     depends_on:
        - db-ods
+       - db-admin
     restart: always
 
   sandboxadmin:
@@ -47,6 +48,7 @@ services:
       - ${PWD}/SandboxAdmin/appsettings.json:/app/appsettings.json
       - ${PWD}/SandboxAdmin/logs:/app/logs
     depends_on:
+       - db-ods
        - db-admin
     restart: always
 
@@ -55,6 +57,4 @@ services:
     volumes:
       - ${PWD}/SwaggerUI/appsettings.json:/app/appsettings.json
       - ${PWD}/SwaggerUI/logs:/app/logs
-    depends_on:
-       - db-ods
     restart: always
