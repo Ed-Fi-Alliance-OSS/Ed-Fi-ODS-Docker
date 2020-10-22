@@ -5,11 +5,8 @@
 *.crt
 Gateway/ssl/*
 Gateway/logs/*
-SandboxAdmin/appsettings.json
 SandboxAdmin/logs/*
-WebApi/appsettings.json
 WebApi/logs/*
-SwaggerUI/appsettings.json
 SwaggerUI/logs/*
 PSQL-Admin/data/*
 PSQL-ODS/data/*
