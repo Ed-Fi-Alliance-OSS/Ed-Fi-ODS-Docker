@@ -5,4 +5,4 @@ RUN apk update && apk upgrade && apk add unzip
 WORKDIR /app
 RUN wget -O /app/WebApi.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.WebApi/${VERSION} && unzip /app/WebApi.zip -d /app && rm -f /app/WebApi.zip
 EXPOSE 80
-ENTRYPOINT ["dotnet","EdFi.Ods.WebApi.exe"]
+ENTRYPOINT ["dotnet","EdFi.Ods.WebApi.dll"]
