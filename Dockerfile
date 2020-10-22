@@ -5,4 +5,4 @@ RUN apk update && apk upgrade && apk add unzip
 WORKDIR /app
 RUN wget -O /app/Admin.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.SandboxAdmin/${VERSION} && unzip /app/Admin.zip -d /app && rm -f /app/Admin.zip
 EXPOSE 80
-ENTRYPOINT ["dotnet","EdFi.Ods.Sandbox.Admin.exe"]
+ENTRYPOINT ["dotnet","EdFi.Ods.Sandbox.Admin.dll"]
