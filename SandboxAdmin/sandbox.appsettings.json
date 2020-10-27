@@ -1,0 +1,32 @@
+﻿{
+  "ApiSettings": {
+    "MinimalTemplateSuffix": "Ods_Minimal_Template",
+    "UsePlugins": false,
+    "PopulatedTemplateSuffix": "Ods_Populated_Template",
+    "MinimalTemplateScript": "PostgreSQLMinimalTemplate",
+    "Engine": "PostgreSQL",
+    "OdsTokens": "",
+    "Mode": "Sandbox",
+    "PopulatedTemplateScript": "PostgreSQLPopulatedTemplate"
+  },
+  "DefaultOperationalContextUri": "uri://ed-fi-api-host.org",
+  "OAuthUrl": "http://webapi:80/oauth/",
+  "MailSettings": {
+    "Smtp": {
+      "UserName": "Bingo",
+      "From": "noreply@ed-fi.org",
+      "SpecifiedPickupDirectory": {
+        "PickupDirectoryLocation": "C:\\Temp\\AdminConsole\\Artifacts\\Emails"
+      },
+      "DeliveryMethod": "SpecifiedPickupDirectory",
+      "Password": "Tingo"
+    }
+  },
+  "Urls": "http://0.0.0.0:80",
+  "ConnectionStrings": {
+    "EdFi_Ods": "host=localhost;port=5432;username=postgres;database=EdFi_{0};Application Name=EdFi.Ods.SandboxAdmin",
+    "EdFi_Security": "host=localhost;port=5432;username=postgres;database=EdFi_Security;Application Name=EdFi.Ods.SandboxAdmin",
+    "EdFi_Admin": "host=localhost;port=5432;username=postgres;database=EdFi_Admin;Application Name=EdFi.Ods.SandboxAdmin",
+    "EdFi_Master": "host=localhost;port=5432;username=postgres;database=postgres;Application Name=EdFi.Ods.SandboxAdmin"
+  }
+}
