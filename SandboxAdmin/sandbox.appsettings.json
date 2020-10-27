@@ -10,7 +10,7 @@
     "PopulatedTemplateScript": "PostgreSQLPopulatedTemplate"
   },
   "DefaultOperationalContextUri": "uri://ed-fi-api-host.org",
-  "OAuthUrl": "http://localhost:54746/oauth/",
+  "OAuthUrl": "http://webapi:80/oauth/",
   "MailSettings": {
     "Smtp": {
       "UserName": "Bingo",
