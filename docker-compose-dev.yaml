@@ -34,7 +34,6 @@ services:
   webapi:
     build: WebApi
     volumes:
-      - ${PWD}/WebApi/appsettings.json:/app/appsettings.json
       - ${PWD}/WebApi/logs:/app/logs
       - ${PWD}/WebApi/plugins:/mnt/plugins
     depends_on:
@@ -45,7 +44,6 @@ services:
   sandboxadmin:
     build: SandboxAdmin
     volumes:
-      - ${PWD}/SandboxAdmin/appsettings.json:/app/appsettings.json
       - ${PWD}/SandboxAdmin/logs:/app/logs
     depends_on:
        - db-ods
@@ -55,6 +53,5 @@ services:
   swaggerui:
     build: SwaggerUI
     volumes:
-      - ${PWD}/SwaggerUI/appsettings.json:/app/appsettings.json
       - ${PWD}/SwaggerUI/logs:/app/logs
     restart: always
