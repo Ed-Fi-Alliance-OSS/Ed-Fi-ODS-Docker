@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   gateway:
-    image:
+    build: GateWay
     ports:
       - "80:80"
       - "443:443"
@@ -16,7 +16,7 @@ services:
     restart: always
 
   db-admin:
-    image:
+    build: PSQL-Admin
     environment:
       POSTGRES_PASSWORD: password
     volumes:
@@ -24,7 +24,7 @@ services:
     restart: always
 
   db-ods:
-    image:
+    build: PSQL-ODS
     environment:
       POSTGRES_PASSWORD: password
     volumes:
@@ -32,7 +32,7 @@ services:
     restart: always
 
   webapi:
-    image:
+    build: WebApi
     volumes:
       - ${PWD}/WebApi/logs:/app/logs
       - ${PWD}/WebApi/plugins:/mnt/plugins
@@ -42,16 +42,19 @@ services:
     restart: always
 
   sandboxadmin:
-    image:
+    build: SandboxAdmin
     volumes:
       - ${PWD}/SandboxAdmin/logs:/app/logs
     depends_on:
        - db-ods
        - db-admin
+       - webapi
     restart: always
 
   swaggerui:
-    image:
+    build: SwaggerUI
     volumes:
       - ${PWD}/SwaggerUI/logs:/app/logs
+    depends_on:
+      - webapi
     restart: always

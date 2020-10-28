@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   gateway:
-    image: gateway
+    build: GateWay
     ports:
       - "80:80"
       - "443:443"
@@ -14,7 +14,7 @@ services:
     restart: always
 
   db-admin: 
-    image: db-admin
+    build: PSQL-Admin
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'pgpassword'
@@ -25,7 +25,7 @@ services:
     restart: always
 
   db-ods:
-    image: db-ods
+    build: PSQL-ODS
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'pgpassword'
@@ -35,7 +35,7 @@ services:
     restart: always
 
   webapi:
-    image: webapi
+    build: WebApi
     volumes:
       - ${PWD}/WebApi/logs:/app/logs
       - ${PWD}/WebApi/plugins:/mnt/plugins

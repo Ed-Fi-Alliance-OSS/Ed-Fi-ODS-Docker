@@ -54,4 +54,6 @@ services:
     build: SwaggerUI
     volumes:
       - ${PWD}/SwaggerUI/logs:/app/logs
+    depends_on:
+      - webapi
     restart: always
