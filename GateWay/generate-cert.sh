@@ -1,3 +1,11 @@
 #!/bin/bash
-openssl dhparam -out ssl/dhparam.pem 4096
-openssl req -x509 -newkey rsa:4096 -nodes -keyout ssl/server.key -out ssl/server.crt -days 365
+
+if [[ `basename "${PWD}"` == "GateWay" ]];
+then
+    mkdir -p ssl
+    openssl dhparam -out ssl/dhparam.pem 4096
+    openssl req -x509 -newkey rsa:4096 -nodes -keyout ssl/server.key -out ssl/server.crt -days 365
+else
+    echo "NOT in GateWay folder"
+    exit -1
+fi

@@ -30,7 +30,6 @@ services:
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'pgpassword'
-      POSTGRES_DB: 'test_db'
     volumes:
       - ${PWD}/PSQL-ODS/data:/var/lib/postgresql/data
     restart: always
@@ -38,6 +37,7 @@ services:
   webapi:
     build: WebApi
     volumes:
+      - ${PWD}/db.pgpass:/app/db.pgpass
       - ${PWD}/WebApi/logs:/app/logs
       - ${PWD}/WebApi/plugins:/mnt/plugins
     depends_on:

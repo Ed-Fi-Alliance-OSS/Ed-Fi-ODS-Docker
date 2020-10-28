@@ -4,5 +4,3 @@ RUN apk update && apk upgrade
 RUN mkdir /etc/nginx/ssl
 EXPOSE 80
 EXPOSE 443
-STOPSIGNAL SIGTERM
-CMD ["nginx", "-g", "daemon off;"]
