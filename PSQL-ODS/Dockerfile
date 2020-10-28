@@ -6,7 +6,9 @@ ENV POPULVERSION="5.1.0-b10284"
 WORKDIR /app
 RUN wget -O /app/WebApi.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.Minimal.Template.PostgreSQL/${MINVERSION} && unzip /app/WebApi.zip -d /app && rm -Rf /app/WebApi.zip *.xml _rels
 RUN wget -O /app/WebApi.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.Populated.Template.PostgreSQL/${POPULVERSION} && unzip /app/WebApi.zip -d /app && rm -Rf /app/WebApi.zip *.xml _rels
-#Getting errror while trying to copy files directly, Need to copy *.sql files from local machine to /docker-entrypoint-initdb.d/
+#Need to copy *.sql files to "docker-entrypoint-initdb.d" from local machine otherwise getting errorr while copying files
 COPY ./*.sql /docker-entrypoint-initdb.d/
 RUN ["chmod", "+x", "/docker-entrypoint-initdb.d/"]
+EXPOSE "5432"
+ENTRYPOINT ["/docker-entrypoint-initdb.d/"]
 
