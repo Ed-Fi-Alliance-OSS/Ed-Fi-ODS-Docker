@@ -70,7 +70,7 @@
     "ExcludedExtensions": []
   },
   "Plugin": {
-    "Folder": "../../../Plugin",
+    "Folder": "/mnt/plugins",
     "Scripts": [
       "production"
     ]
