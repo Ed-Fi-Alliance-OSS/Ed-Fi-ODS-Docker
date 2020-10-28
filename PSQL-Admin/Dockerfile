@@ -1,8 +1,7 @@
 FROM postgres:11-alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
-RUN apk update && apk upgrade && apk add unzip
+RUN apk update && apk upgrade 
+EXPOSE "5432"
 WORKDIR /app
-COPY *.sql /app/
-USER postgres
-EXPOSE 5432
-CMD ["postgres","run"]
+COPY ./*.sql /docker-entrypoint-initdb.d/
+RUN ["chmod", "+x", "/docker-entrypoint-initdb.d/"]
