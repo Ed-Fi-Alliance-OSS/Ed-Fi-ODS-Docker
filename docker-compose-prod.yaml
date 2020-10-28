@@ -7,6 +7,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - ${PWD}/GateWay/edfi-prod.conf:/etc/nginx/conf.d/edfi.conf
       - ${PWD}/GateWay/ssl:/etc/nginx/ssl
       - ${PWD}/GateWay/logs:/var/log/nginx
     depends_on:
