@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   gateway:
-    image:
+    image: gateway
     ports:
       - "80:80"
       - "443:443"
@@ -10,29 +10,33 @@ services:
       - ${PWD}/GateWay/ssl:/etc/nginx/ssl
       - ${PWD}/GateWay/logs:/var/log/nginx
     depends_on:
-       - webapi
+      - webapi
     restart: always
 
-  db-admin:
-    image:
+  db-admin: 
+    image: db-admin
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'pgpassword'
+    ports:
+      - "5432:5432"
     volumes:
       - ${PWD}/PSQL-Admin/data:/var/lib/postgresql/data
     restart: always
 
   db-ods:
-    image:
+    image: db-ods
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'pgpassword'
+      POSTGRES_DB: 'test_db'
     volumes:
       - ${PWD}/PSQL-ODS/data:/var/lib/postgresql/data
     restart: always
 
   webapi:
-    image:
+    image: webapi
     volumes:
-      - ${PWD}/WebApi/appsettings.json:/app/appsettings.json
       - ${PWD}/WebApi/logs:/app/logs
       - ${PWD}/WebApi/plugins:/mnt/plugins
     depends_on:
