@@ -1,20 +1,13 @@
-Ed-Fi-ODS-Docker contributors (sorted alphabetically)
-============================================
+# Contributors List
 
-* **[ptar-innive](https://github.com/ptar-innive)**
+This is the list of Ed-Fi-ODS-Docker's significant contributors.
 
-  * Most features development
+This does not necessarily list everyone who has contributed code, especially
+since many employees of one corporation may be contributing. To see the full
+list of contributors, see the revision history in source control or the [GitHub
+contributors
+graph](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/graphs/contributors).
+New contributors should add their name and e-mail address or link to GitHub
+profile to this file with their first pull request.
 
-* **[smundheinnive](https://github.com/smundheinnive)**
-
-  * Most features development
-
-* **[Stephen Fuqua](https://github.com/stephenfuqua)**
-
-  * Arctic Code Vault Contributor
- 
-* **[Vinaya Mayya](https://github.com/vimayya)**
-
-  * Arctic Code Vault Contributor
-
-**[Full contributors list](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/graphs/contributors).**
+* [Google Cloud](https://cloud.google.com/) / [Innive](https://innive.com/)
