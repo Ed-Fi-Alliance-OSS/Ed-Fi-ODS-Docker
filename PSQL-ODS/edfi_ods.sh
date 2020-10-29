@@ -1,4 +1,3 @@
-set -e
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE edfi_ods_minimal_template;
     GRANT ALL PRIVILEGES ON DATABASE edfi_ods_minimal_template TO $POSTGRES_USER;
