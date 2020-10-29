@@ -1,7 +1,6 @@
-#!/usr/bin/bash
 set -e
-psql -v ON_ERROR_STOP=1 --username 'postgres' <<-EOSQL
-    #CREATE USER postgres with superuser password 'pgpassword';
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE EdFi_Admin;
-    GRANT ALL PRIVILEGES ON DATABASE EdFi_Admin TO postgres;
+    GRANT ALL PRIVILEGES ON DATABASE EdFi_Admin TO $POSTGRES_USER;
 EOSQL
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "EdFi_Admin" < /app/EdFi_Admin.sql
