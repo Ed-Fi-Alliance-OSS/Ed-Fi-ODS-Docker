@@ -20,7 +20,7 @@ services:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'pgpassword'
     ports:
-      - "5432:5432"
+      - "5401:5432"
     volumes:
       - ${PWD}/PSQL-Admin/data:/var/lib/postgresql/data
     restart: always
@@ -30,6 +30,8 @@ services:
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'pgpassword'
+    ports:
+      - "5402:5432"
     volumes:
       - ${PWD}/PSQL-ODS/data:/var/lib/postgresql/data
     restart: always
