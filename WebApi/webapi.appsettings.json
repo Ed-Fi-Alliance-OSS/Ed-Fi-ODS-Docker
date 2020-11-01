@@ -6,10 +6,10 @@
     }
   },
   "ConnectionStrings": {
-    "EdFi_Ods": "host=db-ods;port=5432;username=postgres;password=pgpassword;database=edfi_{0};Application Name=EdFi.Ods.WebApi",
-    "EdFi_Security": "host=db-admin;port=5432;username=postgres;password=pgpassword;database=edfi_security;Application Name=EdFi.Ods.WebApi",
-    "EdFi_Admin": "host=db-admin;port=5432;username=postgres;password=pgpassword;database=edfi_admin;Application Name=EdFi.Ods.WebApi",
-    "EdFi_Master": "host=db-ods;port=5432;username=postgres;password=pgpassword;database=postgres;Application Name=EdFi.Ods.WebApi"
+    "EdFi_Ods": "host=localhost;port=5432;username=postgres;password=pgpassword;database=EdFi_{0};Application Name=EdFi.Ods.WebApi",
+    "EdFi_Security": "host=localhost;port=5432;username=postgres;password=pgpassword;database=EdFi_Security;Application Name=EdFi.Ods.WebApi",
+    "EdFi_Admin": "host=localhost;port=5432;username=postgres;password=pgpassword;database=EdFi_Admin;Application Name=EdFi.Ods.WebApi",
+    "EdFi_Master": "host=localhost;port=5432;username=postgres;password=pgpassword;database=postgres;Application Name=EdFi.Ods.WebApi"
   },
   "AllowedHosts": "*",
   "BearerTokenTimeoutMinutes": "30",
@@ -86,7 +86,7 @@
   },
   "Logging": {
     "LogLevel": {
-      "Default": "Information",
+      "Default": "Debug",
       "Microsoft": "Warning"
     }
   },
