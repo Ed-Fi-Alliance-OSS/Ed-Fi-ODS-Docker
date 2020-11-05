@@ -27,18 +27,16 @@ services:
   #      - swaggerui
   #   restart: always
 
-  # webapi:
-  #   build: WebApi
-  #   volumes:
-  #     - ${PWD}/db.pgpass:/app/db.pgpass
-  #     - ${PWD}/WebApi/logs:/app/logs
-  #     - ${PWD}/WebApi/plugins:/mnt/plugins
-  #   depends_on:
-  #      - db-ods
-  #      - db-admin
-  #   environment: 
-  #     - ASPNETCORE_ENVIRONMENT : Production
-  #   restart: always
+  api-ods:
+    build: Web-Ods
+    volumes:
+      - log-ods:/app/WebApiLog.log
+    depends_on:
+       - db
+       - web-sandbox
+    ports:
+      - "5002:80"
+    restart: always
 
   web-sandbox:
     build: Web-Sandbox-Admin
@@ -46,6 +44,8 @@ services:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
        - db
+    ports:
+      - "5001:80"
     restart: always
 
   # swaggerui:
@@ -63,3 +63,6 @@ volumes:
   log-sandbox:
     driver: local
     name: log-sandbox
+  log-ods:
+    driver: local
+    name: log-ods
