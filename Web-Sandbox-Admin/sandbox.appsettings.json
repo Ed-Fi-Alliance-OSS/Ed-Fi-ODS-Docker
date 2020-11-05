@@ -1,0 +1,59 @@
+﻿{
+  "PreserveLoginUrl": "true",
+  "ClientValidationEnabled": "true",
+  "UnobtrusiveJavaScriptEnabled": "true",
+  "DefaultApplicationName": "Default Sandbox Application",
+  "DefaultClaimSetName": "Ed-Fi Sandbox",
+  "SandboxAdminSQLCommandTimeout": "120",
+  "DefaultOperationalContextUri": "uri://ed-fi-api-host.org",
+  "OAuthUrl": "http://webapi:80/oauth/",
+  "MailSettings": {
+    "Smtp": {
+      "UserName": "Bingo",
+      "From": "noreply@ed-fi.org",
+      "SpecifiedPickupDirectory": {
+        "PickupDirectoryLocation": "C:\\Temp\\AdminConsole\\Artifacts\\Emails"
+      },
+      "DeliveryMethod": "SpecifiedPickupDirectory",
+      "Password": "Tingo"
+    }
+  },
+  "Urls": "http://0.0.0.0:80",
+  "ConnectionStrings": {
+    "EdFi_Ods": "host=db;port=5432;username=postgres;password=pgpassword;database=EdFi_{0};Application Name=EdFi.Ods.SandboxAdmin",
+    "EdFi_Security": "host=db;port=5432;username=postgres;password=pgpassword;database=EdFi_Security;Application Name=EdFi.Ods.SandboxAdmin",
+    "EdFi_Admin": "host=db;port=5432;username=postgres;password=pgpassword;database=EdFi_Admin;Application Name=EdFi.Ods.SandboxAdmin",
+    "EdFi_Master": "host=db;port=5432;username=postgres;password=pgpassword;database=postgres;Application Name=EdFi.Ods.SandboxAdmin"
+  },
+  "User": {
+    "Test Admin": {
+      "Email": "test@ed-fi.org",
+      "Admin": "true",
+      "NamespacePrefixes": ["uri://ed-fi.org", "uri://gbisd.org"],
+      "Password": "***REMOVED***",
+      "Sandboxes": {
+        "Minimal Demonstration Sandbox": {
+          "Key": "minimalSandbox",
+          "Type": "Minimal",
+          "Secret": "minimalSandboxSecret",
+          "Refresh": "false"
+        },
+        "Populated Demonstration Sandbox": {
+          "Key": "populatedSandbox",
+          "Type": "Sample",
+          "Secret": "populatedSandboxSecret",
+          "Refresh": "false"
+        }
+      }
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning"
+    }
+  },
+  "ApiSettings": {
+    "Engine": "PostgreSQL"
+  }
+}
