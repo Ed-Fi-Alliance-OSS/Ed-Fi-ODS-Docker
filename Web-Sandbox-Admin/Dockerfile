@@ -5,7 +5,6 @@ ENV VERSION="5.1.0-b13218"
 
 WORKDIR /app
 COPY sandbox.appsettings.json /app/sandbox.appsettings.json
-# COPY EdFi.Suite3.Ods.SandboxAdmin.5.1.0-b13228.nupkg /app/SandboxAdmin.zip
 #COPY pgpass.conf /app/.pgpass
 
 RUN apk add unzip dos2unix bash && \
