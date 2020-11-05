@@ -11,5 +11,3 @@ EOSQL
 psql --no-password --tuples-only --username postgres --dbname "EdFi_Security" --file /tmp/EdFi_Security.sql
 
 psql --no-password --tuples-only --username postgres --dbname "EdFi_Admin" --file /tmp/EdFi_Admin.sql
-
-rm -rf /tmp/*.sql
