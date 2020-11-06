@@ -5,11 +5,11 @@
 
 docker-compose -f .\docker-compose-sandbox.yml down -v --remove-orphans
 
-docker rmi ed-fi-ods-docker_gateway ed-fi-ods-docker_swaggerui  -f
+docker rmi ed-fi-ods-docker_gateway -f
 
-docker rmi ed-fi-ods-docker_web-ods ed-fi-ods-docker_web-sandbox-admin -f
+docker rmi ed-fi-ods-docker_web-ods ed-fi-ods-docker_web-sandbox ed-fi-ods-docker_web-swagger -f
 
-docker rmi ed-fi-ods-docker_db-sandbox ed-fi-ods-docker_db-ods ed-fi-ods-docker_db-admin -f
+docker rmi ed-fi-ods-docker_db-sandbox ed-fi-ods-docker_db-ods ed-fi-ods-docker_db-admin ed-fi-ods-docker_db -f
 
 docker volume rm $(docker volume ls -qf dangling=true)
 

@@ -27,15 +27,13 @@ services:
   #      - swaggerui
   #   restart: always
 
-  api-ods:
+  web-ods:
     build: Web-Ods
     volumes:
       - log-ods:/app/WebApiLog.log
     depends_on:
        - db
        - web-sandbox
-    ports:
-      - "5002:80"
     restart: always
 
   web-sandbox:
@@ -44,17 +42,16 @@ services:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
        - db
-    ports:
-      - "5001:80"
     restart: always
 
-  # swaggerui:
-  #   build: SwaggerUI
-  #   volumes:
-  #     - ${PWD}/SwaggerUI/logs:/app/logs
-  #   depends_on:
-  #     - webapi
-  #   restart: always
+  web-swagger:
+    build: Web-SwaggerUI
+    depends_on:
+      - web-ods
+      - db
+    ports:
+      - "5003:80"
+    restart: always
 
 volumes:
   pg-db:
