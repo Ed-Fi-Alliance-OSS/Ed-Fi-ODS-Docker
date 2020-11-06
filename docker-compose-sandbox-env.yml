@@ -20,25 +20,22 @@ services:
     restart: always
     container_name: ed-fi-db
 
-  web-gateway:
-    build: 
+  nginx:
+    build:
       context: ./Web-GateWay
       dockerfile: Dockerfile
     ports:
-      - "5000:80"
-      - "443:443"
-    volumes:
-      - ${PWD}/Web-GateWay/edfi-stage.conf:/etc/nginx/conf.d/edfi.conf
-      - ${PWD}/Web-GateWay/ssl:/etc/nginx/ssl
-      - ${PWD}/Web-GateWay/logs:/var/log/nginx
-    depends_on:
-       - web-ods
-       - web-sandbox
-       - web-swagger
-    restart: always
+      - "5000:5000"
+      - "5001:5001"
+      - "5002:5002"
     container_name: ed-fi-gateway
+    restart: always
+    depends_on:
+       - api
+       - admin
+       - swagger
 
-  web-ods:
+  api:
     build:
       context: ./Web-Ods
       dockerfile: Dockerfile
@@ -46,29 +43,36 @@ services:
       - log-ods:/app/WebApiLog.log
     depends_on:
        - db
-       - web-sandbox
+       - admin
     restart: always
+    # ports:
+    #   - "5001:80"
     container_name: ed-fi-ods
 
-  web-sandbox:
+  admin:
     build: 
       context: ./Web-Sandbox-Admin
       dockerfile: Dockerfile
     volumes:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
-       - db
+      - db
     restart: always
+    # ports:
+    #   - "5002:80"
     container_name: ed-fi-sandbox-admin
 
-  web-swagger:
+  swagger:
     build: 
       context: ./Web-SwaggerUI
       dockerfile: Dockerfile
     depends_on:
-      - web-ods
+      - api
+      - admin
       - db
     restart: always
+    # ports:
+    #   - "5000:80"
     container_name: ed-fi-swagger
 
 volumes:

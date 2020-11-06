@@ -1,6 +1,5 @@
 {
-  "WebApiVersionUrl": "http://web-ods:80",
-  "Urls": "http://0.0.0.0:80",
+  "WebApiVersionUrl": "http://localhost:5001",
   "Logging": {
     "LogLevel": {
       "Default": "Information",
@@ -8,10 +7,10 @@
       "Microsoft.Hosting.Lifetime": "Information"
     }
   },
-    "SwaggerUIOptions": {
-        "OAuthConfigObject": {
-            "ClientSecret": "populatedSandboxSecret",
-            "ClientId": "populatedSandbox"
-        }
+  "SwaggerUIOptions": {
+    "OAuthConfigObject": {
+      "ClientSecret": "populatedSandboxSecret",
+      "ClientId": "populatedSandbox"
     }
+  }
 }
