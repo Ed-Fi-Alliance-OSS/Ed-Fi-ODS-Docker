@@ -9,3 +9,5 @@ RUN wget -O /app/WebApi.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Su
 COPY ./init-database.sh /docker-entrypoint-initdb.d/
 EXPOSE "5432"
 #CMD ["docker-entrypoint.sh", "postgres"]
+
+EXPOSE 5432

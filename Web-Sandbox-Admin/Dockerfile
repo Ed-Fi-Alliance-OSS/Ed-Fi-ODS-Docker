@@ -17,4 +17,6 @@ RUN apk add unzip dos2unix bash && \
     rm -f /app/[Content] && \
     mv /app/sandbox.appsettings.json /app/appsettings.json
 
+EXPOSE 80
+
 ENTRYPOINT ["dotnet", "EdFi.Ods.Sandbox.Admin.dll"]

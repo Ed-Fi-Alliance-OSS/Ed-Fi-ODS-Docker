@@ -13,4 +13,6 @@ RUN apk add dos2unix && \
     dos2unix /tmp/EdFi_Admin.sql && \
     dos2unix /tmp/EdFi_Security.sql
 
+EXPOSE 5432
+
 CMD ["docker-entrypoint.sh", "postgres"]

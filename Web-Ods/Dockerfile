@@ -15,4 +15,6 @@ RUN apk add unzip dos2unix bash && \
     rm -f /app/[Content] && \
     mv /app/web.appsettings.json /app/appsettings.json
 
+EXPOSE 80
+
 ENTRYPOINT ["dotnet", "EdFi.Ods.WebApi.dll"]
