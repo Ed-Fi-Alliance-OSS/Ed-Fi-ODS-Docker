@@ -3,9 +3,9 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-docker-compose -f .\docker-compose-sandbox.yml down -v --remove-orphans
+docker-compose -f .\docker-compose-sandbox-env.yml down -v --remove-orphans
 
-docker rmi ed-fi-ods-docker_gateway -f
+docker rmi ed-fi-ods-docker_web-gateway -f
 
 docker rmi ed-fi-ods-docker_web-ods ed-fi-ods-docker_web-sandbox ed-fi-ods-docker_web-swagger -f
 

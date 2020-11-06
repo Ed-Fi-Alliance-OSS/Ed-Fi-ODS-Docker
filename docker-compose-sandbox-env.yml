@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+version: '3.8'
+
+services:
+  db:
+    build:
+      context: ./DB-Sandbox
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'pgpassword'
+    ports:
+      - "5401:5432"
+    volumes:
+      -  pg-db:/var/lib/postgresql/data
+    restart: always
+
+  web-gateway:
+    build: 
+      context: ./Web-GateWay
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+      - "443:443"
+    volumes:
+      - ${PWD}/Web-GateWay/edfi-stage.conf:/etc/nginx/conf.d/edfi.conf
+      - ${PWD}/Web-GateWay/ssl:/etc/nginx/ssl
+      - ${PWD}/Web-GateWay/logs:/var/log/nginx
+    depends_on:
+       - web-ods
+       - web-sandbox
+       - web-swagger
+    restart: always
+
+  web-ods:
+    build:
+      context: ./Web-Ods
+      dockerfile: Dockerfile
+    volumes:
+      - log-ods:/app/WebApiLog.log
+    depends_on:
+       - db
+       - web-sandbox
+    restart: always
+
+  web-sandbox:
+    build: 
+      context: ./Web-Sandbox-Admin
+      dockerfile: Dockerfile
+    volumes:
+      - log-sandbox:/app/SandboxAdminLog.log
+    depends_on:
+       - db
+    restart: always
+
+  web-swagger:
+    build: 
+      context: ./Web-SwaggerUI
+      dockerfile: Dockerfile
+    depends_on:
+      - web-ods
+      - db
+    restart: always
+
+volumes:
+  pg-db:
+    driver: local
+    name: vol-pg-admin
+  log-sandbox:
+    driver: local
+    name: log-sandbox
+  log-ods:
+    driver: local
+    name: log-ods
