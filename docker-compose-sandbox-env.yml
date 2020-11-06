@@ -18,6 +18,7 @@ services:
     volumes:
       -  pg-db:/var/lib/postgresql/data
     restart: always
+    container_name: ed-fi-db
 
   web-gateway:
     build: 
@@ -35,6 +36,7 @@ services:
        - web-sandbox
        - web-swagger
     restart: always
+    container_name: ed-fi-gateway
 
   web-ods:
     build:
@@ -46,6 +48,7 @@ services:
        - db
        - web-sandbox
     restart: always
+    container_name: ed-fi-ods
 
   web-sandbox:
     build: 
@@ -56,6 +59,7 @@ services:
     depends_on:
        - db
     restart: always
+    container_name: ed-fi-sandbox-admin
 
   web-swagger:
     build: 
@@ -65,6 +69,7 @@ services:
       - web-ods
       - db
     restart: always
+    container_name: ed-fi-swagger
 
 volumes:
   pg-db:
