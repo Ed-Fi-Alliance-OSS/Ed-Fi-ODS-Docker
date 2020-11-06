@@ -1,5 +1,5 @@
 {
-  "WebApiVersionUrl": "http://0.0.0.0:54746",
+  "WebApiVersionUrl": "http://web-ods:80",
   "Urls": "http://0.0.0.0:80",
   "Logging": {
     "LogLevel": {
