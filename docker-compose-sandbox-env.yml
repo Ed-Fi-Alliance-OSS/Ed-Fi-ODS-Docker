@@ -20,20 +20,20 @@ services:
     restart: always
     container_name: ed-fi-db
 
-  nginx:
-    build:
-      context: ./Web-GateWay
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-      - "5001:5001"
-      - "5002:5002"
-    container_name: ed-fi-gateway
-    restart: always
-    depends_on:
-       - api
-       - admin
-       - swagger
+  # nginx:
+  #   build:
+  #     context: ./Web-GateWay
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5000:5000"
+  #     - "5001:5001"
+  #     - "5002:5002"
+  #   container_name: ed-fi-gateway
+  #   restart: always
+  #   depends_on:
+  #      - api
+  #      - admin
+  #      - swagger
 
   api:
     build:
@@ -45,8 +45,8 @@ services:
        - db
        - admin
     restart: always
-    # ports:
-    #   - "5001:80"
+    ports:
+      - "5001:80"
     container_name: ed-fi-ods
 
   admin:
@@ -58,8 +58,8 @@ services:
     depends_on:
       - db
     restart: always
-    # ports:
-    #   - "5002:80"
+    ports:
+      - "5002:80"
     container_name: ed-fi-sandbox-admin
 
   swagger:
@@ -71,8 +71,8 @@ services:
       - admin
       - db
     restart: always
-    # ports:
-    #   - "5000:80"
+    ports:
+      - "5000:80"
     container_name: ed-fi-swagger
 
 volumes:

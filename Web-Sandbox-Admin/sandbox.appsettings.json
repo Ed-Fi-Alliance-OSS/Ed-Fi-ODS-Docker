@@ -6,8 +6,8 @@
   "DefaultClaimSetName": "Ed-Fi Sandbox",
   "SandboxAdminSQLCommandTimeout": "120",
   "DefaultOperationalContextUri": "uri://ed-fi-api-host.org",
-  "OAuthUrl": "http://localhost:5001/oauth/",
-  "UseReverseProxyHeaders": true,
+  "OAuthUrl": "http://api:80/oauth/",
+  "UseReverseProxyHeaders": false,
   "MailSettings": {
     "Smtp": {
       "UserName": "Bingo",
@@ -55,5 +55,6 @@
   },
   "ApiSettings": {
     "Engine": "PostgreSQL"
-  }
+  },
+  "Urls" : "http://0.0.0.0:80"
 }

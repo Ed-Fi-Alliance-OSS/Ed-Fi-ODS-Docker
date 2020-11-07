@@ -1,5 +1,5 @@
 {
-  "WebApiVersionUrl": "http://localhost:5001",
+  "WebApiVersionUrl": "http://api:80",
   "Logging": {
     "LogLevel": {
       "Default": "Information",
@@ -12,5 +12,6 @@
       "ClientSecret": "populatedSandboxSecret",
       "ClientId": "populatedSandbox"
     }
-  }
+  },
+  "Urls" : "http://0.0.0.0:80"
 }
