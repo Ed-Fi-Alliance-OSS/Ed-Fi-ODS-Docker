@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.3
+-- Dumped from database version 11.9
 -- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
@@ -26,8 +26,6 @@ CREATE SCHEMA dbo;
 ALTER SCHEMA dbo OWNER TO postgres;
 
 SET default_tablespace = '';
-
-SET default_table_access_method = heap;
 
 --
 -- Name: actions; Type: TABLE; Schema: dbo; Owner: postgres
@@ -983,16 +981,16 @@ COPY dbo.resourceclaims (resourceclaimid, displayname, resourcename, claimname, 
 --
 
 COPY public."DeployJournal" (schemaversionsid, scriptname, applied) FROM stdin;
-1	Artifacts.PgSql.Structure.Security.0010-Schemas.sql	2020-10-15 13:18:32.631358
-2	Artifacts.PgSql.Structure.Security.0020-Tables.sql	2020-10-15 13:18:32.733239
-3	Artifacts.PgSql.Structure.Security.0030-ForeignKeys.sql	2020-10-15 13:18:32.792705
-4	Artifacts.PgSql.Structure.Security.0040-Indexes.sql	2020-10-15 13:18:32.895959
-5	Artifacts.PgSql.Data.Security.0001-ResourceClaimMetadata_generated.sql	2020-10-15 13:18:33.189897
-6	Artifacts.PgSql.Data.Security.1000-CreateDistrictHostedSISClaimSet.sql	2020-10-15 13:18:33.248156
-7	Artifacts.PgSql.Data.Security.1010-AssessmentVendorClaimSetUpdatePerformanceLevels.sql	2020-10-15 13:18:33.304903
-8	Artifacts.PgSql.Data.Security.1019-AddSandboxClaimset.sql	2020-10-15 13:18:33.310199
-9	Artifacts.PgSql.Data.Security.1020-DataStandard3.2b-ResourceClaimMetadata.sql	2020-10-15 13:18:33.316196
-10	Artifacts.PgSql.Data.Security.1050-RemoveBulkServerClaimSets.sql	2020-10-15 13:18:33.32539
+1	Artifacts.PgSql.Structure.Security.0010-Schemas.sql	2020-11-09 14:17:32.926397
+2	Artifacts.PgSql.Structure.Security.0020-Tables.sql	2020-11-09 14:17:33.032277
+3	Artifacts.PgSql.Structure.Security.0030-ForeignKeys.sql	2020-11-09 14:17:33.077364
+4	Artifacts.PgSql.Structure.Security.0040-Indexes.sql	2020-11-09 14:17:33.188512
+5	Artifacts.PgSql.Data.Security.0001-ResourceClaimMetadata_generated.sql	2020-11-09 14:17:33.497533
+6	Artifacts.PgSql.Data.Security.1000-CreateDistrictHostedSISClaimSet.sql	2020-11-09 14:17:33.513591
+7	Artifacts.PgSql.Data.Security.1010-AssessmentVendorClaimSetUpdatePerformanceLevels.sql	2020-11-09 14:17:33.569096
+8	Artifacts.PgSql.Data.Security.1019-AddSandboxClaimset.sql	2020-11-09 14:17:33.575462
+9	Artifacts.PgSql.Data.Security.1020-DataStandard3.2b-ResourceClaimMetadata.sql	2020-11-09 14:17:33.581555
+10	Artifacts.PgSql.Data.Security.1050-RemoveBulkServerClaimSets.sql	2020-11-09 14:17:33.588851
 \.
 
 

@@ -23,5 +23,6 @@ RUN apk add unzip dos2unix bash && \
     mv /app/sandbox.appsettings.json /app/appsettings.json
 
 EXPOSE "80"
+EXPOSE "443"
 
 ENTRYPOINT ["dotnet", "EdFi.Ods.Sandbox.Admin.dll"]
