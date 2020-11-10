@@ -3,10 +3,5 @@
 *.pem
 *.key
 *.crt
-Gateway/ssl/*
-Gateway/logs/*
-SandboxAdmin/logs/*
-WebApi/logs/*
-SwaggerUI/logs/*
-PSQL-Admin/data/*
-PSQL-ODS/data/*
+*.orig
+Web-Gateway/ssl/*

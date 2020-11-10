@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.3
+-- Dumped from database version 11.9
 -- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
@@ -73,8 +73,6 @@ $$;
 ALTER FUNCTION dbo.getclientfortoken(accesstoken uuid) OWNER TO postgres;
 
 SET default_tablespace = '';
-
-SET default_table_access_method = heap;
 
 --
 -- Name: apiclientapplicationeducationorganizations; Type: TABLE; Schema: dbo; Owner: postgres
@@ -946,18 +944,18 @@ COPY dbo.vendors (vendorid, vendorname) FROM stdin;
 --
 
 COPY public."DeployJournal" (schemaversionsid, scriptname, applied) FROM stdin;
-1	Artifacts.PgSql.Structure.Admin.0010-Schemas.sql	2020-10-15 13:18:30.053402
-2	Artifacts.PgSql.Structure.Admin.0020-Tables.sql	2020-10-15 13:18:30.176392
-3	Artifacts.PgSql.Structure.Admin.0030-ForeignKey.sql	2020-10-15 13:18:30.242807
-4	Artifacts.PgSql.Structure.Admin.0040-IdColumnIndexes.sql	2020-10-15 13:18:30.29793
-5	Artifacts.PgSql.Structure.Admin.0050-StoredProcedures.sql	2020-10-15 13:18:30.307293
-6	Artifacts.PgSql.Structure.Admin.0051-Rename-AccessToken-Function.sql	2020-10-15 13:18:30.315719
-7	Artifacts.PgSql.Structure.Admin.0060-Add-OwnershipTokens.sql	2020-10-15 13:18:30.327289
-8	Artifacts.PgSql.Structure.Admin.0061-Add-ApiClientsOwnershipTokens.sql	2020-10-15 13:18:30.356511
-9	Artifacts.PgSql.Structure.Admin.0062-Add-CreatorOwnershipTokenId-To-ApiClients.sql	2020-10-15 13:18:30.38646
-10	Artifacts.PgSql.Structure.Admin.0063-Update-GetClientForToken-For-Record-Level-Ownership.sql	2020-10-15 13:18:30.396267
-11	Artifacts.PgSql.Structure.Admin.0065-Update-GetClientForToken-For-Scope-Support.sql	2020-10-15 13:18:30.403554
-12	Artifacts.PgSql.Structure.Admin.0070-Identity-Support.sql	2020-10-15 13:18:30.534734
+1	Artifacts.PgSql.Structure.Admin.0010-Schemas.sql	2020-11-09 14:17:30.392293
+2	Artifacts.PgSql.Structure.Admin.0020-Tables.sql	2020-11-09 14:17:30.523342
+3	Artifacts.PgSql.Structure.Admin.0030-ForeignKey.sql	2020-11-09 14:17:30.5831
+4	Artifacts.PgSql.Structure.Admin.0040-IdColumnIndexes.sql	2020-11-09 14:17:30.642952
+5	Artifacts.PgSql.Structure.Admin.0050-StoredProcedures.sql	2020-11-09 14:17:30.652326
+6	Artifacts.PgSql.Structure.Admin.0051-Rename-AccessToken-Function.sql	2020-11-09 14:17:30.660889
+7	Artifacts.PgSql.Structure.Admin.0060-Add-OwnershipTokens.sql	2020-11-09 14:17:30.676621
+8	Artifacts.PgSql.Structure.Admin.0061-Add-ApiClientsOwnershipTokens.sql	2020-11-09 14:17:30.711859
+9	Artifacts.PgSql.Structure.Admin.0062-Add-CreatorOwnershipTokenId-To-ApiClients.sql	2020-11-09 14:17:30.729611
+10	Artifacts.PgSql.Structure.Admin.0063-Update-GetClientForToken-For-Record-Level-Ownership.sql	2020-11-09 14:17:30.738195
+11	Artifacts.PgSql.Structure.Admin.0065-Update-GetClientForToken-For-Scope-Support.sql	2020-11-09 14:17:30.749187
+12	Artifacts.PgSql.Structure.Admin.0070-Identity-Support.sql	2020-11-09 14:17:30.900328
 \.
 
 

@@ -1,12 +1,18 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
 version: '3.8'
 
 services:
   gateway:
-    image:
+    build: GateWay
     ports:
       - "80:80"
       - "443:443"
     volumes:
+      - ${PWD}/GateWay/edfi-stage.conf:/etc/nginx/conf.d/edfi.conf
       - ${PWD}/GateWay/ssl:/etc/nginx/ssl
       - ${PWD}/GateWay/logs:/var/log/nginx
     depends_on:
@@ -16,24 +22,31 @@ services:
     restart: always
 
   db-admin:
-    image:
+    build: PSQL-Admin
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'pgpassword'
+    ports:
+      - "5401:5432"
     volumes:
       - ${PWD}/PSQL-Admin/data:/var/lib/postgresql/data
     restart: always
 
   db-ods:
-    image:
+    build: PSQL-ODS
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'pgpassword'
+    ports:
+      - "5402:5432"
     volumes:
       - ${PWD}/PSQL-ODS/data:/var/lib/postgresql/data
     restart: always
 
   webapi:
-    image:
+    build: WebApi
     volumes:
+      - ${PWD}/db.pgpass:/app/db.pgpass
       - ${PWD}/WebApi/logs:/app/logs
       - ${PWD}/WebApi/plugins:/mnt/plugins
     depends_on:
@@ -42,16 +55,20 @@ services:
     restart: always
 
   sandboxadmin:
-    image:
+    build: SandboxAdmin
     volumes:
+      - ${PWD}/db.pgpass:/app/db.pgpass
       - ${PWD}/SandboxAdmin/logs:/app/logs
     depends_on:
        - db-ods
        - db-admin
+       - webapi
     restart: always
 
   swaggerui:
-    image:
+    build: SwaggerUI
     volumes:
       - ${PWD}/SwaggerUI/logs:/app/logs
+    depends_on:
+      - webapi
     restart: always
