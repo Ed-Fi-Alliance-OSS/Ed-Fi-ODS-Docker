@@ -22,7 +22,7 @@ services:
 
   # nginx:
   #   build:
-  #     context: ./Web-GateWay
+  #     context: ./Web-Gateway
   #     dockerfile: Dockerfile
   #   ports:
   #     - "5000:5000"
