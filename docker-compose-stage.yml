@@ -7,14 +7,14 @@ version: '3.8'
 
 services:
   gateway:
-    build: GateWay
+    build: Gateway
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ${PWD}/GateWay/edfi-stage.conf:/etc/nginx/conf.d/edfi.conf
-      - ${PWD}/GateWay/ssl:/etc/nginx/ssl
-      - ${PWD}/GateWay/logs:/var/log/nginx
+      - ${PWD}/Gateway/edfi-stage.conf:/etc/nginx/conf.d/edfi.conf
+      - ${PWD}/Gateway/ssl:/etc/nginx/ssl
+      - ${PWD}/Gateway/logs:/var/log/nginx
     depends_on:
        - webapi
        - sandboxadmin
