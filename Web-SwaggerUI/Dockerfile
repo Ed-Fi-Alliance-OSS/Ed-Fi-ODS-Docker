@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="5.1.0-b13258"
+ENV VERSION="5.2.0-b13315"
 
 WORKDIR /app
 COPY swagger.appsettings.json /app/swagger.appsettings.json
