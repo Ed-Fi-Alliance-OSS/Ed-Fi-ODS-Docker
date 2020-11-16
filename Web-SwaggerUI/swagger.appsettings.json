@@ -1,5 +1,5 @@
 {
-  "WebApiVersionUrl": "http://api:80",
+  "WebApiVersionUrl": "http://localhost:5001",
   "Logging": {
     "LogLevel": {
       "Default": "Information",
