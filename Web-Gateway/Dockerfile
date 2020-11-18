@@ -6,7 +6,5 @@
 FROM nginx:latest
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-COPY nginx.conf /etc/nginx/nginx.conf
-
 EXPOSE "80"
 EXPOSE "443"
