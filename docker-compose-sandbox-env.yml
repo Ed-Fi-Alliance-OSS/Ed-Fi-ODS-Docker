@@ -20,20 +20,24 @@ services:
     restart: always
     container_name: ed-fi-db
 
-  # nginx:
-  #   build:
-  #     context: ./Web-Gateway
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "5000:5000"
-  #     - "5001:5001"
-  #     - "5002:5002"
-  #   container_name: ed-fi-gateway
-  #   restart: always
-  #   depends_on:
-  #      - api
-  #      - admin
-  #      - swagger
+  nginx:
+     build:
+       context: ./Web-Gateway
+       dockerfile: Dockerfile
+     ports:
+       - "5000:5000"
+       - "5001:5001"
+ #     - "5002:5002" -- Temporarily removed Sandbox Admin from behind the reverse proxy until it's able to correctly support reverse proxy requests (ODS-4593). 
+     container_name: ed-fi-gateway
+     restart: always
+     hostname: nginx
+     volumes:
+        - ./Web-Gateway/nginx.conf:/etc/nginx/nginx.conf
+        - ./Web-Gateway/ssl:/ssl/
+     depends_on:
+        - api
+        - admin
+        - swagger
 
   api:
     build:
@@ -45,21 +49,21 @@ services:
        - db
        - admin
     restart: always
-    ports:
-      - "5001:80"
+    hostname: api
     container_name: ed-fi-ods
 
   admin:
     build: 
       context: ./Web-Sandbox-Admin
       dockerfile: Dockerfile
+    ports: 
+      - "5002:80"
     volumes:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
       - db
     restart: always
-    ports:
-      - "5002:80"
+    hostname: admin
     container_name: ed-fi-sandbox-admin
 
   swagger:
@@ -71,8 +75,7 @@ services:
       - admin
       - db
     restart: always
-    ports:
-      - "5000:80"
+    hostname: swagger
     container_name: ed-fi-swagger
 
 volumes:
