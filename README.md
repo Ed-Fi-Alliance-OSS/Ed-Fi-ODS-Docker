@@ -86,3 +86,11 @@ To get more help about particular command > docker-compose <command> --helpEx: d
 
 
 Full documentation is available on Docker's [website](https://docs.docker.com/compose/)
+
+## How to generate self sign certificate
+
+After completing the following steps, the certificate and key will be in folder Ed-Fi-ODS-Docker/Web-Gateway/ssl
+
+1.) Start a WSL session
+2.) Change directory to the Web-Gateway folder under Ed-Fi-ODS-Docker repository folder
+3.) Run script generate-cert.sh (i.e. ./generate-cert.sh)
