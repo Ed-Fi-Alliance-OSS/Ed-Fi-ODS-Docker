@@ -9,19 +9,19 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 ENV VERSION="5.2.0-b13358"
 
 WORKDIR /app
-COPY sandbox.appsettings.json /app/sandbox.appsettings.json
-#COPY pgpass.conf /app/.pgpass
+COPY appsettings.template.json /app/appsettings.template.json
+COPY run.sh /app/run.sh
 
-RUN apk add unzip dos2unix bash && \
+RUN apk add unzip dos2unix bash gettext && \
     wget -O /app/SandboxAdmin.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.SandboxAdmin/${VERSION} && \
     unzip /app/SandboxAdmin.zip -d /app && \
     rm -f /app/SandboxAdmin.zip && \
     rm -f /app/appsettings.json && \
     dos2unix /app/*.json && \
-    rm -f /app/*.exe && \
-    rm -f /app/[Content_Types] && \
-    mv /app/sandbox.appsettings.json /app/appsettings.json
+    dos2unix /app/*.sh && \
+    chmod 700 /app/run.sh && \
+    rm -f /app/*.exe 
 
 EXPOSE "80"
 
-ENTRYPOINT ["dotnet", "EdFi.Ods.Sandbox.Admin.dll"]
+ENTRYPOINT ["/app/run.sh"]
