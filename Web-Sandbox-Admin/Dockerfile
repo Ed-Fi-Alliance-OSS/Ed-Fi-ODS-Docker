@@ -6,7 +6,7 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="5.1.0-b13218"
+ENV VERSION="5.2.0-b13358"
 
 WORKDIR /app
 COPY sandbox.appsettings.json /app/sandbox.appsettings.json
@@ -23,6 +23,5 @@ RUN apk add unzip dos2unix bash && \
     mv /app/sandbox.appsettings.json /app/appsettings.json
 
 EXPOSE "80"
-EXPOSE "443"
 
 ENTRYPOINT ["dotnet", "EdFi.Ods.Sandbox.Admin.dll"]

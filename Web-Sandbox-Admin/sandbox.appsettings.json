@@ -6,8 +6,7 @@
   "DefaultClaimSetName": "Ed-Fi Sandbox",
   "SandboxAdminSQLCommandTimeout": "120",
   "DefaultOperationalContextUri": "uri://ed-fi-api-host.org",
-  "OAuthUrl": "http://api:80/oauth/",
-  "UseReverseProxyHeaders": false,
+  "OAuthUrl": "https://localhost:5001/oauth/",
   "MailSettings": {
     "Smtp": {
       "UserName": "Bingo",

@@ -27,7 +27,7 @@ services:
      ports:
        - "5000:5000"
        - "5001:5001"
- #     - "5002:5002" -- Temporarily removed Sandbox Admin from behind the reverse proxy until it's able to correctly support reverse proxy requests (ODS-4593). 
+       - "5002:5002"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
@@ -56,8 +56,6 @@ services:
     build: 
       context: ./Web-Sandbox-Admin
       dockerfile: Dockerfile
-    ports: 
-      - "5002:80"
     volumes:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
