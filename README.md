@@ -87,6 +87,11 @@ To get more help about particular command > docker-compose <command> --helpEx: d
 
 Full documentation is available on Docker's [website](https://docs.docker.com/compose/)
 
+## .env file
+Compose supports declaring default environment variables in an environment file named .env placed in the folder where the docker-compose command is executed (current working directory).
+For example we can pass env variables like, tag, username, password
+Following command can be used with docker-compose
+Ex: docker-compose --env-file .env -f (docker-compose-filename) up
 ## How to generate self-sign certificate
 
 After completing the following steps, the certificate and key will be in folder Ed-Fi-ODS-Docker/Web-Gateway/ssl

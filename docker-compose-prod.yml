@@ -7,47 +7,47 @@ version: '3.8'
 
 services:
   gateway:
-    build: Gateway
+    build: Web-Gateway
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ${PWD}/Gateway/edfi-prod.conf:/etc/nginx/conf.d/edfi.conf
-      - ${PWD}/Gateway/ssl:/etc/nginx/ssl
-      - ${PWD}/Gateway/logs:/var/log/nginx
+      - ${PWD}/Web-Gateway/edfi-prod.conf:/etc/nginx/conf.d/edfi.conf
+      - ${PWD}/Web-Gateway/ssl:/etc/nginx/ssl
+      - ${PWD}/Web-Gateway/logs:/var/log/nginx
     depends_on:
-      - webapi
-    restart: always
+      - api
+    restart: "${restart_policy}"
 
   db-admin: 
-    build: PSQL-Admin
+    build: DB-Admin
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'pgpassword'
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5401:5432"
     volumes:
-      - ${PWD}/PSQL-Admin/data:/var/lib/postgresql/data
-    restart: always
+      - ${PWD}/DB-Admin/data:/var/lib/postgresql/data
+    restart: "${restart_policy}"
 
   db-ods:
-    build: PSQL-ODS
+    build: DB-ODS
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'pgpassword'
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5402:5432"
     volumes:
-      - ${PWD}/PSQL-ODS/data:/var/lib/postgresql/data
-    restart: always
+      - ${PWD}/DB-ODS/data:/var/lib/postgresql/data
+    restart: "${restart_policy}"
 
-  webapi:
-    build: WebApi
+  api:
+    build: Web-Ods
     volumes:
       - ${PWD}/db.pgpass:/app/db.pgpass
-      - ${PWD}/WebApi/logs:/app/logs
-      - ${PWD}/WebApi/plugins:/mnt/plugins
+      - ${PWD}/Web-Ods/logs:/app/logs
+      - ${PWD}/Web-Ods/plugins:/mnt/plugins
     depends_on:
        - db-ods
        - db-admin
-    restart: always
+    restart: "${restart_policy}"

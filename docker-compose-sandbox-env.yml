@@ -11,13 +11,13 @@ services:
       context: ./DB-Sandbox
       dockerfile: Dockerfile
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'pgpassword'
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5401:5432"
     volumes:
       -  pg-db:/var/lib/postgresql/data
-    restart: always
+    restart: "${restart_policy}"
     container_name: ed-fi-db
 
   nginx:
@@ -48,7 +48,7 @@ services:
     depends_on:
        - db
        - admin
-    restart: always
+    restart: "${restart_policy}"
     hostname: api
     container_name: ed-fi-ods
 
@@ -60,7 +60,7 @@ services:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
       - db
-    restart: always
+    restart: "${restart_policy}"
     hostname: admin
     container_name: ed-fi-sandbox-admin
 
@@ -72,7 +72,7 @@ services:
       - api
       - admin
       - db
-    restart: always
+    restart: "${restart_policy}"
     hostname: swagger
     container_name: ed-fi-swagger
 
