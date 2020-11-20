@@ -47,6 +47,8 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       API_MODE: "Sandbox"
+      ODS_DB: db
+      ADMIN_DB: db
     volumes:
       - log-ods:/app/WebApiLog.log
     depends_on:
@@ -69,6 +71,8 @@ services:
       MINIMAL_SECRET: "${MINIMAL_SECRET}"
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
+      ODS_DB: db
+      ADMIN_DB: db
     volumes:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:

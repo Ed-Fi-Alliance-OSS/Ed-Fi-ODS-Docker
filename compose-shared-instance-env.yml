@@ -8,24 +8,25 @@ version: '3.8'
 services:
   db-ods:
     build:
-      context: ./DB-ODS
+      context: ./DB-Ods
       dockerfile: Dockerfile
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'pgpassword'
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5402:5432"
     volumes:
       -  pg-db-ods:/var/lib/postgresql/data
     restart: always
+    container_name: ed-fi-db-ods
 
   db-admin:
     build:
       context: ./DB-Sandbox
       dockerfile: Dockerfile
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'pgpassword'
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5401:5432"
     volumes:
@@ -36,11 +37,9 @@ services:
   nginx:
      build:
        context: ./Web-Gateway
-       dockerfile: Dockerfile
+       dockerfile: Dockerfile-shared-instance
      ports:
-       - "5000:5000"
        - "5001:5001"
-       - "5002:5002"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
@@ -53,12 +52,18 @@ services:
   api:
     build:
       context: ./Web-Ods
-      dockerfile: Dockerfile-shared-instance
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      ODS_DB: db-ods
+      ADMIN_DB: db-admin
+      API_MODE: "SharedInstance"
     volumes:
       - log-ods:/app/WebApiLog.log
     depends_on:
-       - db
-       - admin
+       - db-ods
+       - db-admin
     restart: always
     hostname: api
     container_name: ed-fi-ods

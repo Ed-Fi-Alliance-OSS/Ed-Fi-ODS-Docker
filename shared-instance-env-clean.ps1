@@ -5,9 +5,9 @@
 
 docker-compose -f .\compose-shared-instance-env.yml down -v --remove-orphans
 
-docker rmi ed-fi-ods-docker_api ed-fi-ods-docker_swagger ed-fi-swagger ed-fi-ods-docker_nginx ed-fi-ods-docker_admin  -f
+docker rmi ed-fi-ods-docker_api ed-fi-ods-docker_nginx -f
 
-docker rmi ed-fi-ods-docker_db -f
+docker rmi ed-fi-ods-docker_db-ods ed-fi-ods-docker_db-admin -f
 
 docker volume rm $(docker volume ls -qf dangling=true)
 
