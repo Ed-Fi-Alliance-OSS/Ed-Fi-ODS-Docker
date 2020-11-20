@@ -9,17 +9,18 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 ENV VERSION="5.1.0-b13218"
 
 WORKDIR /app
-COPY webapi.appsettings.json /app/web.appsettings.json
+COPY appsettings.template.json /app/appsettings.template.json
+COPY run.sh /app/run.sh
 
-RUN apk add unzip dos2unix bash && \
+RUN apk add unzip dos2unix bash gettext && \
     wget -O /app/WebApi.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.WebApi/${VERSION} && \
     unzip /app/WebApi.zip -d /app && \
     rm -f /app/WebApi.zip && \
     dos2unix /app/*.json && \
-    rm -f /app/*.exe && \
-    rm -f /app/[Content_Types] && \
-    mv /app/web.appsettings.json /app/appsettings.json
-
+    dos2unix /app/*.sh && \
+    chmod 700 /app/*.sh ** && \
+    rm -f /app/*.exe
+ 
 EXPOSE "80"
 
-ENTRYPOINT ["dotnet", "EdFi.Ods.WebApi.dll"]
+ENTRYPOINT [ "/app/run.sh" ]
