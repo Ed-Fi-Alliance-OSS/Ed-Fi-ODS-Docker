@@ -13,7 +13,6 @@ ENV POSTGRES_DB=postgres
 ENV ADMIN_VERSION="5.2.0-b10003"
 ENV SECURITY_VERSION="5.2.0-b10025"
 
-
 COPY init-database.sh /docker-entrypoint-initdb.d/init-database.sh
 
 RUN apk add dos2unix unzip && \
