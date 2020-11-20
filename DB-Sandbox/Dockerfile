@@ -7,8 +7,8 @@ FROM postgres:11-alpine
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV MINVERSION="5.1.0-b10359"
-ENV POPULVERSION="5.1.0-b10345"
+ENV MINVERSION="5.1.0"
+ENV POPULVERSION="5.1.0"
 ENV ADMIN_VERSION="5.2.0-b10003"
 ENV SECURITY_VERSION="5.2.0-b10025"
 
@@ -19,8 +19,8 @@ ENV POSTGRES_DB=postgres
 COPY init-database.sh /docker-entrypoint-initdb.d/init-database.sh
 
 RUN apk add unzip dos2unix && \
-    wget -O /tmp/OdsMinimalDatabase.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.Minimal.Template.PostgreSQL/${MINVERSION} && \
-    wget -O /tmp/OdsPopulatedDatabase.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.Populated.Template.PostgreSQL/${POPULVERSION} && \
+    wget -O /tmp/OdsMinimalDatabase.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.Minimal.Template.PostgreSQL/versions/${MINVERSION}/content && \
+    wget -O /tmp/OdsPopulatedDatabase.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.Populated.Template.PostgreSQL/versions/${POPULVERSION}/content && \
     wget -O /tmp/EdFi_Admin.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Database.Admin.PostgreSQL/versions/${ADMIN_VERSION}/content && \
     wget -O /tmp/EdFi_Security.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Database.Security.PostgreSQL/versions/${SECURITY_VERSION}/content && \
     unzip -p /tmp/EdFi_Admin.zip EdFi_Admin.sql > /tmp/EdFi_Admin.sql && \
