@@ -43,6 +43,10 @@ services:
     build:
       context: ./Web-Ods
       dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      API_MODE: "Sandbox"
     volumes:
       - log-ods:/app/WebApiLog.log
     depends_on:
@@ -56,6 +60,15 @@ services:
     build: 
       context: ./Web-Sandbox-Admin
       dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      ADMIN_USER: "${ADMIN_USER}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
+      MINIMAL_KEY: "${MINIMAL_KEY}"
+      MINIMAL_SECRET: "${MINIMAL_SECRET}"
+      POPULATED_KEY: "${POPULATED_KEY}"
+      POPULATED_SECRET: "${POPULATED_SECRET}"
     volumes:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
@@ -68,6 +81,9 @@ services:
     build: 
       context: ./Web-SwaggerUI
       dockerfile: Dockerfile
+    environment: 
+      POPULATED_KEY: "${POPULATED_KEY}"
+      POPULATED_SECRET: "${POPULATED_SECRET}"
     depends_on:
       - api
       - admin
