@@ -17,7 +17,7 @@ services:
       - "5401:5432"
     volumes:
       -  pg-db:/var/lib/postgresql/data
-    restart: "${restart_policy}"
+    restart: always
     container_name: ed-fi-db
 
   nginx:
@@ -48,7 +48,7 @@ services:
     depends_on:
        - db
        - admin
-    restart: "${restart_policy}"
+    restart: always
     hostname: api
     container_name: ed-fi-ods
 
@@ -60,7 +60,7 @@ services:
       - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
       - db
-    restart: "${restart_policy}"
+    restart: always
     hostname: admin
     container_name: ed-fi-sandbox-admin
 
@@ -72,7 +72,7 @@ services:
       - api
       - admin
       - db
-    restart: "${restart_policy}"
+    restart: always
     hostname: swagger
     container_name: ed-fi-swagger
 

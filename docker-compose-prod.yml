@@ -17,7 +17,7 @@ services:
       - ${PWD}/Web-Gateway/logs:/var/log/nginx
     depends_on:
       - api
-    restart: "${restart_policy}"
+    restart: always
 
   db-admin: 
     build: DB-Admin
@@ -28,7 +28,7 @@ services:
       - "5401:5432"
     volumes:
       - ${PWD}/DB-Admin/data:/var/lib/postgresql/data
-    restart: "${restart_policy}"
+    restart: always
 
   db-ods:
     build: DB-ODS
@@ -39,7 +39,7 @@ services:
       - "5402:5432"
     volumes:
       - ${PWD}/DB-ODS/data:/var/lib/postgresql/data
-    restart: "${restart_policy}"
+    restart: always
 
   api:
     build: Web-Ods
@@ -50,4 +50,4 @@ services:
     depends_on:
        - db-ods
        - db-admin
-    restart: "${restart_policy}"
+    restart: always
