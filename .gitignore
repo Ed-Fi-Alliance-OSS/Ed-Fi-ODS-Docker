@@ -5,3 +5,4 @@
 *.crt
 *.orig
 Web-Gateway/ssl/*
+.env
