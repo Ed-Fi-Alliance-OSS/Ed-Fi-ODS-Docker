@@ -6,19 +6,15 @@
 
 set -e
 
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-    CREATE DATABASE "EdFi_Ods_Populated_Template" TEMPLATE template0;
+psql ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE "EdFi_Ods_Minimal_Template" TEMPLATE template0;
-    GRANT ALL PRIVILEGES ON DATABASE "EdFi_Ods_Populated_Template" TO $POSTGRES_USER;
     GRANT ALL PRIVILEGES ON DATABASE "EdFi_Ods_Minimal_Template" TO $POSTGRES_USER;
 EOSQL
 
-psql -v --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Ods_Minimal_Template" --file /app/EdFi_Ods_Minimal_Template.sql
+psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Ods_Minimal_Template" --file /tmp/EdFi_Ods_Minimal_Template.sql
 
-psql -v --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Ods_Populated_Template" --file /app/EdFi_Ods_Populated_Template.sql
-
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-    UPDATE pg_database SET datistemplate='true', datallowconn='false' WHERE datname in ('EdFi_Ods_Populated_Template', 'EdFi_Ods_Minimal_Template');
+psql ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+    UPDATE pg_database SET datistemplate='true', datallowconn='false' WHERE datname in ('EdFi_Ods_Minimal_Template');
     CREATE DATABASE "EdFi_Ods" TEMPLATE 'EdFi_Ods_Minimal_Template';
     GRANT ALL PRIVILEGES ON DATABASE "EdFi_Ods" TO $POSTGRES_USER;
 EOSQL

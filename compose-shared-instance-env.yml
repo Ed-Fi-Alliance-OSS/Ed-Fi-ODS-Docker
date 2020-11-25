@@ -1,0 +1,80 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+version: '3.8'
+
+services:
+  db-ods:
+    build:
+      context: ./DB-Ods
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - "5402:5432"
+    volumes:
+      -  pg-db-ods:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods
+
+  db-admin:
+    build:
+      context: ./DB-Sandbox
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - "5401:5432"
+    volumes:
+      -  pg-db-admin:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-admin
+
+  nginx:
+     build:
+       context: ./Web-Gateway
+       dockerfile: Dockerfile-shared-instance
+     ports:
+       - "5001:5001"
+     container_name: ed-fi-gateway
+     restart: always
+     hostname: nginx
+     volumes:
+        - ./Web-Gateway/nginx-shared.conf:/etc/nginx/nginx.conf
+        - ./Web-Gateway/ssl:/ssl/
+     depends_on:
+        - api
+
+  api:
+    build:
+      context: ./Web-Ods
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      ODS_DB: db-ods
+      ADMIN_DB: db-admin
+      API_MODE: "SharedInstance"
+    volumes:
+      - log-ods:/app/WebApiLog.log
+    depends_on:
+       - db-ods
+       - db-admin
+    restart: always
+    hostname: api
+    container_name: ed-fi-ods
+
+volumes:
+  pg-db-admin:
+    driver: local
+    name: vol-pg-admin
+  pg-db-ods:
+    driver: local
+    name: vol-pg-ods
+  log-ods:
+    driver: local
+    name: log-ods
