@@ -22,7 +22,7 @@ services:
 
   db-admin:
     build:
-      context: ./DB-Sandbox
+      context: ./DB-Admin
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
