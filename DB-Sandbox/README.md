@@ -1,5 +1,5 @@
-# EdFi Sandbox Database
-Provides docker deployment for **_EdFi_Admin**, **_EdFi_Security_**,  the minimal template **_EdFi_Ods_Minimal_Template_**, and the populated template **_EdFi_Ods_Populated_Template_** databases implementation on PostgreSQL 11. The templates implement the unified model version [data model 3.2.c](https://techdocs.ed-fi.org/display/EFDS32/Unifying+Data+Model+-+v3.2+Handbook). The databases are installed when the image is is started for the first time with change queries enabled by default. Sandboxes are initially created when the Sandbox Admin application is started.
+# Ed-Fi Sandbox Databases
+Provides docker deployment for **_EdFi_Admin_**, **_EdFi_Security_**,  the minimal template **_EdFi_Ods_Minimal_Template_**, and the populated template **_EdFi_Ods_Populated_Template_** databases implementation on PostgreSQL 11. The templates implement the [Ed-Fi Data Standard v3.2.0-c](https://techdocs.ed-fi.org/display/EFDS32/Ed-Fi+Data+Standard+v3.2). The databases are installed when the image is started for the first time with change queries enabled by default. Sandboxes are initially created when the Sandbox Admin application is started.
 
 **NOTE: A vendor for Grandbend is installed by default, and this implementation is not recommended for a production environment.**
 
@@ -26,6 +26,6 @@ POSTGRES_PASSWORD=<password for default postgres user>
 ## License Information
 View [license information](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/LICENSE) for the software contained in this image.
 
-As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
+As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc. from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
 
 As for any pre-built image usage, it is the image user's responsibility to ensure that any use of this image complies with any relevant licenses for all software contained within.
