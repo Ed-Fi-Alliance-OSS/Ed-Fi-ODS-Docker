@@ -16,7 +16,7 @@ services:
     ports:
       - "5402:5432"
     volumes:
-      -  pg-db-ods:/var/lib/postgresql/data
+      -  vol-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods
 
@@ -30,7 +30,7 @@ services:
     ports:
       - "5401:5432"
     volumes:
-      -  pg-db-admin:/var/lib/postgresql/data
+      -  vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
 
@@ -51,7 +51,7 @@ services:
 
   api:
     build:
-      context: ./Web-Ods
+      context: ./Web-Ods-Api
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -60,21 +60,21 @@ services:
       ADMIN_DB: db-admin
       API_MODE: "SharedInstance"
     volumes:
-      - log-ods:/app/WebApiLog.log
+      - vol-log-ods-api:/app/WebApiLog.log
     depends_on:
        - db-ods
        - db-admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods
+    container_name: ed-fi-ods-api
 
 volumes:
-  pg-db-admin:
+  vol-db-admin:
     driver: local
-    name: vol-pg-admin
-  pg-db-ods:
+    name: vol-db-admin
+  vol-db-ods:
     driver: local
-    name: vol-pg-ods
-  log-ods:
+    name: vol-db-ods
+  vol-log-ods-api:
     driver: local
-    name: log-ods
+    name: vol-log-ods-api
