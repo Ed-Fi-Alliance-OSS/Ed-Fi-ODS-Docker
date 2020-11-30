@@ -1,7 +1,7 @@
 # Ed-Fi-ODS-Docker
 This repository hosts the docker deployment source code for ODS/API
 
-For Setting up your Docker Environment refer to [Docker's setup page](https://docs.docker.com/get-started/#set-up-your-docker-environment).
+For Setting up your Docker Environment refer to [Setup Your Docker Environment](https://docs.docker.com/get-started/#set-up-your-docker-environment).
 
 ## Docker Compose
 
@@ -11,6 +11,7 @@ Using Compose we can define application environment with a Dockerfile so it can 
 The Compose file provides a way to document and configure all of the application’s service dependencies (databases, queues, caches, web service APIs, etc). Using the Compose command line tool you can create and start one or more containers for each dependency with a single command (docker-compose up).
 
 Full documentation is available on Docker's [website](https://docs.docker.com/compose/)
+
 ## Sample Compose Files
 Included in this repository are two compose files for running the ODS/API behind a proxy.
 
