@@ -52,7 +52,7 @@ services:
       ADMIN_DB: db-admin
       API_MODE: "SharedInstance"
     volumes:
-      - vol-log-ods-api:/app/WebApiLog.log
+      - ${LOGS_FOLDER}:/app/logs
     depends_on:
        - db-ods
        - db-admin
@@ -67,6 +67,3 @@ volumes:
   vol-db-ods:
     driver: local
     name: vol-db-ods
-  vol-log-ods-api:
-    driver: local
-    name: vol-log-ods-api
