@@ -1,3 +1,10 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * Licensed to the Ed-Fi Alliance under one or more agreements.
+ * The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+ * See the LICENSE and NOTICES files in the project root for more information.
+ */
+
 # SPDX-License-Identifier: Apache-2.0
 # Licensed to the Ed-Fi Alliance under one or more agreements.
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
@@ -7,31 +14,37 @@ version: '3.8'
 
 services:
   db-ods:
-    image: edfialliance/ods-api-db-ods:${TAG}
+    build:
+      context: ./DB-Ods
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5402:5432"
     volumes:
-      -  vol-db-ods:/var/lib/postgresql/data
+      -  pg-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods
 
   db-admin:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    build:
+      context: ./DB-Admin
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5401:5432"
     volumes:
-      -  vol-db-admin:/var/lib/postgresql/data
+      -  pg-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
 
   nginx:
-     image: edfialliance/ods-api-web-gateway:${TAG}
+     build:
+       context: ./Web-Gateway
+       dockerfile: Dockerfile
      ports:
        - "5001:5001"
      container_name: ed-fi-gateway
@@ -44,7 +57,9 @@ services:
         - api
 
   api:
-    image: edfialliance/ods-api-web-api:${TAG}
+    build:
+      context: ./Web-Ods
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -52,21 +67,21 @@ services:
       ADMIN_DB: db-admin
       API_MODE: "SharedInstance"
     volumes:
-      - vol-log-ods-api:/app/WebApiLog.log
+      - log-ods:/app/WebApiLog.log
     depends_on:
        - db-ods
        - db-admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods-api
+    container_name: ed-fi-ods
 
 volumes:
-  vol-db-admin:
+  pg-db-admin:
     driver: local
-    name: vol-db-admin
-  vol-db-ods:
+    name: vol-pg-admin
+  pg-db-ods:
     driver: local
-    name: vol-db-ods
-  vol-log-ods-api:
+    name: vol-pg-ods
+  log-ods:
     driver: local
-    name: vol-log-ods-api
+    name: log-ods
