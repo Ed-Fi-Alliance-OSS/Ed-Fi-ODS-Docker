@@ -16,6 +16,45 @@ While these compose files pull down the images from docker hub, there are two ad
 
 The repository also includes setup (e.g. [sandbox-env-up.ps1](sandbox-env-up.ps1)) and teardown (e.g. [sandbox-env-clean.ps1](sandbox-env-clean.ps1)) PowerShell scripts that you can refer to see how to use these compose files.
 
+### Exposed Ports
+The compose files expose the databases outside of the docker network. To disable this modify the compose file by removing the ports key out of the compose file for the database. For example:
+```
+db:
+    build:
+      context: ./DB-Sandbox
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - "5401:5432"
+    volumes:
+      -  vol-db-sandbox:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-sandbox
+```
+
+would be changed to:
+
+```
+db:
+    build:
+      context: ./DB-Sandbox
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    volumes:
+      -  vol-db-sandbox:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-sandbox
+```
+
+For the ODS/API, Swagger and Sandbox Admin tool, the ports need to be exposed to support the proxy server, as virtual path support is not available at this time. This will be addressed in a future release.
+
+## Logging
+The ODS/API and SandboxAdmin have been setup to write logs to a mounted folder within their docker containers. By setting the environment variable `LOGS_FOLDER` to a path (e.g. c:/tmp/logs for windows hosts or ~/tmp/logs for Linux/MacOs hosts) you can configure the log files to be placed there.
+
 ## .env File
 
 Compose supports declaring default [environment variables](https://docs.docker.com/compose/environment-variables/) in an environment file named .env, placed in the folder where the docker-compose command is executed (current working directory). Following command can be used with docker-compose to use an environment file with different name or location.
@@ -32,6 +71,7 @@ ADMIN_PASSWORD=<default password for the sandbox admin user>
 API_MODE=<mode to run the ods/api in>
 MINIMAL_KEY=<minimal template key>
 MINIMAL_SECRET=<minimal template secret>
+LOGS_FOLDER=<path to store the logs file>
 ODS_DB=<database server name for the ods database>
 POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
