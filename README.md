@@ -22,7 +22,7 @@ docker-compose --env-file .env.dev -f (docker-compose-filename) up
 ```
 
 ### Supported environment variables
-`.env.example` file included in the repository lists the supported environment variables:
+[.env.example](.env.example) file included in the repository lists the supported environment variables:
 ```
 ADMIN_DB=<database server for the admin database>
 ADMIN_USER=<default admin user for sandbox admin>
