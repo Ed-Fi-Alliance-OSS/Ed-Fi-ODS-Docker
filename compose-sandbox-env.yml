@@ -16,9 +16,9 @@ services:
     ports:
       - "5401:5432"
     volumes:
-      -  pg-db:/var/lib/postgresql/data
+      -  vol-db-sandbox:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-db
+    container_name: ed-fi-db-sandbox
 
   nginx:
      build:
@@ -41,7 +41,7 @@ services:
 
   api:
     build:
-      context: ./Web-Ods
+      context: ./Web-Ods-Api
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -50,13 +50,13 @@ services:
       ODS_DB: db
       ADMIN_DB: db
     volumes:
-      - log-ods:/app/WebApiLog.log
+      - vol-log-ods-api:/app/WebApiLog.log
     depends_on:
        - db
        - admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods
+    container_name: ed-fi-ods-api
 
   admin:
     build: 
@@ -74,7 +74,7 @@ services:
       ODS_DB: db
       ADMIN_DB: db
     volumes:
-      - log-sandbox:/app/SandboxAdminLog.log
+      - vol-log-sandbox-admin:/app/SandboxAdminLog.log
     depends_on:
       - db
     restart: always
@@ -97,12 +97,12 @@ services:
     container_name: ed-fi-swagger
 
 volumes:
-  pg-db:
+  vol-db-sandbox:
     driver: local
-    name: vol-pg-admin
-  log-sandbox:
+    name: vol-db-sandbox
+  vol-log-sandbox-admin:
     driver: local
-    name: log-sandbox
-  log-ods:
+    name: vol-log-sandbox-admin
+  vol-log-ods-api:
     driver: local
-    name: log-ods
+    name: vol-log-ods-api
