@@ -6,4 +6,5 @@
 FROM nginx:latest
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
+EXPOSE "5000"
 EXPOSE "5001"

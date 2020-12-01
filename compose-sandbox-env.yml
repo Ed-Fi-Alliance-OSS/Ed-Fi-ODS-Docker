@@ -22,7 +22,7 @@ services:
 
   nginx:
      build:
-       context: ./Web-Gateway
+       context: ./Web-Gateway-Sandbox
        dockerfile: Dockerfile
      ports:
        - "5000:5000"
@@ -32,8 +32,8 @@ services:
      restart: always
      hostname: nginx
      volumes:
-        - ./Web-Gateway/nginx.conf:/etc/nginx/nginx.conf
-        - ./Web-Gateway/ssl:/ssl/
+        - ./Web-Gateway-Sandbox/nginx.conf:/etc/nginx/nginx.conf
+        - ./Web-Gateway-Sandbox/ssl:/ssl/
      depends_on:
         - api
         - admin

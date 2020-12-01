@@ -37,7 +37,7 @@ services:
   nginx:
      build:
        context: ./Web-Gateway
-       dockerfile: Dockerfile-shared-instance
+       dockerfile: Dockerfile
      ports:
        - "5001:5001"
      container_name: ed-fi-gateway

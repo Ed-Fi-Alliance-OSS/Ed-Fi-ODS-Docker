@@ -1,101 +1,55 @@
 # Ed-Fi-ODS-Docker
-This repository hosts the docker deployment source code for ODS/API
+This repository hosts the docker deployment source code for ODS/API. To work with what is offered in this repository, set up your Docker environment by referring to [Setup Your Docker Environment](https://docs.docker.com/get-started/#set-up-your-docker-environment).
 
-# DOCKER CONCEPTS
+## Docker Compose
+[Docker Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container Docker applications. This repository includes two compose files for running the ODS/API behind a proxy.
 
-Docker is a platform for developers and sysadmins to build, run, and share applications with containers. The use of containers to deploy applications is called containerization. Containers are not new, but their use for easily deploying applications is.
+### compose-sandbox-env.yml
+Provides an implementation of a sandbox environment with the ODS/API, Sandbox Admin, and SwaggerUI behind nginx. The databases are installed on one instance of PostgreSQL 11. 
 
-Containerization is increasingly popular because containers are:
+### compose-shared-instance-env.yml
+Provides an implementation of a shared instance environment of the ODS/API behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ database and the minimal template are installed on a separate instance of PostgreSQL 11. 
 
- Flexible: Even the most complex applications can be containerized.
- 
- Lightweight: Containers leverage and share the host kernel, making them much more efficient in terms of system resources than virtual machines.
- 
-Portable: You can build locally, deploy to the cloud, and run anywhere.
+The repository also includes setup (e.g. sandbox-env-up.ps1) and teardown (e.g. sandbox-env-clean.ps1) PowerShell scripts that you can refer to see how to use these compose files. 
 
-Loosely coupled: Containers are highly self sufficient and encapsulated, allowing you to replace or upgrade one without disrupting others.
+## .env File
 
-Secure: Containers apply aggressive constraints and isolations to processes without any configuration required on the part of the user.
+Compose supports declaring default [environment variables](https://docs.docker.com/compose/environment-variables/) in an environment file named .env, placed in the folder where the docker-compose command is executed (current working directory). Following command can be used with docker-compose to use an environment file with different name or location.
+```
+docker-compose --env-file .env.dev -f (docker-compose-filename) up
+```
 
-# Images and containers
+### Supported environment variables
+`.env.example` file included in the repository lists the supported environment variables:
+```
+ADMIN_USER=<default admin user for sandbox admin>
+ADMIN_PASSWORD=<default password for the sandbox admin user>
+API_MODE=<mode to run the ods/api in>
+MINIMAL_KEY=<minimal template key>
+MINIMAL_SECRET=<minimal template secret>
+POPULATED_KEY=<populated template key>
+POPULATED_SECRET=<populated template secret>
+POSTGRES_USER=<default postgres database user>
+POSTGRES_PASSWORD=<password for default postgres user>
+```
 
-Fundamentally, a container is nothing but a running process, with some added encapsulation features applied to it in order to keep it isolated from the host and from other containers. One of the most important aspects of container isolation is that each container interacts with its own private filesystem; this filesystem is provided by a Docker image. An image includes everything needed to run an application - the code or binary, runtimes, dependencies, and any other filesystem objects required
+## Self-Signed Certificate
+The deployments require valid SSL certificate to function. A self-signed certificate can be used for a Non-Production environment. This repository includes `generate-cert.sh` script that can be used to generate a self-signed certificate and place it in folder Ed-Fi-ODS-Docker/Web-Gateway/ssl and/or Ed-Fi-ODS-Docker/Web-Gateway-Sandbox/ssl (for sandbox mode) to be used by the running Gateway container. 
 
+If deploying on local Windows host, you will either need GitBash or WSL to run `generate-cert.sh`.
+### Using GitBash
+* Start a GitBash Session
+* Run the following commands:
+  ```
+  export MSYS_NO_PATHCONV=1
+  cd '{your repo root}/Ed-Fi-ODS-Docker/Web-Gateway'
+  ./generate-cert.sh
+  ```
 
-For Setting up your Docker Environment [click here](https://docs.docker.com/get-started/#set-up-your-docker-environment)
+### Using WSL
+* [Enable WSL and installed a Linux distribution from the Microsoft Store](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+* Start a WSL session
+* Change directory to the Web-Gateway (Web-Gateway-Sandbox) folder under Ed-Fi-ODS-Docker repository folder
+* Convert the script from CRLF to LF endings
+* Run script generate-cert.sh (i.e. ./generate-cert.sh)
 
-## Docker commands
-
-  docker build -t image-name .
-  
-  docker images
-  
-  docker run -d --name container name image-name
-  
-  docker ps 
-  
-  
-# DOCKER COMPOSE
-
-
-
-Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a Compose file to configure your application's services. Then, using a single command, you create and start all the services from your configuration.Compose is great for development, testing, and staging environments, as well as CI workflows.
-Using Compose we can define application environment with a Dockerfile so it can be reproduced anywhere.Run docker-compose up and Compose starts and runs your entire app.
-
-The Compose file provides a way to document and configure all of the application’s service dependencies (databases, queues, caches, web service APIs, etc). Using the Compose command line tool you can create and start one or more containers for each dependency with a single command (docker-compose up).
-
-
-## Installation
-
-You can run Compose on macOS, Windows, and 64-bit Linux.
-
-Prerequisites
-
-•Docker Compose relies on Docker Engine for any meaningful work, so make sure you have Docker Engine installed either locally or remote, depending on your setup.
-
-•On desktop systems like Docker for Mac and Windows, Docker Compose is included as part of those desktop installs.
-
-•On Linux systems, first install the Docker for your OS as described on the Get Docker page, then come back here for instructions on installing Compose on Linux systems.
-
-1) Run this command to download the latest version of Docker Compose:$sudocurl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname-s)-$(uname-m)" -o /usr/local/bin/docker-composeUse the latest Compose release number in the download command.The above command is an example, and it may become out-of-date. Please refer below link in case of any issues with installation. https://docs.docker.com/compose/install/
-2) Apply executable permissions to the binary:$sudochmod+x /usr/local/bin/docker-compose
-3) Test the installation.$docker-compose --version
-
-## What you'll need in your system
-
-DockerCE
-
-Download code from github
-
-Extract the zip file  to your local file system
-
-Run
-
-Open command prompt or dockerwindows  terminal  and navigate to the path where we have docker-compose.yml exists
-
-Run command docker-compose up
-
-
-## docker-compose commands
-
-Following commands can be used with docker-compose <command> d
-
-Ex: docker-compose up
-
-To get more help about particular command > docker-compose <command> --helpEx: docker-compose up --help
-
-
-Full documentation is available on Docker's [website](https://docs.docker.com/compose/)
-
-## .env file
-Compose supports declaring default environment variables in an environment file named .env placed in the folder where the docker-compose command is executed (current working directory).
-For example we can pass env variables like, tag, username, password
-Following command can be used with docker-compose
-Ex: docker-compose --env-file .env -f (docker-compose-filename) up
-## How to generate self-sign certificate
-
-After completing the following steps, the certificate and key will be in folder Ed-Fi-ODS-Docker/Web-Gateway/ssl
-
-1) Start a WSL session
-2) Change directory to the Web-Gateway folder under Ed-Fi-ODS-Docker repository folder
-3) Run script generate-cert.sh (i.e. ./generate-cert.sh)
