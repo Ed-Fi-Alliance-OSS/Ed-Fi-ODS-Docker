@@ -16,7 +16,7 @@ services:
     ports:
       - "5401:5432"
     volumes:
-      -  vol-db-admin:/var/lib/postgresql/data
+      -  vol-db-sandbox:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-sandbox
 
@@ -97,9 +97,9 @@ services:
     container_name: ed-fi-swagger
 
 volumes:
-  vol-db-admin:
+  vol-db-sandbox:
     driver: local
-    name: vol-db-admin
+    name: vol-db-sandbox
   vol-log-sandbox-admin:
     driver: local
     name: vol-log-sandbox-admin
