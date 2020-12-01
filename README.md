@@ -10,7 +10,7 @@ Provides an implementation of a sandbox environment with the ODS/API, Sandbox Ad
 ### compose-shared-instance-env.yml
 Provides an implementation of a shared instance environment of the ODS/API behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ database and the minimal template are installed on a separate instance of PostgreSQL 11. 
 
-The repository also includes setup (e.g. sandbox-env-up.ps1 ) and teardown (e.g. sandbox-env-clean.ps1) PowerShell scripts that you can refer to see how to use these compose files. 
+The repository also includes setup (e.g. sandbox-env-up.ps1) and teardown (e.g. sandbox-env-clean.ps1) PowerShell scripts that you can refer to see how to use these compose files. 
 
 ## .env File
 

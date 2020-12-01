@@ -1,5 +1,5 @@
 # Ed-Fi Sandbox Databases
-Provides docker deployment for **_EdFi_Admin_**, **_EdFi_Security_**,  the minimal template **_EdFi_Ods_Minimal_Template_**, and the populated template **_EdFi_Ods_Populated_Template_** databases implementation on PostgreSQL 11. The templates implement the [Ed-Fi Data Standard v3.2.0-c](https://techdocs.ed-fi.org/display/EFDS32/Ed-Fi+Data+Standard+v3.2). The databases are installed when the image is started for the first time with change queries enabled by default. Sandboxes are initially created when the Sandbox Admin application is started.
+Provides docker deployment for **_EdFi_Admin_**, **_EdFi_Security_**, the minimal template **_EdFi_Ods_Minimal_Template_**, and the populated template **_EdFi_Ods_Populated_Template_** databases implementation on PostgreSQL 11. The templates implement the [Ed-Fi Data Standard v3.2.0-c](https://techdocs.ed-fi.org/display/EFDS32/Ed-Fi+Data+Standard+v3.2). The databases are installed when the image is started for the first time with change queries enabled by default. Sandboxes are initially created when the Sandbox Admin application is started.
 
 **NOTE: A vendor for Grandbend is installed by default, and this implementation is not recommended for a production environment.**
 
@@ -7,7 +7,7 @@ Provides docker deployment for **_EdFi_Admin_**, **_EdFi_Security_**,  the minim
 [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/DB-Sandbox/Dockerfile)
 
 ## Image Variants
-The only supported image at this time is an Alpine implementation using [PostgreSQL 11](https://hub.docker.com/_/postgres).
+The only supported image at this time is an Alpine-based implementation using [PostgreSQL 11](https://hub.docker.com/_/postgres).
 
 `edfialliance/ods-api-db-sandbox:<version>`
 

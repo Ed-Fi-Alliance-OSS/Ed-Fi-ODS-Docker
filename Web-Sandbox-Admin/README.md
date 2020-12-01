@@ -7,7 +7,7 @@ Provides docker deployment for Sandbox Admin tool.
 [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/Web-Sandbox-Admin/Dockerfile)
 
 ## Image Variants
-The only supported image at this time is an Alpine implementation.
+The only supported image at this time is an Alpine-based implementation.
 
 `edfialliance/ods-api-web-sandbox-admin:<version>`
 

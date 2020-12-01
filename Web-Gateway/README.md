@@ -7,7 +7,7 @@ Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API.
 [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/Web-Gateway/Dockerfile)
 
 ## Image Variants
-The only supported image at this time is an Alpine implementation using [nginx](https://hub.docker.com/_/nginx).
+The only supported image at this time is an Alpine-based implementation using [nginx](https://hub.docker.com/_/nginx).
 
 `edfialliance/ods-api-web-gateway:<version>`
 

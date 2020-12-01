@@ -7,7 +7,7 @@ Provides docker deployment for **_EdFi_Ods_** and the minimal template **_EdFi_O
 [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/DB-ODS/Dockerfile)
 
 ## Image Variants
-The only supported image at this time is an Alpine implementation using [PostgreSQL 11](https://hub.docker.com/_/postgres).
+The only supported image at this time is an Alpine-based implementation using [PostgreSQL 11](https://hub.docker.com/_/postgres).
 
 `edfialliance/ods-api-db-ods:<version>`
 
