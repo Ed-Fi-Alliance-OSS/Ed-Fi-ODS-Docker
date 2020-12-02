@@ -17,7 +17,7 @@ While these compose files pull down the images from docker hub, there are two ad
 The repository also includes setup (e.g. [sandbox-env-up.ps1](sandbox-env-up.ps1)) and teardown (e.g. [sandbox-env-clean.ps1](sandbox-env-clean.ps1)) PowerShell scripts that you can refer to see how to use these compose files.
 
 ### Exposed Ports
-The compose files expose the databases outside of the docker network. To disable this modify the compose file by removing the ports key out of the compose file for the database. For example:
+The compose files expose the databases outside of the docker network. To disable this, modify the compose file by removing the `ports` key for the databases. For example:
 ```
 db:
     build:
