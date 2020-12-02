@@ -60,7 +60,7 @@ services:
       ADMIN_DB: db-admin
       API_MODE: "SharedInstance"
     volumes:
-      - log-ods:/app/WebApiLog.log
+      - ${LOGS_FOLDER}:/app/logs
     depends_on:
        - db-ods
        - db-admin
@@ -75,6 +75,3 @@ volumes:
   pg-db-ods:
     driver: local
     name: vol-pg-ods
-  log-ods:
-    driver: local
-    name: log-ods

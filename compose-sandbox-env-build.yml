@@ -50,7 +50,7 @@ services:
       ODS_DB: db
       ADMIN_DB: db
     volumes:
-      - log-ods:/app/WebApiLog.log
+      - ${LOGS_FOLDER}:/app/logs
     depends_on:
        - db
        - admin
@@ -74,7 +74,7 @@ services:
       ODS_DB: db
       ADMIN_DB: db
     volumes:
-      - log-sandbox:/app/SandboxAdminLog.log
+      - ${LOGS_FOLDER}:/app/logs
     depends_on:
       - db
     restart: always
@@ -100,9 +100,4 @@ volumes:
   pg-db:
     driver: local
     name: vol-pg-admin
-  log-sandbox:
-    driver: local
-    name: log-sandbox
-  log-ods:
-    driver: local
-    name: log-ods
+
