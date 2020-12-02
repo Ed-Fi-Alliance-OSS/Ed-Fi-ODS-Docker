@@ -7,19 +7,23 @@ version: '3.8'
 
 services:
   db:
-    image: edfialliance/ods-api-db-sandbox:${TAG}
+    build:
+      context: ./DB-Sandbox
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5401:5432"
     volumes:
-      -  vol-db-sandbox:/var/lib/postgresql/data
+      -  pg-db:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-db-sandbox
+    container_name: ed-fi-db
 
   nginx:
-     image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
+     build:
+       context: ./Web-Gateway-Sandbox
+       dockerfile: Dockerfile
      ports:
        - "5000:5000"
        - "5001:5001"
@@ -36,7 +40,9 @@ services:
         - swagger
 
   api:
-    image: edfialliance/ods-api-web-api:${TAG}
+    build:
+      context: ./Web-Ods-Api
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -44,16 +50,18 @@ services:
       ODS_DB: db
       ADMIN_DB: db
     volumes:
-      - vol-log-ods-api:/app/WebApiLog.log
+      - log-ods:/app/WebApiLog.log
     depends_on:
        - db
        - admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods-api
+    container_name: ed-fi-ods
 
   admin:
-    image: edfialliance/ods-api-web-sandbox-admin:${TAG}
+    build: 
+      context: ./Web-Sandbox-Admin
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -66,7 +74,7 @@ services:
       ODS_DB: db
       ADMIN_DB: db
     volumes:
-      - vol-log-sandbox-admin:/app/SandboxAdminLog.log
+      - log-sandbox:/app/SandboxAdminLog.log
     depends_on:
       - db
     restart: always
@@ -74,7 +82,9 @@ services:
     container_name: ed-fi-sandbox-admin
 
   swagger:
-    image: edfialliance/ods-api-web-swaggerui:${TAG}
+    build: 
+      context: ./Web-SwaggerUI
+      dockerfile: Dockerfile
     environment: 
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
@@ -87,12 +97,12 @@ services:
     container_name: ed-fi-swagger
 
 volumes:
-  vol-db-sandbox:
+  pg-db:
     driver: local
-    name: vol-db-sandbox
-  vol-log-sandbox-admin:
+    name: vol-pg-admin
+  log-sandbox:
     driver: local
-    name: vol-log-sandbox-admin
-  vol-log-ods-api:
+    name: log-sandbox
+  log-ods:
     driver: local
-    name: vol-log-ods-api
+    name: log-ods
