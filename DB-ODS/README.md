@@ -3,7 +3,7 @@ Provides docker deployment for **_EdFi_Ods_** and the minimal template **_EdFi_O
 
 **Note: This image is suitable for production use in _shared instance_ mode.**
 
-## Image Links
+## Image Links
 [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/DB-ODS/Dockerfile)
 
 ## Image Variants

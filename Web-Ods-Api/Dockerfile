@@ -11,13 +11,16 @@ ENV VERSION="5.1.0"
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
+COPY log4net.config /app/log4net.txt
 
 RUN apk add unzip dos2unix bash gettext postgresql-client && \
     wget -O /app/WebApi.zip  https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.WebApi/versions/${VERSION}/content && \
     unzip /app/WebApi.zip -d /app && \
     rm -f /app/WebApi.zip && \
+    cp /app/log4net.txt /app/log4net.config && \
     dos2unix /app/*.json && \
     dos2unix /app/*.sh && \
+    dos2unix /app/log4net.config && \
     chmod 700 /app/*.sh ** && \
     rm -f /app/*.exe
  

@@ -44,7 +44,7 @@ services:
       ODS_DB: db
       ADMIN_DB: db
     volumes:
-      - vol-log-ods-api:/app/WebApiLog.log
+      - ${LOGS_FOLDER}:/app/logs
     depends_on:
        - db
        - admin
@@ -66,7 +66,7 @@ services:
       ODS_DB: db
       ADMIN_DB: db
     volumes:
-      - vol-log-sandbox-admin:/app/SandboxAdminLog.log
+      - ${LOGS_FOLDER}:/app/logs
     depends_on:
       - db
     restart: always
@@ -90,9 +90,3 @@ volumes:
   vol-db-sandbox:
     driver: local
     name: vol-db-sandbox
-  vol-log-sandbox-admin:
-    driver: local
-    name: vol-log-sandbox-admin
-  vol-log-ods-api:
-    driver: local
-    name: vol-log-ods-api

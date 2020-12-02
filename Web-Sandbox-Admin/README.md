@@ -13,6 +13,7 @@ The only supported image at this time is an Alpine-based implementation.
 
 ## Supported Environment Variables
 ``` 
+LOGS_FOLDER=<path to store the logs file>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
 ```
