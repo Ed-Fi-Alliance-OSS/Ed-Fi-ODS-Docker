@@ -11,7 +11,6 @@ ENV VERSION="5.2.0-b13358"
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
-COPY wait-fo-it.sh /app/wait-for-it.sh
 
 RUN apk add unzip dos2unix bash gettext postgresql-client && \
     wget -O /app/SandboxAdmin.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.SandboxAdmin/${VERSION} && \
