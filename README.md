@@ -22,15 +22,18 @@ docker-compose --env-file .env.dev -f (docker-compose-filename) up
 ### Supported environment variables
 `.env.example` file included in the repository lists the supported environment variables:
 ```
+ADMIN_DB=<database server for the admin database>
 ADMIN_USER=<default admin user for sandbox admin>
 ADMIN_PASSWORD=<default password for the sandbox admin user>
 API_MODE=<mode to run the ods/api in>
 MINIMAL_KEY=<minimal template key>
 MINIMAL_SECRET=<minimal template secret>
+ODS_DB=<database server name for the ods database>
 POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
+TAG=<version of the images>
 ```
 
 ## Self-Signed Certificate

@@ -12,14 +12,14 @@ WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
 
-RUN apk add unzip dos2unix bash gettext && \
+RUN apk add unzip dos2unix bash gettext postgresql-client && \
     wget -O /app/SandboxAdmin.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.SandboxAdmin/${VERSION} && \
     unzip /app/SandboxAdmin.zip -d /app && \
     rm -f /app/SandboxAdmin.zip && \
     rm -f /app/appsettings.json && \
     dos2unix /app/*.json && \
     dos2unix /app/*.sh && \
-    chmod 700 /app/run.sh && \
+    chmod 700 /app/*.sh && \
     rm -f /app/*.exe 
 
 EXPOSE "80"
