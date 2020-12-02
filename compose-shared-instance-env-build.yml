@@ -51,7 +51,7 @@ services:
 
   api:
     build:
-      context: ./Web-Ods
+      context: ./Web-Ods-Api
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
