@@ -39,7 +39,7 @@ services:
        context: ./Web-Gateway
        dockerfile: Dockerfile
      ports:
-       - "5001:5001"
+       - "443:443"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx

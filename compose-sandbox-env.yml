@@ -26,8 +26,7 @@ services:
        dockerfile: Dockerfile
      ports:
        - "5000:5000"
-       - "5001:5001"
-       - "5002:5002"
+       - "443:443"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
