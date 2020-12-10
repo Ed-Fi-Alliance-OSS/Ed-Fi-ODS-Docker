@@ -24,7 +24,6 @@ RUN apk add unzip dos2unix bash gettext postgresql-client && \
     chmod 700 /app/*.sh ** && \
     rm -f /app/*.exe
  
-
 EXPOSE "80"
 
 ENTRYPOINT [ "/app/run.sh" ]
