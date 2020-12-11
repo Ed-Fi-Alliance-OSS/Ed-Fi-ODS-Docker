@@ -33,7 +33,6 @@ services:
   nginx:
      image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
      ports:
-       - "5000:5000"
        - "5001:5001"
        - "5002:5002"
      container_name: ed-fi-gateway
@@ -89,7 +88,7 @@ services:
 
   swagger:
     image: edfialliance/ods-api-web-swaggerui:${TAG}
-    environment: 
+    environment:
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
     depends_on:
