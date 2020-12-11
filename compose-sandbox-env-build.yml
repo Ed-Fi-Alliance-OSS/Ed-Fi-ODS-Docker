@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - "5401:5432"
+      - "5402:5432"
     volumes:
       -  pg-db-ods:/var/lib/postgresql/data
     restart: always
@@ -28,7 +28,7 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - "5402:5432"
+      - "5401:5432"
     volumes:
       -  pg-db-admin:/var/lib/postgresql/data
     restart: always
@@ -120,4 +120,3 @@ volumes:
   pg-db-ods:
     driver: local
     name: vol-pg-ods
-

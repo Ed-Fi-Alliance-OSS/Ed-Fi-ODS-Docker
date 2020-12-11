@@ -6,17 +6,29 @@
 version: '3.8'
 
 services:
-  db:
+  db-ods:
     image: edfialliance/ods-api-db-sandbox:${TAG}
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - "5402:5432"
+    volumes:
+      -  vol-db-sandbox:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods
+
+  db-admin:
+    image: edfialliance/ods-api-db-admin:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
       - "5401:5432"
     volumes:
-      -  vol-db-sandbox:/var/lib/postgresql/data
+      -  vol-db-admin:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-db-sandbox
+    container_name: ed-fi-db-admin
 
   nginx:
      image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
@@ -46,7 +58,8 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
-       - db
+       - db-ods
+       - db-admin
        - admin
     restart: always
     hostname: api
@@ -63,12 +76,13 @@ services:
       MINIMAL_SECRET: "${MINIMAL_SECRET}"
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
-      ODS_DB: db
-      ADMIN_DB: db
+      ODS_DB: db-ods
+      ADMIN_DB: db-admin
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
-      - db
+      - db-ods
+      - db-admin
     restart: always
     hostname: admin
     container_name: ed-fi-sandbox-admin
@@ -81,12 +95,16 @@ services:
     depends_on:
       - api
       - admin
-      - db
+      - db-ods
+      - db-admin
     restart: always
     hostname: swagger
     container_name: ed-fi-swagger
 
 volumes:
-  vol-db-sandbox:
+  vol-db-admin:
     driver: local
-    name: vol-db-sandbox
+    name: vol-db-admin
+  vol-db-ods:
+    driver: local
+    name: vol-db-ods
