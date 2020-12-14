@@ -40,6 +40,7 @@ services:
        dockerfile: Dockerfile
      ports:
        - "5001:5001"
+       - "5002:5002"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
@@ -48,6 +49,7 @@ services:
         - ./Web-Gateway/ssl:/ssl/
      depends_on:
         - api
+        - adminapp
 
   api:
     build:
@@ -67,6 +69,27 @@ services:
     restart: always
     hostname: api
     container_name: ed-fi-ods
+
+  adminapp:
+    build:
+      context: ./Web-Ods-AdminApp
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      ODS_DB: db-ods
+      ADMIN_DB: db-admin
+      API_MODE: "SharedInstance"
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+      - ${ADMINAPP_BULKUPLOAD_FOLDER}:/app/BulkUploadHashCache
+    depends_on:
+       - db-ods
+       - db-admin
+       - api
+    restart: always
+    hostname: adminapp
+    container_name: ed-fi-ods-adminapp
 
 volumes:
   pg-db-admin:
