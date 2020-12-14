@@ -6,7 +6,7 @@
 version: '3.8'
 
 services:
-  db:
+  db-ods:
     build:
       context: ./DB-Sandbox
       dockerfile: Dockerfile
@@ -14,11 +14,25 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
+      - "5402:5432"
+    volumes:
+      -  pg-db-ods:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods
+
+  db-admin:
+    build:
+      context: ./DB-Admin
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
       - "5401:5432"
     volumes:
-      -  pg-db:/var/lib/postgresql/data
+      -  pg-db-admin:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-db
+    container_name: ed-fi-db-admin
 
   nginx:
      build:
@@ -47,12 +61,13 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       API_MODE: "Sandbox"
-      ODS_DB: db
-      ADMIN_DB: db
+      ODS_DB: db-ods
+      ADMIN_DB: db-admin
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
-       - db
+       - db-ods
+       - db-admin
        - admin
     restart: always
     hostname: api
@@ -71,12 +86,13 @@ services:
       MINIMAL_SECRET: "${MINIMAL_SECRET}"
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
-      ODS_DB: db
-      ADMIN_DB: db
+      ODS_DB: db-ods
+      ADMIN_DB: db-admin
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
-      - db
+      - db-ods
+      - db-admin
     restart: always
     hostname: admin
     container_name: ed-fi-sandbox-admin
@@ -91,13 +107,16 @@ services:
     depends_on:
       - api
       - admin
-      - db
+      - db-ods
+      - db-admin
     restart: always
     hostname: swagger
     container_name: ed-fi-swagger
 
 volumes:
-  pg-db:
+  pg-db-admin:
     driver: local
     name: vol-pg-admin
-
+  pg-db-ods:
+    driver: local
+    name: vol-pg-ods
