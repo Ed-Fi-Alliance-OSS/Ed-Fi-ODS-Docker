@@ -17,7 +17,6 @@ API_MODE=<mode of api>
 LOGS_FOLDER=<path to store the logs file>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
-ADMINAPP_BULKUPLOAD_FOLDER=<path to store the bulk upload hash cache files>
 ```
 
 ## License Information
