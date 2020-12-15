@@ -82,7 +82,7 @@ services:
       API_MODE: "SharedInstance"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
-      - ${ADMINAPP_BULKUPLOAD_FOLDER}:/app/BulkUploadHashCache
+      - adminapp-bulk-hashcache:/app/BulkUploadHashCache
     depends_on:
        - db-ods
        - db-admin
@@ -98,3 +98,6 @@ volumes:
   pg-db-ods:
     driver: local
     name: vol-pg-ods
+  adminapp-bulk-hashcache:
+    driver: local
+    name: vol-adminapp-bulk-hashcache
