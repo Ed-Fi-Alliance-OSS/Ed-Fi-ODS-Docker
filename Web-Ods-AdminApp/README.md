@@ -1,18 +1,18 @@
 # Ed-Fi Web ODS/API
+
 Provides docker deployment for Ed-Fi ODS ADMIN APP [v2.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284).
 
 **NOTE: This image is suitable for production use.**
 
 ## Image Links
 
-
 ## Image Variants
+
 The only supported image at this time is an Alpine-based implementation.
 
-
-
 ## Supported Environment Variables
-``` 
+
+```
 API_MODE=<mode of api>
 LOGS_FOLDER=<path to store the logs file>
 POSTGRES_USER=<default postgres database user>
@@ -21,6 +21,7 @@ ADMINAPP_BULKUPLOAD_FOLDER=<path to store the bulk upload hash cache files>
 ```
 
 ## License Information
+
 View [license information](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/LICENSE) for the software contained in this image.
 
 As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc. from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
