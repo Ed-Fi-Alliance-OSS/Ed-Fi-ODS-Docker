@@ -1,4 +1,4 @@
-# Ed-Fi Web ODS/API
+# Ed-Fi Ods Admin App
 
 Provides docker deployment for Ed-Fi ODS ADMIN APP [v2.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284).
 
@@ -6,9 +6,13 @@ Provides docker deployment for Ed-Fi ODS ADMIN APP [v2.1.0](https://techdocs.ed-
 
 ## Image Links
 
+[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/Web-Ods-Admin/Dockerfile)
+
 ## Image Variants
 
 The only supported image at this time is an Alpine-based implementation.
+
+`edfialliance/ods-admin-app:<version>`
 
 ## Supported Environment Variables
 
