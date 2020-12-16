@@ -1,6 +1,6 @@
-# Ed-Fi Ods Admin App
+# Ed-Fi ODS Admin App
 
-Provides docker deployment for Ed-Fi ODS ADMIN APP [v2.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284).
+Provides docker deployment for [Ed-Fi ODS Admin App v2.1.0](https://techdocs.ed-fi.org/display/ADMIN/).
 
 **NOTE: This image is suitable for production use.**
 
