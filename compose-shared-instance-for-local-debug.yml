@@ -3,7 +3,9 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-# Starts the ODS/API in SharedInstance mode without Admin App
+# Starts the ODS/API in SharedInstance mode without Admin App and without the
+# API gateway. Directly exposes internal port 80 over unsecured port 5000. Not
+# suitable anywhere except for local development and testing.
 
 version: '3.8'
 
