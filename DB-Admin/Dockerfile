@@ -12,17 +12,21 @@ ENV POSTGRES_DB=postgres
 
 ENV ADMIN_VERSION="5.2.0-b10003"
 ENV SECURITY_VERSION="5.2.0-b10025"
+ENV ADMINAPP_DATABASE_VERSION="2.1.0-pre0016"
 
 COPY init-database.sh /docker-entrypoint-initdb.d/init-database.sh
 
 RUN apk add dos2unix unzip && \
     wget -O /tmp/EdFi_Admin.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Database.Admin.PostgreSQL/versions/${ADMIN_VERSION}/content && \
     wget -O /tmp/EdFi_Security.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Database.Security.PostgreSQL/versions/${SECURITY_VERSION}/content && \
+    wget -O /tmp/EdFi_AdminApp.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.ODS.AdminApp.Database/versions/${ADMINAPP_DATABASE_VERSION}/content && \
     unzip -p /tmp/EdFi_Admin.zip EdFi_Admin.sql > /tmp/EdFi_Admin.sql && \
     unzip -p /tmp/EdFi_Security.zip EdFi_Security.sql > /tmp/EdFi_Security.sql && \
+    unzip /tmp/EdFi_AdminApp.zip PgSql/* -d /tmp/AdminAppScripts/ && \
     dos2unix /docker-entrypoint-initdb.d/init-database.sh && \
     dos2unix /tmp/EdFi_Admin.sql && \
-    dos2unix /tmp/EdFi_Security.sql
+    dos2unix /tmp/EdFi_Security.sql && \
+    dos2unix /tmp/AdminAppScripts/PgSql/*  
 
 EXPOSE "5432"
 
