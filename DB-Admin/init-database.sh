@@ -16,7 +16,9 @@ psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Secu
 
 psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file /tmp/EdFi_Admin.sql
 
-for FILE in /tmp/AdminAppScripts/PgSql/*
-do 
-    psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file $FILE
-done
+if [ "${API_MODE,,}" = "sharedinstance" ]; then
+    for FILE in /tmp/AdminAppScripts/PgSql/*
+    do 
+        psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file $FILE
+    done
+fi
