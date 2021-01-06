@@ -5,6 +5,6 @@
 
 docker-compose -f .\compose-shared-instance-env-build.yml down -v --remove-orphans
 
-docker rmi ed-fi-ods-docker_api ed-fi-ods-docker_nginx -f
+docker rmi docker_api docker_nginx -f
 
-docker rmi ed-fi-ods-docker_db-ods ed-fi-ods-docker_db-admin -f
+docker rmi docker_db-ods docker_db-admin -f
