@@ -5,6 +5,24 @@
 
 docker-compose -f .\compose-shared-instance-env-build.yml down -v --remove-orphans
 
-docker rmi ed-fi-ods-docker_api ed-fi-ods-docker_nginx -f
+# On some systems the images build by `shared-instance-env-up.ps` have names
+# that are prefixed with "ed-fi-ods-", while others do not. So loook for both
+# formats to remove.
+@(
+    "ed-fi-ods-docker_api",
+    "ed-fi-ods-docker_nginx",
+    "ed-fi-ods-docker_db-ods",
+    "ed-fi-ods-docker_db-admin",
+    "ed-fi-ods-docker_adminapp",
+    "docker_api",
+    "docker_nginx",
+    "docker_db-ods",
+    "docker_db-admin",
+    "docker_adminapp"
+) | ForEach-Object {
 
-docker rmi ed-fi-ods-docker_db-ods ed-fi-ods-docker_db-admin -f
+    $exists = (&docker images -q $_)
+    if ($exists) {
+        docker rmi $_
+    }
+}
