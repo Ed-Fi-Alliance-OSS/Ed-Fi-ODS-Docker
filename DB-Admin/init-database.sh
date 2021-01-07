@@ -15,3 +15,10 @@ EOSQL
 psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Security" --file /tmp/EdFi_Security.sql
 
 psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file /tmp/EdFi_Admin.sql
+
+if [ "${API_MODE,,}" = "sharedinstance" ]; then
+    for FILE in /tmp/AdminAppScripts/PgSql/*
+    do 
+        psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file $FILE
+    done
+fi
