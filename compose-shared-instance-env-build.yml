@@ -27,6 +27,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      API_MODE: "SharedInstance"
     ports:
       - "5401:5432"
     volumes:
