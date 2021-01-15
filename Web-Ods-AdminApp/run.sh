@@ -15,4 +15,8 @@ done
 >&2 echo "Postgres is up - executing command"
 exec $cmd
 
+# Extra sleep giving a few seconds for initial AdminApp db migrations
+# to run in the admin container
+sleep 10
+
 dotnet EdFi.Ods.AdminApp.Web.dll

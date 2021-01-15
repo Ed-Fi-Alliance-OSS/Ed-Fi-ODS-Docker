@@ -23,6 +23,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      API_MODE: "SharedInstance"
     ports:
       - "5401:5432"
     volumes:
@@ -34,6 +35,7 @@ services:
      image: edfialliance/ods-api-web-gateway:${TAG}
      ports:
        - "5001:5001"
+       - "5002:5002"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
@@ -42,6 +44,7 @@ services:
         - ./Web-Gateway/ssl:/ssl/
      depends_on:
         - api
+        - adminapp
 
   api:
     image: edfialliance/ods-api-web-api:${TAG}
@@ -60,6 +63,26 @@ services:
     hostname: api
     container_name: ed-fi-ods-api
 
+  adminapp:
+    image: edfialliance/ods-admin-app:${TAG}
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      ODS_DB: db-ods
+      ADMIN_DB: db-admin
+      API_MODE: "SharedInstance"
+      ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+      - adminapp-bulk-hashcache:/app/BulkUploadHashCache
+    depends_on:
+       - db-ods
+       - db-admin
+       - api
+    restart: always
+    hostname: adminapp
+    container_name: ed-fi-ods-adminapp
+
 volumes:
   vol-db-admin:
     driver: local
@@ -67,3 +90,6 @@ volumes:
   vol-db-ods:
     driver: local
     name: vol-db-ods
+  adminapp-bulk-hashcache:
+    driver: local
+    name: vol-adminapp-bulk-hashcache
