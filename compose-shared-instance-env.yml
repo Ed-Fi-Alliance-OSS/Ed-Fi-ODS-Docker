@@ -7,7 +7,7 @@ version: '3.8'
 
 services:
   db-ods:
-    image: edfialliance/ods-api-db-ods:${TAG}
+    image: edfialliance/ods-api-db-ods:${ODS_API_TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -19,7 +19,7 @@ services:
     container_name: ed-fi-db-ods
 
   db-admin:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    image: edfialliance/ods-api-db-admin:${ODS_API_TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -32,7 +32,7 @@ services:
     container_name: ed-fi-db-admin
 
   nginx:
-     image: edfialliance/ods-api-web-gateway:${TAG}
+     image: edfialliance/ods-api-web-gateway:${ODS_API_TAG}
      ports:
        - "5001:5001"
        - "5002:5002"
@@ -47,7 +47,7 @@ services:
         - adminapp
 
   api:
-    image: edfialliance/ods-api-web-api:${TAG}
+    image: edfialliance/ods-api-web-api:${ODS_API_TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -64,7 +64,7 @@ services:
     container_name: ed-fi-ods-api
 
   adminapp:
-    image: edfialliance/ods-admin-app:${TAG}
+    image: edfialliance/ods-admin-app:${ODS_API_TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"

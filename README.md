@@ -77,7 +77,7 @@ POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
-TAG=<version of the images>
+ODS_API_TAG=<version tag of the ODS/API images>
 ```
 
 ## Self-Signed Certificate
