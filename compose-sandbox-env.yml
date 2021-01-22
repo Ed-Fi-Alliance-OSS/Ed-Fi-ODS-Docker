@@ -14,7 +14,7 @@ services:
     ports:
       - "5402:5432"
     volumes:
-      -  vol-db-sandbox:/var/lib/postgresql/data
+      -  vol-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods
 
@@ -53,8 +53,8 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       API_MODE: "Sandbox"
-      ODS_DB: db
-      ADMIN_DB: db
+      ODS_DB: db-ods
+      ADMIN_DB: db-admin
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
