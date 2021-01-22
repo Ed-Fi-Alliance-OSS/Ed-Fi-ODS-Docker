@@ -23,6 +23,6 @@ docker-compose -f .\compose-shared-instance-env-build.yml down -v --remove-orpha
 
     $exists = (&docker images -q $_)
     if ($exists) {
-        docker rmi $_
+        docker rmi -f $_
     }
 }
