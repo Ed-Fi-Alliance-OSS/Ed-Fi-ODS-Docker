@@ -77,7 +77,7 @@ POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
-ODS_API_TAG=<version tag of the ODS/API images>
+TAG=<version tag of the ODS/API images>
 
 # The following are only needed for Admin App
 ODS_ADMIN_APP_TAG=<version tag of the ods-admin-app image>
