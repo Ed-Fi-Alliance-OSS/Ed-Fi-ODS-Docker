@@ -6,17 +6,19 @@
 
 envsubst < /app/appsettings.template.json > /app/appsettings.json
 
-until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ODS_DB -U $POSTGRES_USER -c '\q'; 
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ODS_DB -U $POSTGRES_USER -c '\q';
 do
-  >&2 echo "Postgres is unavailable - sleeping"
+  >&2 echo "ODS Postgres is unavailable - sleeping"
   sleep 10
 done
-  
+
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ADMIN_DB -U $POSTGRES_USER -c '\q';
+do
+  >&2 echo "Admin Postgres is unavailable - sleeping"
+  sleep 10
+done
+
 >&2 echo "Postgres is up - executing command"
 exec $cmd
-
-# Extra sleep giving a few seconds for initial AdminApp db migrations
-# to run in the admin container
-sleep 10
 
 dotnet EdFi.Ods.AdminApp.Web.dll
