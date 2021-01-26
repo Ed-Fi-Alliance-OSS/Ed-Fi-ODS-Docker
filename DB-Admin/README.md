@@ -20,7 +20,8 @@ The only supported image at this time is an Alpine-based implementation using
 
 ## Supported Environment Variables
 
-```none
+``` none
+API_MODE=<Sandbox | SharedInstance>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
 ```
