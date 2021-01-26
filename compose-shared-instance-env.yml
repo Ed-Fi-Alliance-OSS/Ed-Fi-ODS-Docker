@@ -71,6 +71,7 @@ services:
       ODS_DB: db-ods
       ADMIN_DB: db-admin
       API_MODE: "SharedInstance"
+      API_EXTERNAL_URL: "${API_EXTERNAL_URL}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
