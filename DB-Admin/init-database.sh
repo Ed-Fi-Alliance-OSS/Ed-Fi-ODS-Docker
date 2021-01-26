@@ -15,3 +15,12 @@ EOSQL
 psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Security" --file /tmp/EdFi_Security.sql
 
 psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file /tmp/EdFi_Admin.sql
+
+if [ "${API_MODE,,}" = "sharedinstance" ]; then
+    # Force sorting by name following C language sort ordering, so that the sql scripts are run
+    # sequentially in the correct alphanumeric order
+    for FILE in `LANG=C ls /tmp/AdminAppScripts/PgSql/* | sort -V`
+    do 
+        psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file $FILE
+    done
+fi

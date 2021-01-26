@@ -77,7 +77,9 @@ POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
-TAG=<version of the images>
+TAG=<image tag version>
+# The following are only needed for Admin App
+ENCRYPTION_KEY=<base64-encoded 256-bit key>
 ```
 
 ## Self-Signed Certificate
