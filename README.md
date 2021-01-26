@@ -14,7 +14,7 @@ Provides an implementation of a sandbox environment with the ODS/API, Sandbox Ad
 
 ### [compose-shared-instance-env.yml](compose-shared-instance-env.yml)
 
-Provides an implementation of a shared instance environment of the ODS/API behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ database and the minimal template are installed on a separate instance of PostgreSQL 11.
+Provides an implementation of a shared instance environment of the ODS/API and Admin App behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ database and the minimal template are installed on a separate instance of PostgreSQL 11.
 
 While these compose files pull down the images from Docker Hub, there are two additional compose files [compose-sandbox-env-build.yml](compose-sandbox-env-build.yml) and [compose-shared-instance-env-build.yml](compose-shared-instance-env-build.yml) included in the repository for working with the `Dockerfile` directly for customizations.
 
@@ -56,11 +56,11 @@ db:
     container_name: ed-fi-db-sandbox
 ```
 
-For the ODS/API, Swagger and Sandbox Admin tool, the ports need to be exposed to support the proxy server, as virtual path support is not available at this time. This will be addressed in a future release.
+For the ODS/API, Admin App, Swagger and Sandbox Admin tool, the ports need to be exposed to support the proxy server, as virtual path support is not available at this time. This will be addressed in a future release.
 
 ## Logging
 
-The ODS/API and Sandbox Admin have been set up to write logs to a mounted folder within their Docker containers. By setting the environment variable `LOGS_FOLDER` to a path (e.g. c:/tmp/logs for windows hosts or ~/tmp/logs for Linux/MacOs hosts) you can configure the log files to be placed there.
+The ODS/API, Admin App and Sandbox Admin have been set up to write logs to a mounted folder within their Docker containers. By setting the environment variable `LOGS_FOLDER` to a path (e.g. c:/tmp/logs for windows hosts or ~/tmp/logs for Linux/MacOs hosts) you can configure the log files to be placed there.
 
 ## .env File
 
@@ -89,6 +89,7 @@ POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
 TAG=<image tag version>
 # The following are only needed for Admin App
+API_EXTERNAL_URL=<ods api url>
 ENCRYPTION_KEY=<base64-encoded 256-bit key>
 ```
 
