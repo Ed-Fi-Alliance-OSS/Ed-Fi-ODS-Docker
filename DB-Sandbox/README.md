@@ -12,7 +12,7 @@ The only supported image at this time is an Alpine-based implementation using [P
 `edfialliance/ods-api-db-sandbox:<version>`
 
 ## Supported Environment Variables
-```
+``` 
 ADMIN_USER=<default admin user for sandbox admin>
 ADMIN_PASSWORD=<default password for the sandbox admin user>
 MINIMAL_KEY=<minimal template key>
