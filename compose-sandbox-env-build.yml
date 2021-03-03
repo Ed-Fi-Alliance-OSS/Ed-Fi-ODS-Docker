@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - "5402:5432"
+      - 5402:5432
     volumes:
       -  pg-db-ods:/var/lib/postgresql/data
     restart: always
@@ -28,7 +28,7 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - "5401:5432"
+      - 5401:5432
     volumes:
       -  pg-db-admin:/var/lib/postgresql/data
     restart: always
@@ -39,7 +39,7 @@ services:
        context: ./Web-Gateway-Sandbox
        dockerfile: Dockerfile
      ports:
-       - "443:443"
+       - 443:443
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
@@ -61,6 +61,7 @@ services:
       API_MODE: "Sandbox"
       ODS_DB: db-ods
       ADMIN_DB: db-admin
+      "ApiSettings:PathBase": "$ODS_VIRTUAL_NAME"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -86,6 +87,8 @@ services:
       POPULATED_SECRET: "${POPULATED_SECRET}"
       ODS_DB: db-ods
       ADMIN_DB: db-admin
+      PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME}"
+      OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME}/oauth/"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -102,6 +105,8 @@ services:
     environment:
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
+      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME}"
+      PathBase: "${DOCS_VIRTUAL_NAME}"
     depends_on:
       - api
       - admin
