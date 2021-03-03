@@ -6,4 +6,4 @@
 FROM nginx:alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-EXPOSE "443"
+EXPOSE 443
