@@ -14,7 +14,7 @@ services:
     ports:
       - 5402:5432
     volumes:
-      -  vol-db-ods:/var/lib/postgresql/data
+      -  pg-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods
 
@@ -26,7 +26,7 @@ services:
     ports:
       - 5401:5432
     volumes:
-      -  vol-db-admin:/var/lib/postgresql/data
+      -  pg-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
 
@@ -62,7 +62,7 @@ services:
        - admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods-api
+    container_name: ed-fi-ods
 
   admin:
     image: edfialliance/ods-api-web-sandbox-admin:${TAG}
@@ -105,9 +105,10 @@ services:
     container_name: ed-fi-swagger
 
 volumes:
-  vol-db-admin:
+  pg-db-admin:
     driver: local
-    name: vol-db-admin
-  vol-db-ods:
+    name: vol-pg-admin
+  pg-db-ods:
     driver: local
-    name: vol-db-ods
+    name: vol-pg-ods
+
