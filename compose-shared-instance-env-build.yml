@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - 5402:5432
+      - "5402:5432"
     volumes:
       -  pg-db-ods:/var/lib/postgresql/data
     restart: always
@@ -29,7 +29,7 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       API_MODE: "SharedInstance"
     ports:
-      - 5401:5432
+      - "5401:5432"
     volumes:
       -  pg-db-admin:/var/lib/postgresql/data
     restart: always
@@ -40,8 +40,8 @@ services:
        context: ./Web-Gateway
        dockerfile: Dockerfile
      ports:
-       - 443:443
-       - 5002:5002
+       - "443:443"
+       - "5002:5002"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx

@@ -12,9 +12,9 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - 5402:5432
+      - "5402:5432"
     volumes:
-      -  pg-db-ods:/var/lib/postgresql/data
+      -  vol-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods
 
@@ -24,16 +24,16 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - 5401:5432
+      - "5401:5432"
     volumes:
-      -  pg-db-admin:/var/lib/postgresql/data
+      -  vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
 
   nginx:
      image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
      ports:
-       - 443:443
+       - "443:443"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
@@ -62,7 +62,7 @@ services:
        - admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods
+    container_name: ed-fi-ods-api
 
   admin:
     image: edfialliance/ods-api-web-sandbox-admin:${TAG}
@@ -105,10 +105,9 @@ services:
     container_name: ed-fi-swagger
 
 volumes:
-  pg-db-admin:
+  vol-db-admin:
     driver: local
-    name: vol-pg-admin
-  pg-db-ods:
+    name: vol-db-admin
+  vol-db-ods:
     driver: local
-    name: vol-pg-ods
-
+    name: vol-db-ods
