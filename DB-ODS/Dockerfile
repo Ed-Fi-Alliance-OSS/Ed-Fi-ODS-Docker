@@ -7,7 +7,7 @@ FROM postgres:11-alpine
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV MINVERSION="5.1.0"
+ENV MINVERSION="5.2.0-b10493"
 
 ENV POSTGRES_USER=${POSTGRES_USER}
 ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -22,6 +22,6 @@ RUN apk add unzip dos2unix && \
     dos2unix /docker-entrypoint-initdb.d/init-database.sh && \
     dos2unix /tmp/*.sql
 
-EXPOSE "5432"
+EXPOSE 5432
 
 CMD ["docker-entrypoint.sh", "postgres"]

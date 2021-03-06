@@ -16,7 +16,7 @@ services:
     ports:
       - "5402:5432"
     volumes:
-      -  pg-db-ods:/var/lib/postgresql/data
+      -  vol-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods
 
@@ -30,7 +30,7 @@ services:
     ports:
       - "5401:5432"
     volumes:
-      -  pg-db-admin:/var/lib/postgresql/data
+      -  vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
 
@@ -39,9 +39,7 @@ services:
        context: ./Web-Gateway-Sandbox
        dockerfile: Dockerfile
      ports:
-       - "5000:5000"
-       - "5001:5001"
-       - "5002:5002"
+       - "443:443"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
@@ -63,6 +61,7 @@ services:
       API_MODE: "Sandbox"
       ODS_DB: db-ods
       ADMIN_DB: db-admin
+      "ApiSettings:PathBase": "$ODS_VIRTUAL_NAME"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -71,10 +70,10 @@ services:
        - admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods
+    container_name: ed-fi-ods-api
 
   admin:
-    build: 
+    build:
       context: ./Web-Sandbox-Admin
       dockerfile: Dockerfile
     environment:
@@ -88,6 +87,8 @@ services:
       POPULATED_SECRET: "${POPULATED_SECRET}"
       ODS_DB: db-ods
       ADMIN_DB: db-admin
+      PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME}"
+      OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME}/oauth/"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -98,12 +99,14 @@ services:
     container_name: ed-fi-sandbox-admin
 
   swagger:
-    build: 
+    build:
       context: ./Web-SwaggerUI
       dockerfile: Dockerfile
-    environment: 
+    environment:
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
+      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME}"
+      PathBase: "${DOCS_VIRTUAL_NAME}"
     depends_on:
       - api
       - admin
@@ -114,9 +117,9 @@ services:
     container_name: ed-fi-swagger
 
 volumes:
-  pg-db-admin:
+  vol-db-admin:
     driver: local
     name: vol-pg-admin
-  pg-db-ods:
+  vol-db-ods:
     driver: local
     name: vol-pg-ods

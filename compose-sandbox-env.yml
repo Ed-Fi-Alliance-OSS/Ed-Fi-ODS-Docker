@@ -33,9 +33,7 @@ services:
   nginx:
      image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
      ports:
-       - "5000:5000"
-       - "5001:5001"
-       - "5002:5002"
+       - "443:443"
      container_name: ed-fi-gateway
      restart: always
      hostname: nginx
@@ -55,6 +53,7 @@ services:
       API_MODE: "Sandbox"
       ODS_DB: db-ods
       ADMIN_DB: db-admin
+      "ApiSettings:PathBase": "$ODS_VIRTUAL_NAME"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -78,6 +77,8 @@ services:
       POPULATED_SECRET: "${POPULATED_SECRET}"
       ODS_DB: db-ods
       ADMIN_DB: db-admin
+      PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME}"
+      OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME}/oauth/"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -89,9 +90,11 @@ services:
 
   swagger:
     image: edfialliance/ods-api-web-swaggerui:${TAG}
-    environment: 
+    environment:
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
+      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME}"
+      PathBase: "${DOCS_VIRTUAL_NAME}"
     depends_on:
       - api
       - admin

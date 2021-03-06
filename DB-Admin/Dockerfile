@@ -10,8 +10,8 @@ ENV POSTGRES_USER=${POSTGRES_USER}
 ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 ENV POSTGRES_DB=postgres
 
-ENV ADMIN_VERSION="5.2.0-b10003"
-ENV SECURITY_VERSION="5.2.0-b10025"
+ENV ADMIN_VERSION="5.2.0-b10056"
+ENV SECURITY_VERSION="5.2.0-b10076"
 ENV ADMINAPP_DATABASE_VERSION="2.1.1"
 
 COPY init-database.sh /docker-entrypoint-initdb.d/init-database.sh
@@ -26,8 +26,8 @@ RUN apk add dos2unix unzip && \
     dos2unix /docker-entrypoint-initdb.d/init-database.sh && \
     dos2unix /tmp/EdFi_Admin.sql && \
     dos2unix /tmp/EdFi_Security.sql && \
-    dos2unix /tmp/AdminAppScripts/PgSql/*  
+    dos2unix /tmp/AdminAppScripts/PgSql/*
 
-EXPOSE "5432"
+EXPOSE 5432
 
 CMD ["docker-entrypoint.sh", "postgres"]

@@ -23,7 +23,7 @@ RUN apk add unzip dos2unix bash gettext postgresql-client && \
     dos2unix /app/log4net.config && \
     chmod 700 /app/*.sh ** && \
     rm -f /app/*.exe
- 
-EXPOSE "80"
+
+EXPOSE 80
 
 ENTRYPOINT [ "/app/run.sh" ]

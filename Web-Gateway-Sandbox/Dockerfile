@@ -6,5 +6,4 @@
 FROM nginx:alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-EXPOSE "5000"
-EXPOSE "5001"
+EXPOSE 443
