@@ -107,8 +107,7 @@ services:
       POPULATED_SECRET: "${POPULATED_SECRET}"
       WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME}"
       UseReverseProxyHeaders: "true"
-      SwaggerUIOptions__RoutePrefix: "${DOCS_VIRTUAL_NAME}"
-      PathBase: "${DOCS_VIRTUAL_NAME}"
+      RoutePrefix: "${DOCS_VIRTUAL_NAME}"
     depends_on:
       - api
       - admin

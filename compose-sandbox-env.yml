@@ -53,7 +53,7 @@ services:
       API_MODE: "Sandbox"
       ODS_DB: db-ods
       ADMIN_DB: db-admin
-      "ApiSettings:PathBase": "$ODS_VIRTUAL_NAME"
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -94,7 +94,8 @@ services:
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
       WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME}"
-      PathBase: "${DOCS_VIRTUAL_NAME}"
+      UseReverseProxyHeaders: "true"
+      RoutePrefix: "${DOCS_VIRTUAL_NAME}"
     depends_on:
       - api
       - admin
