@@ -5,7 +5,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 set -e
-set -v
+set -x
 
 psql ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE "EdFi_Ods_Minimal_Template" TEMPLATE template0;

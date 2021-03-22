@@ -5,7 +5,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 set -e
-set -v
+set -x
 
 envsubst < /app/appsettings.template.json > /app/appsettings.json
 
