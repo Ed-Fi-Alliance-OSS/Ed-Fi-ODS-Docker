@@ -5,6 +5,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 set -e
+set -x
 
 if [[ `basename "${PWD}"` == "Web-Gateway" ]];
 then

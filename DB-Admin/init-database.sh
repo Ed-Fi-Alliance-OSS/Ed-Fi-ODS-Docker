@@ -7,22 +7,25 @@
 set -e
 set -x
 
-psql ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+echo "Creating base Admin and Security databases..."
+psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE "EdFi_Admin" TEMPLATE template0;
     CREATE DATABASE "EdFi_Security" TEMPLATE template0;
     GRANT ALL PRIVILEGES ON DATABASE "EdFi_Admin" TO $POSTGRES_USER;
     GRANT ALL PRIVILEGES ON DATABASE "EdFi_Security" TO $POSTGRES_USER;
 EOSQL
 
-psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Security" --file /tmp/EdFi_Security.sql
+echo "Loading Security Database from backup..."
+psql --no-password --username "$POSTGRES_USER" --dbname "EdFi_Security" --file /tmp/EdFi_Security.sql 1> /dev/null
 
-psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file /tmp/EdFi_Admin.sql
+echo "Loading Admin database from backup..."
+psql --no-password --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file /tmp/EdFi_Admin.sql 1> /dev/null
 
 if [ "${API_MODE,,}" = "sharedinstance" ]; then
     # Force sorting by name following C language sort ordering, so that the sql scripts are run
     # sequentially in the correct alphanumeric order
     for FILE in `LANG=C ls /tmp/AdminAppScripts/PgSql/* | sort -V`
     do
-        psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file $FILE
+        psql --no-password --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file $FILE 1> /dev/null
     done
 fi
