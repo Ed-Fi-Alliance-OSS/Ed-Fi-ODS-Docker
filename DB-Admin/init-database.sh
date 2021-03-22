@@ -3,7 +3,9 @@
 # Licensed to the Ed-Fi Alliance under one or more agreements.
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
+
 set -e
+set -v
 
 psql ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE "EdFi_Admin" TEMPLATE template0;
@@ -20,7 +22,7 @@ if [ "${API_MODE,,}" = "sharedinstance" ]; then
     # Force sorting by name following C language sort ordering, so that the sql scripts are run
     # sequentially in the correct alphanumeric order
     for FILE in `LANG=C ls /tmp/AdminAppScripts/PgSql/* | sort -V`
-    do 
+    do
         psql --no-password --tuples-only --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file $FILE
     done
 fi
