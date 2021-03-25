@@ -93,8 +93,9 @@ services:
     environment:
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
-      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME}"
+      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME}/"
       UseReverseProxyHeaders: "true"
+      PathBase: "${DOCS_VIRTUAL_NAME}"
     depends_on:
       - api
       - admin
