@@ -41,6 +41,7 @@ services:
        dockerfile: Dockerfile
      ports:
        - "443:443"
+       - "80:80"
        - "5002:5002"
      container_name: ed-fi-gateway
      restart: always
