@@ -7,15 +7,19 @@
 set -e
 set -x
 
+if [[ -z "$POSTGRES_PORT" ]]; then
+  export POSTGRES_PORT=5432
+fi
+
 envsubst < /app/appsettings.template.json > /app/appsettings.json
 
-until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ODS_DB -U $POSTGRES_USER -c '\q';
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ODS_DB -p $POSTGRES_PORT -U $POSTGRES_USER -c '\q';
 do
   >&2 echo "ODS Postgres is unavailable - sleeping"
   sleep 10
 done
 
-until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ADMIN_DB -U $POSTGRES_USER -c '\q';
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ADMIN_DB -p $POSTGRES_PORT -U $POSTGRES_USER -c '\q';
 do
   >&2 echo "Admin Postgres is unavailable - sleeping"
   sleep 10

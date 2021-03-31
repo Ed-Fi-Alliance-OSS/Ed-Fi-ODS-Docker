@@ -3,24 +3,22 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-version: '3.8'
+version: '3.9'
 
 services:
-  db-ods:
+  pg-ods:
     build:
       context: ./DB-Ods
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-    ports:
-      - "5402:5432"
     volumes:
       -  pg-db-ods:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-db-ods
+    container_name: ed-fi-pg-ods
 
-  db-admin:
+  pg-admin:
     build:
       context: ./DB-Admin
       dockerfile: Dockerfile
@@ -28,12 +26,10 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       API_MODE: "SharedInstance"
-    ports:
-      - "5401:5432"
     volumes:
       -  pg-db-admin:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-db-admin
+    container_name: ed-fi-pg-admin
 
   nginx:
      build:
@@ -59,6 +55,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_PORT: 6432
       ODS_DB: db-ods
       ADMIN_DB: db-admin
       API_MODE: "SharedInstance"
@@ -79,6 +76,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_PORT: 6432
       ODS_DB: db-ods
       ADMIN_DB: db-admin
       API_MODE: "SharedInstance"
@@ -95,6 +93,30 @@ services:
     restart: always
     hostname: adminapp
     container_name: ed-fi-ods-adminapp
+
+  db-admin:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = pg-admin port=${POSTGRES_PORT} user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: 6432
+    ports:
+      - "5401:6432"
+    restart: always
+    container_name: ed-fi-db-admin
+    depends_on:
+      - pg-admin
+
+  db-ods:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = pg-ods port=${POSTGRES_PORT} user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: 6432
+    ports:
+      - "5402:6432"
+    restart: always
+    container_name: ed-fi-db-ods
+    depends_on:
+      - pg-ods
 
 volumes:
   pg-db-admin:
