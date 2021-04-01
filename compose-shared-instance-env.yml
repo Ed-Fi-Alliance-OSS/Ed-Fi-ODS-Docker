@@ -35,6 +35,7 @@ services:
      image: edfialliance/ods-api-web-gateway:${TAG}
      ports:
        - "443:443"
+       - "80:80"
        - "5002:5002"
      container_name: ed-fi-gateway
      restart: always
