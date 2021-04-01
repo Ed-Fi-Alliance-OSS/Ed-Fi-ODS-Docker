@@ -7,8 +7,12 @@
 set -e
 set -x
 
+if [[ -z "$POSTGRES_PORT" ]]; then
+  export POSTGRES_PORT=5432
+fi
+
 echo "Creating base Admin and Security databases..."
-psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE "EdFi_Admin" TEMPLATE template0;
     CREATE DATABASE "EdFi_Security" TEMPLATE template0;
     GRANT ALL PRIVILEGES ON DATABASE "EdFi_Admin" TO $POSTGRES_USER;
@@ -16,16 +20,16 @@ psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 EOSQL
 
 echo "Loading Security Database from backup..."
-psql --no-password --username "$POSTGRES_USER" --dbname "EdFi_Security" --file /tmp/EdFi_Security.sql 1> /dev/null
+psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Security" --file /tmp/EdFi_Security.sql 1> /dev/null
 
 echo "Loading Admin database from backup..."
-psql --no-password --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file /tmp/EdFi_Admin.sql 1> /dev/null
+psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Admin" --file /tmp/EdFi_Admin.sql 1> /dev/null
 
 if [ "${API_MODE,,}" = "sharedinstance" ]; then
     # Force sorting by name following C language sort ordering, so that the sql scripts are run
     # sequentially in the correct alphanumeric order
     for FILE in `LANG=C ls /tmp/AdminAppScripts/PgSql/* | sort -V`
     do
-        psql --no-password --username "$POSTGRES_USER" --dbname "EdFi_Admin" --file $FILE 1> /dev/null
+        psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Admin" --file $FILE 1> /dev/null
     done
 fi

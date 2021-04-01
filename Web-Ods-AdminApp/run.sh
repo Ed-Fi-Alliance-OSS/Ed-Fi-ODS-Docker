@@ -7,8 +7,11 @@
 set -e
 set -x
 
-if [[ -z "$POSTGRES_PORT" ]]; then
-  export POSTGRES_PORT=5432
+if [[ -z "$PGBOUNCER_LISTEN_PORT" ]];
+then
+  export POSTGRES_PORT=$POSTGRES_PORT
+else
+  export POSTGRES_PORT=$PGBOUNCER_LISTEN_PORT
 fi
 
 envsubst < /app/appsettings.template.json > /app/appsettings.json

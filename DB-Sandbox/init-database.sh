@@ -7,7 +7,11 @@
 set -e
 set -x
 
-psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+if [[ -z "$POSTGRES_PORT" ]]; then
+  export POSTGRES_PORT=5432
+fi
+
+psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE "EdFi_Ods_Minimal_Template" TEMPLATE template0;
     CREATE DATABASE "EdFi_Ods_Populated_Template" TEMPLATE template0;
     GRANT ALL PRIVILEGES ON DATABASE "EdFi_Ods_Populated_Template" TO $POSTGRES_USER;
@@ -15,11 +19,11 @@ psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 EOSQL
 
 echo "Loading Minimal Template Database from backup..."
-psql --no-password --username "$POSTGRES_USER" --dbname "EdFi_Ods_Minimal_Template" --file /tmp/EdFi_Ods_Minimal_Template.sql 1> /dev/null
+psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Ods_Minimal_Template" --file /tmp/EdFi_Ods_Minimal_Template.sql 1> /dev/null
 
 echo "Loading Populated Template Database from backup..."
-psql --no-password --username "$POSTGRES_USER" --dbname "EdFi_Ods_Populated_Template" --file /tmp/EdFi_Ods_Populated_Template.sql 1> /dev/null
+psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Ods_Populated_Template" --file /tmp/EdFi_Ods_Populated_Template.sql 1> /dev/null
 
-psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "$POSTGRES_DB" <<-EOSQL
     UPDATE pg_database SET datistemplate='true', datallowconn='false' WHERE datname in ('EdFi_Ods_Populated_Template', 'EdFi_Ods_Minimal_Template');
 EOSQL
