@@ -18,14 +18,15 @@ The only supported image at this time is an Alpine-based implementation.
 ## Supported Environment Variables
 
 ```none
-ADMIN_DB=<container-resolved name of the PostgreSQL instance containing the Admin and Security databases>
+ADMIN_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the Admin and Security databases>
 API_MODE=<mode of api>
 API_EXTERNAL_URL=<ods api url>
 ENCRYPTION_KEY=<256 bit key suitable for AES encryption>
 LOGS_FOLDER=<path to store the logs file>
-ODS_DB=<container-resolved name of the PostgreSQL instance containing the ODS database>
+ODS_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the ODS database>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
+POSTGRES_PORT=<port that postgres run on default to 5432> (OPTIONAL)
 ```
 
 :warning As of version 1.1.x, only one `API_MODE` is supported:

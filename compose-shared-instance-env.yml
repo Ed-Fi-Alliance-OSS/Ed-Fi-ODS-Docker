@@ -11,7 +11,6 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${POSTGRES_PORT}"
     volumes:
       -  vol-db-ods:/var/lib/postgresql/data
     restart: always
@@ -22,7 +21,6 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${POSTGRES_PORT}"
       API_MODE: "SharedInstance"
     volumes:
       -  vol-db-admin:/var/lib/postgresql/data
@@ -49,10 +47,9 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${POSTGRES_PORT}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
-      ODS_DB: db-ods
-      ADMIN_DB: db-admin
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      ODS_POSTGRES_HOST: db-ods
+      ADMIN_POSTGRES_HOST: db-admin
       API_MODE: "SharedInstance"
       ApiSettings__PathBase: "$ODS_VIRTUAL_NAME"
     volumes:
@@ -69,10 +66,9 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${POSTGRES_PORT}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
-      ODS_DB: db-ods
-      ADMIN_DB: db-admin
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      ODS_POSTGRES_HOST: db-ods
+      ADMIN_POSTGRES_HOST: db-admin
       API_MODE: "SharedInstance"
       API_EXTERNAL_URL: "${API_EXTERNAL_URL}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
@@ -91,7 +87,7 @@ services:
   db-admin:
     image: pgbouncer/pgbouncer
     environment:
-      DATABASES: "* = host = pg-admin port=${POSTGRES_PORT} user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      DATABASES: "* = host = pg-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
       PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
     ports:
       - "5401:${PGBOUNCER_LISTEN_PORT}"
@@ -103,7 +99,7 @@ services:
   db-ods:
     image: pgbouncer/pgbouncer
     environment:
-      DATABASES: "* = host = pg-ods port=${POSTGRES_PORT} user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      DATABASES: "* = host = pg-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
       PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
     ports:
       - "5402:${PGBOUNCER_LISTEN_PORT}"
