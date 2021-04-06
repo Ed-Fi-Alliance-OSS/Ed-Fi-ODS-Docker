@@ -6,7 +6,7 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="2.1.1"
+ENV VERSION="2.2.0-pre0047"
 
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
