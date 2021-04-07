@@ -6,30 +6,26 @@
 version: '3.8'
 
 services:
-  db-ods:
+  pg-ods:
     image: edfialliance/ods-api-db-ods:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-    ports:
-      - "5402:5432"
     volumes:
       -  vol-db-ods:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-db-ods
+    container_name: ed-fi-pg-ods
 
-  db-admin:
+  pg-admin:
     image: edfialliance/ods-api-db-admin:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       API_MODE: "SharedInstance"
-    ports:
-      - "5401:5432"
     volumes:
       -  vol-db-admin:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-db-admin
+    container_name: ed-fi-pg-admin
 
   nginx:
      image: edfialliance/ods-api-web-gateway:${TAG}
@@ -51,10 +47,11 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      ODS_DB: db-ods
-      ADMIN_DB: db-admin
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      ODS_POSTGRES_HOST: db-ods
+      ADMIN_POSTGRES_HOST: db-admin
       API_MODE: "SharedInstance"
-      "ApiSettings:PathBase": "$ODS_VIRTUAL_NAME"
+      ApiSettings__PathBase: "$ODS_VIRTUAL_NAME"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -69,8 +66,9 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      ODS_DB: db-ods
-      ADMIN_DB: db-admin
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      ODS_POSTGRES_HOST: db-ods
+      ADMIN_POSTGRES_HOST: db-admin
       API_MODE: "SharedInstance"
       API_EXTERNAL_URL: "${API_EXTERNAL_URL}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
@@ -85,6 +83,30 @@ services:
     restart: always
     hostname: adminapp
     container_name: ed-fi-ods-adminapp
+
+  db-admin:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = pg-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
+    ports:
+      - "5401:${PGBOUNCER_LISTEN_PORT}"
+    restart: always
+    container_name: ed-fi-db-admin
+    depends_on:
+      - pg-admin
+
+  db-ods:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = pg-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
+    ports:
+      - "5402:${PGBOUNCER_LISTEN_PORT}"
+    restart: always
+    container_name: ed-fi-db-ods
+    depends_on:
+      - pg-ods
 
 volumes:
   vol-db-admin:

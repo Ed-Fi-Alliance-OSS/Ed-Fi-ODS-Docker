@@ -12,11 +12,14 @@ The only supported image at this time is an Alpine-based implementation.
 `edfialliance/ods-api-web-api:<version>`
 
 ## Supported Environment Variables
-``` 
+```
 API_MODE=<mode of api>
 LOGS_FOLDER=<path to store the logs file>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
+POSTGRES_PORT=<port that postgres run on default to 5432> (OPTIONAL)
+ADMIN_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the Admin and Security databases>
+ODS_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the ODS database>
 ```
 
 ## License Information
