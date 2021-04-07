@@ -12,7 +12,7 @@ WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
 
-RUN apk add unzip dos2unix bash gettext && \
+RUN apk --no-cache add unzip=6.0-r8 dos2unix=7.4.2-r0 bash=5.1.0-r0 gettext=0.20.2-r2 && \
     wget -O /app/SwaggerUI.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.SwaggerUI/${VERSION} && \
     unzip /app/SwaggerUI.zip -d /app && \
     rm -f /app/SwaggerUI.zip && \
