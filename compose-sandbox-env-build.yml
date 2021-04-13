@@ -41,7 +41,6 @@ services:
      restart: always
      hostname: nginx
      volumes:
-        - ./Web-Gateway-Sandbox/nginx.conf:/etc/nginx/nginx.conf
         - ./Web-Gateway-Sandbox/ssl:/ssl/
      depends_on:
         - api
