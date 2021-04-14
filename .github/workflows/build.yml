@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+name: Lint Docker Files
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Lint Docker Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Starter-Kit-SEA-Data-Collection
+        uses: actions/checkout@v2.3.4
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      - name: Lint Docker Files
+        uses: github/super-linter@v3.15.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
+          VALIDATE_DOCKERFILE_HADOLINT: true
