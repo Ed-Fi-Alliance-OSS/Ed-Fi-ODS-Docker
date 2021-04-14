@@ -28,6 +28,9 @@ services:
 
   nginx:
      image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
+     environment:
+        ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME}"
+        SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME}"
      ports:
        - "443:443"
        - "80:80"
