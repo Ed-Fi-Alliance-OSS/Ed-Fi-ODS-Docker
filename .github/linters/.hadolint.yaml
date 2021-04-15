@@ -1,4 +1,6 @@
+# https://github.com/hadolint/hadolint#configure
 ignored:
+
   # https://github.com/hadolint/hadolint/wiki/DL3047
-  # reason: wget version does not support the '--progress' parameter
+  # reason: wget version does not support the --progress parameter
   - DL3047
