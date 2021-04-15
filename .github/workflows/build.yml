@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Starter-Kit-SEA-Data-Collection
+      - name: Checkout Ed-Fi-ODS-Docker
         uses: actions/checkout@v2.3.4
         with:
 
