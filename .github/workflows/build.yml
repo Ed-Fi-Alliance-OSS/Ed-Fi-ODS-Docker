@@ -1,0 +1,24 @@
+name: Lint Docker Files
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Lint Docker Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Ed-Fi-ODS-Docker
+        uses: actions/checkout@v2.3.4
+        with:
+
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      # https://github.com/github/super-linter#how-to-use
+      - name: Lint Docker Files
+        uses: github/super-linter@v3.15.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
+          VALIDATE_DOCKERFILE_HADOLINT: true
