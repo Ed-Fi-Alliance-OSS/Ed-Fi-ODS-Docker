@@ -15,7 +15,7 @@ jobs:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
-      # https://github.com/hadolint/hadolint#configure
+      # https://github.com/github/super-linter#how-to-use
       - name: Lint Docker Files
         uses: github/super-linter@v3.15.5
         env:
