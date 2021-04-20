@@ -7,6 +7,8 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV VERSION="5.2.14406"
+ENV UseReverseProxyHeaders=true
+ENV PathBase=docs
 
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json

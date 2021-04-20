@@ -9,6 +9,8 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 ENV VERSION="2.2.0-pre0047"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
+ENV ADMINAPP_VIRTUAL_NAME=adminapp
+ENV API_MODE=SharedInstance
 
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json

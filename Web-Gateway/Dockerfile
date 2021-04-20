@@ -6,8 +6,8 @@
 FROM nginx:alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV ODS_VIRTUAL_NAME api
-ENV ADMINAPP_VIRTUAL_NAME adminapp
+ENV ODS_VIRTUAL_NAME=api
+ENV ADMINAPP_VIRTUAL_NAME=adminapp
 
 COPY ./default.conf.template /etc/nginx/templates/
 
