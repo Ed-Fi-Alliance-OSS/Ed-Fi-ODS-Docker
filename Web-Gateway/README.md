@@ -1,7 +1,5 @@
 # Ed-Fi Web Gateway
-Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API. 
-
-**NOTE: The current implementation is using routes based on ports as virtual path based routes are not fully functional, and will be addressed with a future version of the ODS/API. This image is suitable for production use.**
+Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API.
 
 ## Image Links
 [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/Web-Gateway/Dockerfile)
