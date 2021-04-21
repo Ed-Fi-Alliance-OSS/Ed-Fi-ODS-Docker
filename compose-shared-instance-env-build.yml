@@ -85,7 +85,7 @@ services:
       API_EXTERNAL_URL: "${API_EXTERNAL_URL:-https://localhost/api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
-      API_INTERNAL_URL: "${API_INTERNAL_URL}"
+      API_INTERNAL_URL: "${API_INTERNAL_URL:-http://api}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
