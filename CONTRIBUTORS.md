@@ -11,3 +11,4 @@ New contributors should add their name and e-mail address or link to GitHub
 profile to this file with their first pull request.
 
 * [Google Cloud](https://cloud.google.com/) / [Innive](https://innive.com/)
+* [EdWire/EdGraph](https://edgraph.com/) / Jean-Francois Guertin
