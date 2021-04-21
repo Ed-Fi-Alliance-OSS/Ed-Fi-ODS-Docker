@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     volumes:
-      -  pg-db-ods:/var/lib/postgresql/data
+      - vol-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-pg-ods
 
@@ -27,7 +27,7 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       API_MODE: "SharedInstance"
     volumes:
-      -  pg-db-admin:/var/lib/postgresql/data
+      -  vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-pg-admin
 
@@ -36,8 +36,8 @@ services:
        context: ./Web-Gateway
        dockerfile: Dockerfile
      environment:
-       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME}"
-       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME}"
+       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-admin}"
+       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
      ports:
        - "443:443"
        - "80:80"
@@ -61,7 +61,7 @@ services:
       ODS_POSTGRES_HOST: db-ods
       ADMIN_POSTGRES_HOST: db-admin
       API_MODE: "SharedInstance"
-      ApiSettings__PathBase: "$ODS_VIRTUAL_NAME"
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -82,9 +82,9 @@ services:
       ODS_POSTGRES_HOST: db-ods
       ADMIN_POSTGRES_HOST: db-admin
       API_MODE: "SharedInstance"
-      API_EXTERNAL_URL: "${API_EXTERNAL_URL}"
+      API_EXTERNAL_URL: "${API_EXTERNAL_URL:-https://localhost/api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
-      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME}"
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
@@ -121,12 +121,12 @@ services:
       - pg-ods
 
 volumes:
-  pg-db-admin:
+  vol-db-admin:
     driver: local
-    name: vol-pg-admin
-  pg-db-ods:
+    name: vol-db-admin
+  vol-db-ods:
     driver: local
-    name: vol-pg-ods
+    name: vol-db-ods
   adminapp-bulk-hashcache:
     driver: local
     name: vol-adminapp-bulk-hashcache

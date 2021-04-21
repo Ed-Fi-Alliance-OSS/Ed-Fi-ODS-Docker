@@ -30,8 +30,8 @@ services:
   nginx:
      image: edfialliance/ods-api-web-gateway:${TAG}
      environment:
-       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME}"
-       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME}"
+       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
+       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
      ports:
        - "443:443"
        - "80:80"
@@ -53,7 +53,7 @@ services:
       ODS_POSTGRES_HOST: db-ods
       ADMIN_POSTGRES_HOST: db-admin
       API_MODE: "SharedInstance"
-      ApiSettings__PathBase: "$ODS_VIRTUAL_NAME"
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -72,9 +72,9 @@ services:
       ODS_POSTGRES_HOST: db-ods
       ADMIN_POSTGRES_HOST: db-admin
       API_MODE: "SharedInstance"
-      API_EXTERNAL_URL: "${API_EXTERNAL_URL}"
+      API_EXTERNAL_URL: "${API_EXTERNAL_URL:-https://localhost/api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
-      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME}"
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache

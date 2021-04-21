@@ -35,8 +35,8 @@ services:
        context: ./Web-Gateway-Sandbox
        dockerfile: Dockerfile
      environment:
-        ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME}"
-        SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME}"
+        ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+        SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
      ports:
        - "443:443"
        - "80:80"
@@ -61,7 +61,7 @@ services:
       API_MODE: "Sandbox"
       ODS_POSTGRES_HOST: db-ods
       ADMIN_POSTGRES_HOST: db-admin
-      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME}"
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -88,8 +88,8 @@ services:
       POPULATED_SECRET: "${POPULATED_SECRET}"
       ODS_POSTGRES_HOST: db-ods
       ADMIN_POSTGRES_HOST: db-admin
-      PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME}"
-      OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME}/oauth/"
+      PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
+      OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/oauth/"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -106,9 +106,8 @@ services:
     environment:
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
-      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME}/"
-      UseReverseProxyHeaders: "true"
-      PathBase: "${DOCS_VIRTUAL_NAME}"
+      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/"
+      PathBase: "${DOCS_VIRTUAL_NAME:-docs}"
     depends_on:
       - api
       - admin
@@ -145,7 +144,7 @@ services:
 volumes:
   vol-db-admin:
     driver: local
-    name: vol-pg-admin
+    name: vol-db-admin
   vol-db-ods:
     driver: local
-    name: vol-pg-ods
+    name: vol-db-ods
