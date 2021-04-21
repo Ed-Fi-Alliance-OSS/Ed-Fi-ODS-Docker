@@ -7,6 +7,11 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV VERSION="5.2.14406"
+ENV DOCS_VIRTUAL_NAME=docs
+ENV ODS_VIRTUAL_NAME=api
+ENV WebApiVersionUrl="https://localhost/${ODS_VIRTUAL_NAME}/"
+ENV UseReverseProxyHeaders=true
+ENV PathBase="${DOCS_VIRTUAL_NAME}"
 
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json

@@ -6,3 +6,4 @@
 *.orig
 Web-Gateway/ssl/*
 .env
+*.7z

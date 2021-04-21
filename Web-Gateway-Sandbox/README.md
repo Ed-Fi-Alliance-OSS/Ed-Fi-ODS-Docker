@@ -1,7 +1,5 @@
 # Ed-Fi Web Gateway Sandbox
-Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API [v5.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284), along with the SwaggerUI, and the Sandbox Admin tool. 
-
-**NOTE: The current implementation is using routes based on ports as virtual path based routes are not fully functional, and will be addressed with a future version of the ODS/API. This image is not recommended for production use.**
+Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API [v5.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284), along with the SwaggerUI, and the Sandbox Admin tool.
 
 ## Image Links
 [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/Web-Gateway-Sandbox/Dockerfile)

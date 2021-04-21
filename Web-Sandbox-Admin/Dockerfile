@@ -9,6 +9,9 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 ENV VERSION="5.2.14406"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
+ENV ODS_VIRTUAL_NAME=api
+ENV PathBase=admin
+ENV OAuthUrl="https://localhost/${ODS_VIRTUAL_NAME}/oauth/"
 
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
