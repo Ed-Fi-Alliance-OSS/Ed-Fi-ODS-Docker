@@ -6,7 +6,7 @@
 version: '3.8'
 
 services:
-  pg-ods:
+  db-ods:
     image: edfialliance/ods-api-db-ods:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -14,9 +14,9 @@ services:
     volumes:
       -  vol-db-ods:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-pg-ods
+    container_name: ed-fi-db-ods
 
-  pg-admin:
+  db-admin:
     image: edfialliance/ods-api-db-admin:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -25,7 +25,7 @@ services:
     volumes:
       -  vol-db-admin:/var/lib/postgresql/data
     restart: always
-    container_name: ed-fi-pg-admin
+    container_name: ed-fi-db-admin
 
   nginx:
      image: edfialliance/ods-api-web-gateway:${TAG}
@@ -50,15 +50,15 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT}"
-      ODS_POSTGRES_HOST: db-ods
-      ADMIN_POSTGRES_HOST: db-admin
+      ODS_POSTGRES_HOST: pb-ods
+      ADMIN_POSTGRES_HOST: pb-admin
       API_MODE: "SharedInstance"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
-       - db-ods
-       - db-admin
+       - pb-ods
+       - pb-admin
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
@@ -69,8 +69,8 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT}"
-      ODS_POSTGRES_HOST: db-ods
-      ADMIN_POSTGRES_HOST: db-admin
+      ODS_POSTGRES_HOST: pb-ods
+      ADMIN_POSTGRES_HOST: pb-admin
       API_MODE: "SharedInstance"
       API_EXTERNAL_URL: "${API_EXTERNAL_URL:-https://localhost/api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
@@ -80,36 +80,36 @@ services:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
     depends_on:
-       - db-ods
-       - db-admin
+       - pb-ods
+       - pb-admin
        - api
     restart: always
     hostname: adminapp
     container_name: ed-fi-ods-adminapp
 
-  db-admin:
+  pb-admin:
     image: pgbouncer/pgbouncer
     environment:
-      DATABASES: "* = host = pg-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      DATABASES: "* = host = db-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
       PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
     ports:
       - "5401:${PGBOUNCER_LISTEN_PORT}"
     restart: always
-    container_name: ed-fi-db-admin
+    container_name: ed-fi-pb-admin
     depends_on:
-      - pg-admin
+      - db-admin
 
-  db-ods:
+  pb-ods:
     image: pgbouncer/pgbouncer
     environment:
-      DATABASES: "* = host = pg-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      DATABASES: "* = host = db-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
       PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
     ports:
       - "5402:${PGBOUNCER_LISTEN_PORT}"
     restart: always
-    container_name: ed-fi-db-ods
+    container_name: ed-fi-pb-ods
     depends_on:
-      - pg-ods
+      - db-ods
 
 volumes:
   vol-db-admin:
