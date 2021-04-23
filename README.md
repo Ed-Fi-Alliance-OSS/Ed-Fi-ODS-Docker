@@ -88,8 +88,12 @@ POPULATED_SECRET=<populated template secret>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
 TAG=<image tag version>
+ODS_VIRTUAL_NAME=<virtual name for the ods endpoint>
+SANDBOX_ADMIN_VIRTUAL_NAME=<virtual name for the sandbox admin endpoint>
 # The following are only needed for Admin App
+ADMINAPP_VIRTUAL_NAME=<virtual name for the admin app endpoint>
 API_EXTERNAL_URL=<ods api url>
+API_INTERNAL_URL=<http://{ods api container's hostname}>
 ENCRYPTION_KEY=<base64-encoded 256-bit key>
 ```
 
