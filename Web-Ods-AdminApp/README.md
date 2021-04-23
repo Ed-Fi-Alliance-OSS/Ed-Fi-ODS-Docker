@@ -20,6 +20,7 @@ The only supported image at this time is an Alpine-based implementation.
 ```none
 ADMIN_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the Admin and Security databases>
 API_MODE=<mode of api>
+API_INTERNAL_URL=<http://{ods api container's hostname}>
 API_EXTERNAL_URL=<ods api url>
 ENCRYPTION_KEY=<256 bit key suitable for AES encryption>
 LOGS_FOLDER=<path to store the logs file>
@@ -31,6 +32,7 @@ POSTGRES_PORT=<port that postgres run on default to 5432> (OPTIONAL)
 
 :warning As of version 1.1.x, only one `API_MODE` is supported:
 "SharedInstance".
+API_INTERNAL_URL and API_EXTERNAL_URL values are required for successfully connecting to ODS/API.
 
 ## License Information
 
