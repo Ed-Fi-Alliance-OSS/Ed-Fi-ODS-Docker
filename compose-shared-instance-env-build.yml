@@ -57,7 +57,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       ODS_POSTGRES_HOST: pb-ods
       ADMIN_POSTGRES_HOST: pb-admin
       API_MODE: "SharedInstance"
@@ -78,7 +78,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       ODS_POSTGRES_HOST: pb-ods
       ADMIN_POSTGRES_HOST: pb-admin
       API_MODE: "SharedInstance"
@@ -101,9 +101,9 @@ services:
     image: pgbouncer/pgbouncer
     environment:
       DATABASES: "* = host = db-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
     ports:
-      - "5401:${PGBOUNCER_LISTEN_PORT}"
+      - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-admin
     depends_on:
@@ -113,9 +113,9 @@ services:
     image: pgbouncer/pgbouncer
     environment:
       DATABASES: "* = host = db-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
     ports:
-      - "5402:${PGBOUNCER_LISTEN_PORT}"
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-ods
     depends_on:
