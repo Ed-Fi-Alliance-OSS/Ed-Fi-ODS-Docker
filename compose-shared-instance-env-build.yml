@@ -3,7 +3,7 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-version: '3.8'
+version: "3.8"
 
 services:
   db-ods:
@@ -27,28 +27,28 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       API_MODE: "SharedInstance"
     volumes:
-      -  vol-db-admin:/var/lib/postgresql/data
+      - vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
 
   nginx:
-     build:
-       context: ./Web-Gateway
-       dockerfile: Dockerfile
-     environment:
-       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-admin}"
-       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
-     ports:
-       - "443:443"
-       - "80:80"
-     container_name: ed-fi-gateway
-     restart: always
-     hostname: nginx
-     volumes:
-        - ./Web-Gateway/ssl:/ssl/
-     depends_on:
-        - api
-        - adminapp
+    build:
+      context: ./Web-Gateway
+      dockerfile: Dockerfile
+    environment:
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-admin}"
+      ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+    ports:
+      - "443:443"
+      - "80:80"
+    container_name: ed-fi-gateway
+    restart: always
+    hostname: nginx
+    volumes:
+      - ./Web-Gateway/ssl:/ssl/
+    depends_on:
+      - api
+      - adminapp
 
   api:
     build:
@@ -65,8 +65,8 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
-       - pb-ods
-       - pb-admin
+      - pb-ods
+      - pb-admin
     restart: always
     hostname: api
     container_name: ed-fi-ods
@@ -90,9 +90,9 @@ services:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
     depends_on:
-       - pb-ods
-       - pb-admin
-       - api
+      - pb-ods
+      - pb-admin
+      - api
     restart: always
     hostname: adminapp
     container_name: ed-fi-ods-adminapp

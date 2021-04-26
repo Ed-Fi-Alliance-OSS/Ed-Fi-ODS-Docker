@@ -12,7 +12,7 @@ The only supported image at this time is an Alpine-based implementation using [P
 `edfialliance/ods-api-db-ods:<version>`
 
 ## Supported Environment Variables
-``` 
+```
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
 ```
