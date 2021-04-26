@@ -6,7 +6,7 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="2.2.0-pre0047"
+ENV VERSION="2.2.0-pre0458"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
 ENV ADMINAPP_VIRTUAL_NAME=adminapp

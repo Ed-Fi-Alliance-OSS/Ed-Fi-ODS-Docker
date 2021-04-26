@@ -12,7 +12,7 @@ ENV POSTGRES_DB=postgres
 
 ENV ADMIN_VERSION="5.2.10083"
 ENV SECURITY_VERSION="5.2.10103"
-ENV ADMINAPP_DATABASE_VERSION="2.1.1"
+ENV ADMINAPP_DATABASE_VERSION="2.2.0-pre0458"
 
 COPY init-database.sh /docker-entrypoint-initdb.d/init-database.sh
 
