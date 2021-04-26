@@ -3,7 +3,7 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-version: '3.8'
+version: "3.8"
 
 services:
   db-ods:
@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     volumes:
-      -  vol-db-ods:/var/lib/postgresql/data
+      - vol-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods
 
@@ -26,29 +26,29 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     volumes:
-      -  vol-db-admin:/var/lib/postgresql/data
+      - vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
 
   nginx:
-     build:
-       context: ./Web-Gateway-Sandbox
-       dockerfile: Dockerfile
-     environment:
-        ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
-        SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
-     ports:
-       - "443:443"
-       - "80:80"
-     container_name: ed-fi-gateway
-     restart: always
-     hostname: nginx
-     volumes:
-        - ./Web-Gateway-Sandbox/ssl:/ssl/
-     depends_on:
-        - api
-        - admin
-        - swagger
+    build:
+      context: ./Web-Gateway-Sandbox
+      dockerfile: Dockerfile
+    environment:
+      ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+      SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
+    ports:
+      - "443:443"
+      - "80:80"
+    container_name: ed-fi-gateway
+    restart: always
+    hostname: nginx
+    volumes:
+      - ./Web-Gateway-Sandbox/ssl:/ssl/
+    depends_on:
+      - api
+      - admin
+      - swagger
 
   api:
     build:
@@ -65,9 +65,9 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
-       - pb-ods
-       - pb-admin
-       - admin
+      - pb-ods
+      - pb-admin
+      - admin
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
