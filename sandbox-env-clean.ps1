@@ -5,6 +5,18 @@
 
 docker-compose -f .\compose-sandbox-env-build.yml down -v --remove-orphans
 
-docker rmi ed-fi-ods-docker_api ed-fi-ods-docker_swagger ed-fi-swagger ed-fi-ods-docker_nginx ed-fi-ods-docker_admin  -f
+@(
+    "ed-fi-ods-docker_api",
+    "ed-fi-ods-docker_nginx",
+    "ed-fi-ods-docker_swagger",
+    "ed-fi-ods-docker_db-ods",
+    "ed-fi-ods-docker_db-admin",
+    "ed-fi-ods-docker_pb-admin",
+    "ed-fi-ods-docker_pb-admin"
+) | ForEach-Object {
 
-docker rmi ed-fi-ods-docker_db-ods ed-fi-ods-docker_db-admin -f
+    $exists = (&docker images -q $_)
+    if ($exists) {
+        docker rmi $_
+    }
+}

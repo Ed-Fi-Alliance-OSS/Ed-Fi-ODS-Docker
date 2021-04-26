@@ -122,6 +122,14 @@ If deploying on local Windows host, you will either need GitBash or WSL to run `
 * Convert the script from CRLF to LF endings
 * Run script generate-cert.sh (i.e. ./generate-cert.sh)
 
+## PgBouncer
+This compose files use [https://www.pgbouncer.org/|PGBouncer] to manage the connection pools for the database as PostgreSQL does not manage connections. Without this management the database runs out of connections and requires a reboot. There are other solutions available or if the implementor would like to remove this dependency the following needs to be changed.
+
+1. Remove and/or comment out the `pb-admin` and `pb-ods` services from the compose file.
+2. Update `admin`, and `api` services and change the database environment variables (`ODS_POSTGRES_HOST`, and `ADMIN_POSTGRES_HOST`) to point to `db-ods` and `db-admin` from `pb-ods` and `pb-admin`.
+3. Update the `POSTGRES_PORT` environment variable to point to 5432.
+4. If required expose the port on the services `db-admin`, and `db-ods` services. Note these ports should be independent.
+
 ## Contributing
 
 The Ed-Fi Alliance welcomes code contributions from the community. For more information, see:
