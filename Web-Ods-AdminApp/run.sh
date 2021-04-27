@@ -7,7 +7,16 @@
 set -e
 set -x
 
-envsubst < /app/appsettings.template.json > /app/appsettings.json
+apk add jq
+
+envsubst < /app/appsettings.template.json > /app/temp.json
+
+measurementId=`jq -r '.AppSettings.GoogleAnalyticsMeasurementId' /app/appsettings.json`
+
+tmp=$(mktemp)
+jq --arg variable "$measurementId" '.AppSettings.GoogleAnalyticsMeasurementId = $variable' /app/temp.json > "$tmp" && mv "$tmp" /app/temp.json
+
+mv /app/temp.json /app/appsettings.json
 
 until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ODS_POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -c '\q';
 do
