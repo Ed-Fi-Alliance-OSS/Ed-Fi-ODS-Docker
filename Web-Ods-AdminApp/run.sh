@@ -7,7 +7,6 @@
 set -e
 set -x
 
-apk add jq
 
 envsubst < /app/appsettings.template.json > /app/temp.json
 
