@@ -6,7 +6,7 @@ This repository hosts the Docker deployment source code for ODS/API. To work wit
 
 [Docker Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container Docker applications. This repository includes two compose files for running the ODS/API behind a proxy.
 
-An example how to use run the compose files by running the following command: `docker-compose -f .\compose-sandbox-env.yml up -d`.
+An example how to use run the compose files by running the following command: `docker-compose -f .\Compose\pgsql\compose-sandbox-env.yml --env-file .\.env up -d`.
 
 ### [compose-sandbox-env.yml](compose-sandbox-env.yml)
 
