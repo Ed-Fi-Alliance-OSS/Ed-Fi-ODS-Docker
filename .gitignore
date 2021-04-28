@@ -4,6 +4,6 @@
 *.key
 *.crt
 *.orig
-Web-Gateway/ssl/*
+ssl/
 .env
 *.7z

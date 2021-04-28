@@ -6,19 +6,19 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
+# Alpine image does not contain Globalization Cultures library so we need to install ICU library to get fopr LINQ expression to work
+# Disable the globaliztion invariant mode (set in base image)
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
 ENV VERSION="5.2.14406"
-ENV POSTGRES_PORT=5432
-ENV PGBOUNCER_LISTEN_PORT=6432
-ENV ODS_VIRTUAL_NAME=api
-ENV ApiSettings__PathBase="${ODS_VIRTUAL_NAME}"
 
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
 COPY log4net.config /app/log4net.txt
 
-RUN apk --no-cache add unzip=6.0-r8 dos2unix=7.4.2-r0 bash=5.1.0-r0 gettext=0.20.2-r2 postgresql-client=13.2-r0 && \
-    wget -O /app/WebApi.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.WebApi/versions/${VERSION}/content && \
+RUN apk --no-cache add unzip=6.0-r8 dos2unix=7.4.2-r0 bash=5.1.0-r0 gettext=0.20.2-r2 icu=67.1-r2 && \
+    wget -O /app/WebApi.zip  https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.WebApi/versions/${VERSION}/content && \
     unzip /app/WebApi.zip -d /app && \
     rm -f /app/WebApi.zip && \
     cp /app/log4net.txt /app/log4net.config && \

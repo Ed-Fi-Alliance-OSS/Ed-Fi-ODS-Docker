@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+version: "3.8"
+
+services:
+  nginx:
+    image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
+    environment:
+      ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+      SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
+    ports:
+      - "443:443"
+      - "80:80"
+    container_name: ed-fi-gateway
+    restart: always
+    hostname: nginx
+    volumes:
+      - ../../ssl:/ssl/
+    depends_on:
+      - api
+      - admin
+      - swagger
+
+  api:
+    image: edfialliance/ods-api-web-api:${TAG}
+    environment:
+      API_MODE: "Sandbox"
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
+      SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_USER: "${SQLSERVER_USER}"
+      SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+    depends_on:
+      - admin
+    restart: always
+    hostname: api
+    container_name: ed-fi-ods-api
+
+  admin:
+    image: edfialliance/ods-api-web-sandbox-admin:${TAG}
+    environment:
+      ADMIN_USER: "${ADMIN_USER}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
+      MINIMAL_KEY: "${MINIMAL_KEY}"
+      MINIMAL_SECRET: "${MINIMAL_SECRET}"
+      POPULATED_KEY: "${POPULATED_KEY}"
+      POPULATED_SECRET: "${POPULATED_SECRET}"
+      SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host-docker-internal}"
+      SQLSERVER_USER: "${SQLSERVER_USER}"
+      SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
+      PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
+      OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/oauth/"
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+    restart: always
+    hostname: admin
+    container_name: ed-fi-sandbox-admin
+
+  swagger:
+    image: edfialliance/ods-api-web-swaggerui:${TAG}
+    environment:
+      POPULATED_KEY: "${POPULATED_KEY}"
+      POPULATED_SECRET: "${POPULATED_SECRET}"
+      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/"
+      PathBase: "${DOCS_VIRTUAL_NAME:-docs}"
+    depends_on:
+      - api
+      - admin
+    restart: always
+    hostname: swagger
+    container_name: ed-fi-swagger

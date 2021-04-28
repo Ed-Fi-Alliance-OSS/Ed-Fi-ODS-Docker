@@ -39,7 +39,7 @@ services:
     restart: always
     hostname: nginx
     volumes:
-      - ./Web-Gateway/ssl:/ssl/
+      - ./../ssl:/ssl/
     depends_on:
       - api
       - adminapp

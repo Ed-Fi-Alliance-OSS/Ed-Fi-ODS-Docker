@@ -7,9 +7,7 @@ version: "3.8"
 
 services:
   db-ods:
-    build:
-      context: ./DB-Ods
-      dockerfile: Dockerfile
+    image: edfialliance/ods-api-db-ods:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -19,9 +17,7 @@ services:
     container_name: ed-fi-db-ods
 
   db-admin:
-    build:
-      context: ./DB-Admin
-      dockerfile: Dockerfile
+    image: edfialliance/ods-api-db-admin:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -32,11 +28,9 @@ services:
     container_name: ed-fi-db-admin
 
   nginx:
-    build:
-      context: ./Web-Gateway
-      dockerfile: Dockerfile
+    image: edfialliance/ods-api-web-gateway:${TAG}
     environment:
-      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-admin}"
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
     ports:
       - "443:443"
@@ -45,15 +39,13 @@ services:
     restart: always
     hostname: nginx
     volumes:
-      - ./Web-Gateway/ssl:/ssl/
+      - ./../ssl:/ssl/
     depends_on:
       - api
       - adminapp
 
   api:
-    build:
-      context: ./Web-Ods-Api
-      dockerfile: Dockerfile
+    image: edfialliance/ods-api-web-api:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -69,12 +61,10 @@ services:
       - pb-admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods
+    container_name: ed-fi-ods-api
 
   adminapp:
-    build:
-      context: ./Web-Ods-AdminApp
-      dockerfile: Dockerfile
+    image: edfialliance/ods-admin-app:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"

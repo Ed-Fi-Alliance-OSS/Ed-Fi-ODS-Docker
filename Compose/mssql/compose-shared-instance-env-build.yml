@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+version: "3.8"
+
+services:
+  nginx:
+    build:
+      context: ../../Web-Gateway/Alpine
+      dockerfile: Dockerfile
+    environment:
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-admin}"
+      ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+    ports:
+      - "443:443"
+      - "80:80"
+    container_name: ed-fi-gateway
+    restart: always
+    hostname: nginx
+    volumes:
+      - ../../ssl:/ssl/
+    depends_on:
+      - api
+      - adminapp
+
+  api:
+    build:
+      context: ../../Web-Ods-Api/Alpine/mssql
+      dockerfile: Dockerfile
+    environment:
+      API_MODE: "SharedInstance"
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
+      SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_USER: "${SQLSERVER_USER}"
+      SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+    restart: always
+    hostname: api
+    container_name: ed-fi-ods
+
+  adminapp:
+    build:
+      context: ../../Web-Ods-AdminApp/Alpine/mssql
+      dockerfile: Dockerfile
+    environment:
+      API_MODE: "SharedInstance"
+      API_EXTERNAL_URL: "${API_EXTERNAL_URL:-https://localhost/api}"
+      ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
+      API_INTERNAL_URL: "${API_INTERNAL_URL:-http://api}"
+      SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_USER: "${SQLSERVER_USER}"
+      SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+      - adminapp-bulk-hashcache:/app/BulkUploadHashCache
+    depends_on:
+      - api
+    restart: always
+    hostname: adminapp
+    container_name: ed-fi-ods-adminapp
+
+volumes:
+  vol-db-admin:
+    driver: local
+    name: vol-db-admin
+  vol-db-ods:
+    driver: local
+    name: vol-db-ods
+  adminapp-bulk-hashcache:
+    driver: local
+    name: vol-adminapp-bulk-hashcache

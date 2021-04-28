@@ -6,17 +6,17 @@ This repository hosts the Docker deployment source code for ODS/API. To work wit
 
 [Docker Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container Docker applications. This repository includes two compose files for running the ODS/API behind a proxy.
 
-An example how to use run the compose files by running the following command: `docker-compose -f .\compose-sandbox-env.yml up -d`.
+An example how to use run the compose files by running the following command: `docker-compose -f .\Compose\pgsql\compose-sandbox-env.yml --env-file .\.env up -d`.
 
-### [compose-sandbox-env.yml](compose-sandbox-env.yml)
+### [compose-sandbox-env.yml](./Compose/pgsql/compose-sandbox-env.yml)
 
 Provides an implementation of a sandbox environment with the ODS/API, Sandbox Admin, and SwaggerUI behind nginx. The databases are installed on one instance of PostgreSQL 11.
 
-### [compose-shared-instance-env.yml](compose-shared-instance-env.yml)
+### [compose-shared-instance-env.yml](./Compose/pgsql/compose-shared-instance-env.yml)
 
 Provides an implementation of a shared instance environment of the ODS/API and Admin App behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ database and the minimal template are installed on a separate instance of PostgreSQL 11.
 
-While these compose files pull down the images from Docker Hub, there are two additional compose files [compose-sandbox-env-build.yml](compose-sandbox-env-build.yml) and [compose-shared-instance-env-build.yml](compose-shared-instance-env-build.yml) included in the repository for working with the `Dockerfile` directly for customizations.
+While these compose files pull down the images from Docker Hub, there are two additional compose files [compose-sandbox-env-build.yml](./Compose/pgsql/compose-sandbox-env-build.yml) and [compose-shared-instance-env-build.yml](./Compose/pgsql/compose-shared-instance-env-build.yml) included in the repository for working with the `Dockerfile` directly for customizations.
 
 The repository also includes setup (e.g. [sandbox-env-up.ps1](sandbox-env-up.ps1)) and teardown (e.g. [sandbox-env-clean.ps1](sandbox-env-clean.ps1)) PowerShell scripts that you can refer to see how to use these compose files.
 
@@ -99,7 +99,7 @@ ENCRYPTION_KEY=<base64-encoded 256-bit key>
 
 ## Self-Signed Certificate
 
-The deployments require valid SSL certificate to function. A self-signed certificate can be used for a Non-Production environment. This repository includes `generate-cert.sh` script that can be used to generate a self-signed certificate and place it in folder Ed-Fi-ODS-Docker/Web-Gateway/ssl and/or Ed-Fi-ODS-Docker/Web-Gateway-Sandbox/ssl (for sandbox mode) to be used by the running Gateway container.
+The deployments require valid SSL certificate to function. A self-signed certificate can be used for a Non-Production environment. This repository includes `generate-cert.sh` script that can be used to generate a self-signed certificate and place it in folder ./ssl to be used by the running Gateway container.
 
 If deploying on local Windows host, you will either need GitBash or WSL to run `generate-cert.sh`.
 
@@ -110,7 +110,6 @@ If deploying on local Windows host, you will either need GitBash or WSL to run `
 
   ```bash
   export MSYS_NO_PATHCONV=1
-  cd '{your repo root}/Ed-Fi-ODS-Docker/Web-Gateway'
   ./generate-cert.sh
   ```
 

@@ -8,7 +8,7 @@ version: "3.8"
 services:
   db-ods:
     build:
-      context: ./DB-Sandbox
+      context: ../../DB-Ods/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -20,11 +20,12 @@ services:
 
   db-admin:
     build:
-      context: ./DB-Admin
+      context: ../../DB-Admin/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      API_MODE: "SharedInstance"
     volumes:
       - vol-db-admin:/var/lib/postgresql/data
     restart: always
@@ -32,11 +33,11 @@ services:
 
   nginx:
     build:
-      context: ./Web-Gateway-Sandbox
+      context: ../../Web-Gateway/Alpine
       dockerfile: Dockerfile
     environment:
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-admin}"
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
-      SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
     ports:
       - "443:443"
       - "80:80"
@@ -44,78 +45,57 @@ services:
     restart: always
     hostname: nginx
     volumes:
-      - ./Web-Gateway-Sandbox/ssl:/ssl/
+      - ../../ssl:/ssl/
     depends_on:
       - api
-      - admin
-      - swagger
+      - adminapp
 
   api:
     build:
-      context: ./Web-Ods-Api
+      context: ../../Web-Ods-Api/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      API_MODE: "Sandbox"
       ODS_POSTGRES_HOST: pb-ods
       ADMIN_POSTGRES_HOST: pb-admin
+      API_MODE: "SharedInstance"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
       - pb-ods
       - pb-admin
-      - admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods-api
+    container_name: ed-fi-ods
 
-  admin:
+  adminapp:
     build:
-      context: ./Web-Sandbox-Admin
+      context: ../../Web-Ods-AdminApp/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      ADMIN_USER: "${ADMIN_USER}"
-      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
-      MINIMAL_KEY: "${MINIMAL_KEY}"
-      MINIMAL_SECRET: "${MINIMAL_SECRET}"
-      POPULATED_KEY: "${POPULATED_KEY}"
-      POPULATED_SECRET: "${POPULATED_SECRET}"
       ODS_POSTGRES_HOST: pb-ods
       ADMIN_POSTGRES_HOST: pb-admin
-      PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
-      OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/oauth/"
+      API_MODE: "SharedInstance"
+      API_EXTERNAL_URL: "${API_EXTERNAL_URL:-https://localhost/api}"
+      ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
+      API_INTERNAL_URL: "${API_INTERNAL_URL:-http://api}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
+      - adminapp-bulk-hashcache:/app/BulkUploadHashCache
     depends_on:
       - pb-ods
       - pb-admin
-    restart: always
-    hostname: admin
-    container_name: ed-fi-sandbox-admin
-
-  swagger:
-    build:
-      context: ./Web-SwaggerUI
-      dockerfile: Dockerfile
-    environment:
-      POPULATED_KEY: "${POPULATED_KEY}"
-      POPULATED_SECRET: "${POPULATED_SECRET}"
-      WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/"
-      PathBase: "${DOCS_VIRTUAL_NAME:-docs}"
-    depends_on:
       - api
-      - admin
-      - pb-ods
-      - pb-admin
     restart: always
-    hostname: swagger
-    container_name: ed-fi-swagger
+    hostname: adminapp
+    container_name: ed-fi-ods-adminapp
 
   pb-admin:
     image: pgbouncer/pgbouncer
@@ -148,3 +128,6 @@ volumes:
   vol-db-ods:
     driver: local
     name: vol-db-ods
+  adminapp-bulk-hashcache:
+    driver: local
+    name: vol-adminapp-bulk-hashcache

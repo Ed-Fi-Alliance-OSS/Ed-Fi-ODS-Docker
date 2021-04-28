@@ -28,3 +28,4 @@ RUN apk --no-cache add unzip=6.0-r8 dos2unix=7.4.2-r0 && \
 EXPOSE 5432
 
 CMD ["docker-entrypoint.sh", "postgres"]
+

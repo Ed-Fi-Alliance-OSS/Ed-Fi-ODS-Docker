@@ -12,7 +12,7 @@ The only supported image at this time is an Alpine-based implementation.
 `edfialliance/ods-api-web-swaggerui:<version>`
 
 ## Supported Environment Variables
-```
+``` 
 POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
 ```

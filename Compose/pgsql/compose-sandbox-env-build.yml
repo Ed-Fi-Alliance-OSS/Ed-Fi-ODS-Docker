@@ -7,7 +7,9 @@ version: "3.8"
 
 services:
   db-ods:
-    image: edfialliance/ods-api-db-sandbox:${TAG}
+    build:
+      context: ../../DB-Sandbox/Alpine/pgsql
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -17,7 +19,9 @@ services:
     container_name: ed-fi-db-ods
 
   db-admin:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    build:
+      context: ../../DB-Admin/Alpine/pgsql
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -27,7 +31,9 @@ services:
     container_name: ed-fi-db-admin
 
   nginx:
-    image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
+    build:
+      context: ../../Web-Gateway-Sandbox/Alpine
+      dockerfile: Dockerfile
     environment:
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
       SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
@@ -38,14 +44,16 @@ services:
     restart: always
     hostname: nginx
     volumes:
-      - ./Web-Gateway-Sandbox/ssl:/ssl/
+      - ../../ssl:/ssl/
     depends_on:
       - api
       - admin
       - swagger
 
   api:
-    image: edfialliance/ods-api-web-api:${TAG}
+    build:
+      context: ../../Web-Ods-Api/Alpine/pgsql
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -65,7 +73,9 @@ services:
     container_name: ed-fi-ods-api
 
   admin:
-    image: edfialliance/ods-api-web-sandbox-admin:${TAG}
+    build:
+      context: ../../Web-Sandbox-Admin/Alpine/pgsql
+      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -90,7 +100,9 @@ services:
     container_name: ed-fi-sandbox-admin
 
   swagger:
-    image: edfialliance/ods-api-web-swaggerui:${TAG}
+    build:
+      context: ../../Web-SwaggerUI/Alpine
+      dockerfile: Dockerfile
     environment:
       POPULATED_KEY: "${POPULATED_KEY}"
       POPULATED_SECRET: "${POPULATED_SECRET}"
@@ -121,9 +133,9 @@ services:
     image: pgbouncer/pgbouncer
     environment:
       DATABASES: "* = host = db-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
     ports:
-      - "5402:${PGBOUNCER_LISTEN_PORT}"
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-ods
     depends_on:
