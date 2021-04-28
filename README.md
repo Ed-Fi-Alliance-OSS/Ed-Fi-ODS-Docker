@@ -99,7 +99,7 @@ ENCRYPTION_KEY=<base64-encoded 256-bit key>
 
 ## Self-Signed Certificate
 
-The deployments require valid SSL certificate to function. A self-signed certificate can be used for a Non-Production environment. This repository includes `generate-cert.sh` script that can be used to generate a self-signed certificate and place it in folder Ed-Fi-ODS-Docker/Web-Gateway/ssl and/or Ed-Fi-ODS-Docker/Web-Gateway-Sandbox/ssl (for sandbox mode) to be used by the running Gateway container.
+The deployments require valid SSL certificate to function. A self-signed certificate can be used for a Non-Production environment. This repository includes `generate-cert.sh` script that can be used to generate a self-signed certificate and place it in folder ./ssl to be used by the running Gateway container.
 
 If deploying on local Windows host, you will either need GitBash or WSL to run `generate-cert.sh`.
 
@@ -110,7 +110,6 @@ If deploying on local Windows host, you will either need GitBash or WSL to run `
 
   ```bash
   export MSYS_NO_PATHCONV=1
-  cd '{your repo root}/Ed-Fi-ODS-Docker/Web-Gateway'
   ./generate-cert.sh
   ```
 
