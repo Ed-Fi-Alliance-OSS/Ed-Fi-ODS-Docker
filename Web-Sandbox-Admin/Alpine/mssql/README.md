@@ -1,5 +1,5 @@
 # Ed-Fi Web Sandbox Admin
-Provides docker deployment for Sandbox Admin tool.
+Provides docker deployment for Sandbox Admin tool running SQL Server.
 
 **NOTE: This image is not recommended for production use.**
 

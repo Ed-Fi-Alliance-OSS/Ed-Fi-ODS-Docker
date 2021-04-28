@@ -1,5 +1,5 @@
 # Ed-Fi Web ODS/API
-Provides docker deployment for Ed-Fi ODS/API [v5.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284).
+Provides docker deployment for Ed-Fi ODS/API [v5.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284) running SQL Server.
 
 **NOTE: This image is suitable for production use.**
 

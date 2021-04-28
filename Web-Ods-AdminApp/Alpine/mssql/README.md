@@ -1,7 +1,7 @@
 # Ed-Fi ODS Admin App
 
 Provides docker deployment for [Ed-Fi ODS Admin App
-v2.1.0](https://techdocs.ed-fi.org/display/ADMIN/).
+v2.1.0](https://techdocs.ed-fi.org/display/ADMIN/) running SQL Server.
 
 **NOTE: This image is suitable for production use.**
 
@@ -25,9 +25,9 @@ API_EXTERNAL_URL=<ods api url>
 ENCRYPTION_KEY=<256 bit key suitable for AES encryption>
 LOGS_FOLDER=<path to store the logs file>
 ODS_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the ODS database>
-POSTGRES_USER=<default postgres database user>
-POSTGRES_PASSWORD=<password for default postgres user>
-POSTGRES_PORT=<port that postgres run on default to 5432> (OPTIONAL)
+SQLSERVER_DATASOURCE=<DNS or IP Address of the SQL Server Instance, i.e. sql.somedns.org or 10.1.5.9,1433
+SQLSERVER_USER=<SQL Username with access to SQL Server Ed-Fi databases, edfiadmin>
+SQLSERVER_PASSWORD=<SQL Password for the SQLSERVER_USER with access to SQL Server Ed-Fi databases, password123!>
 ```
 
 :warning As of version 1.1.x, only one `API_MODE` is supported:
