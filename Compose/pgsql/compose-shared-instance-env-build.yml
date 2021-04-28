@@ -45,7 +45,7 @@ services:
     restart: always
     hostname: nginx
     volumes:
-        - ../../ssl:/ssl/
+      - ../../ssl:/ssl/
     depends_on:
       - api
       - adminapp
