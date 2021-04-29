@@ -10,7 +10,7 @@ An example how to use run the compose files by running the following command: `d
 
 ### [compose-sandbox-env.yml](./Compose/pgsql/compose-sandbox-env.yml)
 
-Provides an implementation of a sandbox environment with the ODS/API, Sandbox Admin, and SwaggerUI behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ sandboxes and templates are installed on a separate instance of PostgreSQL 11.
+Provides an implementation of a sandbox environment with the ODS/API, Sandbox Admin, and SwaggerUI behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ sandboxes and templates are installed on a separate instance of PostgreSQL 11.
 
 ### [compose-shared-instance-env.yml](./Compose/pgsql/compose-shared-instance-env.yml)
 
