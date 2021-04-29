@@ -25,7 +25,7 @@ services:
       - swagger
 
   api:
-    image: edfialliance/ods-api-web-api:${TAG}
+    image: edfialliance/ods-api-web-api-mssql:${TAG}
     environment:
       API_MODE: "Sandbox"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
@@ -41,7 +41,7 @@ services:
     container_name: ed-fi-ods-api
 
   admin:
-    image: edfialliance/ods-api-web-sandbox-admin:${TAG}
+    image: edfialliance/ods-api-web-sandbox-admin-mssql:${TAG}
     environment:
       ADMIN_USER: "${ADMIN_USER}"
       ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
