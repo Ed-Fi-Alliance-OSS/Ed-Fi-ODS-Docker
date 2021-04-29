@@ -64,12 +64,6 @@ services:
     container_name: ed-fi-ods-adminapp
 
 volumes:
-  vol-db-admin:
-    driver: local
-    name: vol-db-admin
-  vol-db-ods:
-    driver: local
-    name: vol-db-ods
   adminapp-bulk-hashcache:
     driver: local
     name: vol-adminapp-bulk-hashcache
