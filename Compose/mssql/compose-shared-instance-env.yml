@@ -18,7 +18,7 @@ services:
     restart: always
     hostname: nginx
     volumes:
-      - ./../ssl:/ssl/
+      - ../../ssl:/ssl/
     depends_on:
       - api
       - adminapp
@@ -26,13 +26,11 @@ services:
   api:
     image: edfialliance/ods-api-web-api-mssql:${TAG}
     environment:
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      ODS_POSTGRES_HOST: pb-ods
-      ADMIN_POSTGRES_HOST: pb-admin
       API_MODE: "SharedInstance"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
+      SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_USER: "${SQLSERVER_USER}"
+      SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     restart: always
@@ -42,16 +40,14 @@ services:
   adminapp:
     image: edfialliance/ods-admin-app-mssql:${TAG}
     environment:
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      ODS_POSTGRES_HOST: pb-ods
-      ADMIN_POSTGRES_HOST: pb-admin
       API_MODE: "SharedInstance"
       API_EXTERNAL_URL: "${API_EXTERNAL_URL:-https://localhost/api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       API_INTERNAL_URL: "${API_INTERNAL_URL:-http://api}"
+      SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_USER: "${SQLSERVER_USER}"
+      SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
