@@ -7,7 +7,7 @@ version: "3.8"
 
 services:
   db-ods:
-    image: edfialliance/ods-api-db-ods:${TAG}
+    image: edfialliance/ods-api-db-ods-mssql:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -17,7 +17,7 @@ services:
     container_name: ed-fi-db-ods
 
   db-admin:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    image: edfialliance/ods-api-db-admin-mssql:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
