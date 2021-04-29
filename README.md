@@ -14,7 +14,7 @@ Provides an implementation of a sandbox environment with the ODS/API, Sandbox Ad
 
 ### [compose-shared-instance-env.yml](./Compose/pgsql/compose-shared-instance-env.yml)
 
-Provides an implementation of a shared instance environment of the ODS/API and Admin App behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ database and minimal template are installed on a separate instance of PostgreSQL 11.
+Provides an implementation of a shared instance environment of the ODS/API and Admin App behind nginx. The databases _EdFi_Admin_ and _EdFi_Security_ are installed on one instance of PostgreSQL 11. The _EdFi_Ods_ database and minimal template are installed on a separate instance of PostgreSQL 11.
 
 While these compose files pull down the images from Docker Hub, there are two additional compose files [compose-sandbox-env-build.yml](./Compose/pgsql/compose-sandbox-env-build.yml) and [compose-shared-instance-env-build.yml](./Compose/pgsql/compose-shared-instance-env-build.yml) included in the repository for working with the `Dockerfile` directly for customizations.
 
