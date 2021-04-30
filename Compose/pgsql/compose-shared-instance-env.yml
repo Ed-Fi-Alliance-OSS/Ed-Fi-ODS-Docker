@@ -39,7 +39,7 @@ services:
     restart: always
     hostname: nginx
     volumes:
-      - ./../ssl:/ssl/
+      - ../../ssl:/ssl/
     depends_on:
       - api
       - adminapp
@@ -61,7 +61,7 @@ services:
       - pb-admin
     restart: always
     hostname: api
-    container_name: ed-fi-ods-api
+    container_name: ed-fi-ods
 
   adminapp:
     image: edfialliance/ods-admin-app:${TAG}
