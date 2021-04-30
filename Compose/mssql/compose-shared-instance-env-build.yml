@@ -39,7 +39,7 @@ services:
       - ${LOGS_FOLDER}:/app/logs
     restart: always
     hostname: api
-    container_name: ed-fi-ods
+    container_name: ed-fi-ods-api
 
   adminapp:
     build:
