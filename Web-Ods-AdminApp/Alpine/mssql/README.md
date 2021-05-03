@@ -7,7 +7,7 @@ v2.1.0](https://techdocs.ed-fi.org/display/ADMIN/) running SQL Server.
 
 ## Image Links
 
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/Web-Ods-Admin/Dockerfile)
+[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-Admin/Alpine/mssql/Dockerfile)
 
 ## Image Variants
 

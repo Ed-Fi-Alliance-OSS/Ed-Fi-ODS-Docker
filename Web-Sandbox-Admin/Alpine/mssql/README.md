@@ -4,7 +4,7 @@ Provides docker deployment for Sandbox Admin tool running SQL Server.
 **NOTE: This image is not recommended for production use.**
 
 ## Image Links
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/alpine/mssql/Web-Sandbox-Admin/Dockerfile)
+[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Sandbox-Admin/Alpine/mssql//Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation.

@@ -4,7 +4,9 @@ Provides docker deployment for **_EdFi_Ods_** and the minimal template **_EdFi_O
 **Note: This image is suitable for production use in _shared instance_ mode.**
 
 ## Image Links
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/DB-ODS/Dockerfile)
+[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/DB-ODS/Alpine/pgsql/Dockerfile)
+[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/DB-ODS/Dockerfile)
+[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/DB-ODS/Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation using [PostgreSQL 11](https://hub.docker.com/_/postgres).
