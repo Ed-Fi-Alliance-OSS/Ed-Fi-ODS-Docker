@@ -7,7 +7,8 @@ v2.1.0](https://techdocs.ed-fi.org/display/ADMIN/).
 
 ## Image Links
 
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/Web-Ods-Admin/Dockerfile)
+[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-Admin/Alpine/pgsql/Dockerfile)
+[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Ods-Admin/Dockerfile)
 
 ## Image Variants
 
