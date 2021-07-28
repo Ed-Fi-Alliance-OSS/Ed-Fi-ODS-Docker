@@ -1,0 +1,71 @@
+version: "3.8"
+
+services:
+  db-ods:
+    build:
+      context: ../../DB-Ods/Alpine/pgsql
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    volumes:
+      - ${WEBAPP_STORAGE_HOME}/vol-db-ods:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods
+
+  nginx:
+    build:
+      context: ../../Web-Gateway/Alpine
+      dockerfile: Dockerfile
+    environment:
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-admin}"
+      ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+    ports:
+      - "443:443"
+      - "80:80"
+    container_name: ed-fi-gateway
+    restart: always
+    hostname: nginx
+    volumes:
+      - ../../ssl:/ssl/
+    depends_on:
+      - api
+      - adminapp
+
+  api:
+    build:
+      context: ../../Web-Ods-Api/Alpine/pgsql
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      ODS_POSTGRES_HOST: pb-ods
+      ADMIN_POSTGRES_HOST: pb-admin
+      API_MODE: "SharedInstance"
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+    depends_on:
+      - pb-ods
+      - pb-admin
+    restart: always
+    hostname: api
+    container_name: ed-fi-ods
+
+  pb-ods:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = db-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+    ports:
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
+    restart: always
+    container_name: ed-fi-pb-ods
+    depends_on:
+      - db-ods
+
+volumes:
+  vol-db-ods:
+    driver: local
+    name: vol-db-ods
