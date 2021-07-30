@@ -32,6 +32,7 @@ POSTGRES_PORT=<port that postgres run on default to 5432> (OPTIONAL)
 
 :warning As of version 1.1.x, only one `API_MODE` is supported:
 "SharedInstance".
+API_HOSTNAME value is required for successfully connecting to ODS/API.
 
 ## License Information
 
