@@ -3,13 +3,6 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-server {
-    listen 80 default_server;
-
-    server_name _;
-
-    return 301 https://$host$request_uri;
-}
 
 server {
     listen       443 ssl;
@@ -59,5 +52,18 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_cache_bypass $http_upgrade;
+    }
+}
+
+server {
+    listen       80;
+    server_name  localhost;
+
+    location /${ODS_VIRTUAL_NAME} {
+        proxy_pass  http://api;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port 80;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
