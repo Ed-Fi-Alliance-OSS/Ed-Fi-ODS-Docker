@@ -31,7 +31,7 @@ SQLSERVER_PASSWORD=<SQL Password for the SQLSERVER_USER with access to SQL Serve
 
 :warning As of version 1.1.x, only one `API_MODE` is supported:
 "SharedInstance".
-API_HOSTNAME value is required for successfully connecting to ODS/API.
+`API_HOSTNAME` value is required for successfully connecting to ODS/API. This should be the full host (server) name for public access to the API, not including protocol (e.g. "https") or path (e.g. "/api"). For example, if running on a virtual machine called `edfi` on network `my-district.edu` then this value would be `API_HOSTNAME=edfi.my-district.edu`.
 
 ## License Information
 
