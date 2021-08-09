@@ -9,4 +9,4 @@ set -x
 
 mkdir -p ssl
 openssl dhparam -out ssl/dhparam.pem 4096
-openssl req -subj '/CN=localhost' -x509 -newkey rsa:4096 -nodes -keyout ssl/server.key -out ssl/server.crt -days 365
+openssl req -subj '/CN=localhost' -x509 -newkey rsa:4096 -nodes -keyout ssl/server.key -out ssl/server.crt -days 365 -addext "subjectAltName = DNS:nginx"
