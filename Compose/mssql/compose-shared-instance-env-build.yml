@@ -57,7 +57,7 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
-      - ../../Web-Gateway/ssl:/ssl/
+      - ../../ssl:/ssl/
     depends_on:
       - api
     restart: always
