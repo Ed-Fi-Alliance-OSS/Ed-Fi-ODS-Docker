@@ -20,8 +20,7 @@ The only supported image at this time is an Alpine-based implementation.
 ```none
 ADMIN_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the Admin and Security databases>
 API_MODE=<mode of api>
-API_INTERNAL_URL=<http://{ods api container's hostname}>
-API_EXTERNAL_URL=<ods api url>
+API_HOSTNAME=<ods api hostname>
 ENCRYPTION_KEY=<256 bit key suitable for AES encryption>
 LOGS_FOLDER=<path to store the logs file>
 ODS_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the ODS database>
@@ -32,7 +31,7 @@ SQLSERVER_PASSWORD=<SQL Password for the SQLSERVER_USER with access to SQL Serve
 
 :warning As of version 1.1.x, only one `API_MODE` is supported:
 "SharedInstance".
-API_INTERNAL_URL and API_EXTERNAL_URL values are required for successfully connecting to ODS/API.
+`API_HOSTNAME` value is required for successfully connecting to ODS/API. This should be the full host (server) name for public access to the API, not including protocol (e.g. "https") or path (e.g. "/api"). For example, if running on a virtual machine called `edfi` on network `my-district.edu` then this value would be `API_HOSTNAME=edfi.my-district.edu`.
 
 ## License Information
 

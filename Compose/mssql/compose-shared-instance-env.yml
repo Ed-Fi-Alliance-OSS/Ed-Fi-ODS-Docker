@@ -41,16 +41,17 @@ services:
     image: edfialliance/ods-admin-app-mssql:${TAG}
     environment:
       API_MODE: "SharedInstance"
-      API_EXTERNAL_URL: "${API_EXTERNAL_URL:-https://localhost/api}"
+      API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
-      API_INTERNAL_URL: "${API_INTERNAL_URL:-http://api}"
+      API_INTERNAL_URL: "https://nginx/${ODS_VIRTUAL_NAME:-api}"
       SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
+      - ../../ssl:/ssl/
     depends_on:
       - api
     restart: always
