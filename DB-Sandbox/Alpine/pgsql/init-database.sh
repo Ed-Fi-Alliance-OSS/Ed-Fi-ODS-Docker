@@ -11,6 +11,14 @@ if [[ -z "$POSTGRES_PORT" ]]; then
   export POSTGRES_PORT=5432
 fi
 
+export MINIMAL_BACKUP=EdFi_Ods_Minimal_Template.sql
+export POPULATED_BACKUP=EdFi_Ods_Populated_Template.sql
+
+if [[ "$TPDM_ENABLED" = true ]]; then
+  export MINIMAL_BACKUP=EdFi_Ods_Minimal_Template_TPDM_Core.sql
+  export POPULATED_BACKUP=EdFi_Ods_Populated_Template_TPDM_Core.sql
+fi
+
 psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE "EdFi_Ods_Minimal_Template" TEMPLATE template0;
     CREATE DATABASE "EdFi_Ods_Populated_Template" TEMPLATE template0;
@@ -19,10 +27,10 @@ psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "$POSTGRES_DB" <
 EOSQL
 
 echo "Loading Minimal Template Database from backup..."
-psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Ods_Minimal_Template" --file /tmp/EdFi_Ods_Minimal_Template.sql 1> /dev/null
+psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Ods_Minimal_Template" --file /tmp/${MINIMAL_BACKUP} 1> /dev/null
 
 echo "Loading Populated Template Database from backup..."
-psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Ods_Populated_Template" --file /tmp/EdFi_Ods_Populated_Template.sql 1> /dev/null
+psql --no-password --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Ods_Populated_Template" --file /tmp/${POPULATED_BACKUP} 1> /dev/null
 
 psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "$POSTGRES_DB" <<-EOSQL
     UPDATE pg_database SET datistemplate='true', datallowconn='false' WHERE datname in ('EdFi_Ods_Populated_Template', 'EdFi_Ods_Minimal_Template');

@@ -11,6 +11,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      TPDM_ENABLED: "${TPDM_ENABLED:-true}"
     volumes:
       - vol-db-ods:/var/lib/postgresql/data
     restart: always
@@ -54,6 +55,7 @@ services:
       ODS_POSTGRES_HOST: pb-ods
       ADMIN_POSTGRES_HOST: pb-admin
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
+      TPDM_ENABLED: "${TPDM_ENABLED:-true}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:

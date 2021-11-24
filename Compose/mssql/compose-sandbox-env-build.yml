@@ -36,6 +36,7 @@ services:
       SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
+      TPDM_ENABLED: "${TPDM_ENABLED:-true}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:

@@ -7,6 +7,10 @@
 set -e
 set -x
 
+if [[ "$TPDM_ENABLED" != true ]]; then
+    export Plugin__Folder="./Plugin_Disabled"
+fi
+
 envsubst < /app/appsettings.template.json > /app/appsettings.json
 
 until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ODS_POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -c '\q';
