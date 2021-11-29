@@ -1,0 +1,7 @@
+usePreBuiltImages: false
+apiMode: YearSpecific
+tokens:
+- token: '2021'
+  pgBouncerPort: 5402
+- token: '2022'
+  pgBouncerPort: 5403

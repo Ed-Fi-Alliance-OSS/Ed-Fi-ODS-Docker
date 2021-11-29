@@ -1,0 +1,146 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+version: "3.8"
+
+services:
+  db-admin:
+    build:
+      context: ../../DB-Admin/Alpine/pgsql
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      API_MODE: {{apiMode}}
+    volumes:
+      - vol-db-admin:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-admin
+
+  nginx:
+    build:
+      context: ../../Web-Gateway/Alpine
+      dockerfile: Dockerfile
+    environment:
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
+      ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+    ports:
+      - "443:443"
+      - "80:80"
+    container_name: ed-fi-gateway
+    restart: always
+    hostname: nginx
+    volumes:
+      - ../../ssl:/ssl/
+    depends_on:
+      - api
+      - adminapp
+
+  api:
+    build:
+      context: ../../Web-Ods-Api/Alpine/pgsql
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      ADMIN_POSTGRES_HOST: pb-admin
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
+      ODS_POSTGRES_HOST: EdFi_{0}
+      ODS_WAIT_POSTGRES_HOSTS: "{{#tokens}} EdFi_Ods_{{token}}{{/tokens}}"
+      API_MODE: {{apiMode}}
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+    depends_on:
+      - pb-admin
+      {{#tokens}}
+      - edfi_ods_{{token}}
+      {{/tokens}}
+    restart: always
+    hostname: api
+    container_name: ed-fi-ods-api
+
+  {{#tokens}}
+
+  db-ods-{{token}}:
+    build:
+      context: ../../DB-Ods/Alpine/pgsql
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      ODS_DB: "EdFi_Ods_{{token}}"
+    volumes:
+      - vol-db-ods-{{token}}:/var/lib/postgresql/data
+    container_name: ed-fi-db-ods-{{token}}
+
+  edfi_ods_{{token}}:
+    image: pgbouncer/pgbouncer
+    restart: always
+    {{#pgBouncerPort}}
+    ports:
+      - "{{.}}:${PGBOUNCER_LISTEN_PORT:-6432}"
+    {{/pgBouncerPort}}
+    environment:
+      DATABASES: "* = host = db-ods-{{token}} port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+    depends_on:
+      - db-ods-{{token}}
+    container_name: ed-fi-pb-ods-{{token}}
+  {{/tokens}}
+
+  adminapp:
+    build:
+      context: ../../Web-Ods-AdminApp/Alpine/pgsql
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      ADMIN_POSTGRES_HOST: pb-admin
+      API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
+      ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
+      API_INTERNAL_URL: "https://nginx/${ODS_VIRTUAL_NAME:-api}"
+      ODS_POSTGRES_HOST: EdFi_{0}
+      ODS_WAIT_POSTGRES_HOSTS: "{{#tokens}} EdFi_Ods_{{token}}{{/tokens}}"
+      API_MODE: {{apiMode}}
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+      - adminapp-bulk-hashcache:/app/BulkUploadHashCache
+      - ../../ssl:/ssl/
+    depends_on:
+      - pb-admin
+      - api
+      {{#tokens}}
+      - edfi_ods_{{token}}
+      {{/tokens}}
+    restart: always
+    hostname: adminapp
+    container_name: ed-fi-ods-adminapp
+
+  pb-admin:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = db-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+    ports:
+      - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
+    restart: always
+    container_name: ed-fi-pb-admin
+    depends_on:
+      - db-admin
+
+volumes:
+  vol-db-admin:
+    driver: local
+    name: vol-db-admin
+  adminapp-bulk-hashcache:
+    driver: local
+    name: vol-adminapp-bulk-hashcache
+  {{#tokens}}
+  vol-db-ods-{{token}}: 
+    driver: local
+  {{/tokens}}

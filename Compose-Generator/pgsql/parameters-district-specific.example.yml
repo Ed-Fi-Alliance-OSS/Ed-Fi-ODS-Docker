@@ -1,0 +1,7 @@
+usePreBuiltImages: false
+apiMode: DistrictSpecific
+tokens:
+- token: 'todo'
+  pgBouncerPort: 5402
+- token: 'todo'
+  pgBouncerPort: 5403
