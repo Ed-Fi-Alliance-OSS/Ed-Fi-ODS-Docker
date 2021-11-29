@@ -55,6 +55,7 @@ services:
       SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
+      ADMINAPP_HEALTHCHECK_TEST: ${ADMINAPP_HEALTHCHECK_TEST?Please consult env.example to set the Admin App healthcheck test}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
@@ -64,6 +65,10 @@ services:
     restart: always
     hostname: adminapp
     container_name: ed-fi-ods-adminapp
+    healthcheck:
+      test: $$ADMINAPP_HEALTHCHECK_TEST
+      start_period: "60s"
+      retries: 3
 
 volumes:
   adminapp-bulk-hashcache:
