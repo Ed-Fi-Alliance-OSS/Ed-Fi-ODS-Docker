@@ -7,3 +7,4 @@
 ssl/
 .env
 *.7z
+Compose/*/compose.yml
