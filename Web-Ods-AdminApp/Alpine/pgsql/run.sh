@@ -22,11 +22,11 @@ if [[ -z "$ODS_WAIT_POSTGRES_HOSTS" ]]; then
 fi
 
 export ODS_WAIT_POSTGRES_HOSTS_ARR=($ODS_WAIT_POSTGRES_HOSTS) 
-for HOST in $ODS_WAIT_POSTGRES_HOSTS_ARR
+for HOST in ${ODS_WAIT_POSTGRES_HOSTS_ARR[@]}
 do
   until PGPASSWORD=$POSTGRES_PASSWORD psql -h $HOST -p $POSTGRES_PORT -U $POSTGRES_USER -c '\q';
   do
-    >&2 echo "ODS Postgres is unavailable - sleeping"
+    >&2 echo "ODS Postgres '$HOST' is unavailable - sleeping"
     sleep 10
   done
 done
