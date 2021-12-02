@@ -33,7 +33,7 @@ services:
       API_MODE: "SharedInstance"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
       SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
-      ADMIN_SQL_SERVER_DATASOURCE: "${ADMIN_SQL_SERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
@@ -54,7 +54,7 @@ services:
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       API_INTERNAL_URL: "https://nginx/${ODS_VIRTUAL_NAME:-api}"
       SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
-      ADMIN_SQL_SERVER_DATASOURCE: "${ADMIN_SQL_SERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
       ADMINAPP_HEALTHCHECK_TEST: ${ADMINAPP_HEALTHCHECK_TEST?Please consult env.example to set the Admin App healthcheck test}
