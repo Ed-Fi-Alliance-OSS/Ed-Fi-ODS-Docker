@@ -8,6 +8,5 @@ apiMode: DistrictSpecific
 tokens:
 - token: '255901'
   pgBouncerPort: 5402
-- token: '123456'
+- token: '255902'
   pgBouncerPort: 5403
-  
