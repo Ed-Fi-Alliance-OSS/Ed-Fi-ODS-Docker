@@ -9,7 +9,7 @@ services:
   nginx:
     image: edfialliance/ods-api-web-gateway:${TAG}
     environment:
-      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-admin}"
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
     ports:
       - "443:443"
