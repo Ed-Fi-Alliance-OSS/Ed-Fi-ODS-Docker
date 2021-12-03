@@ -32,7 +32,7 @@ services:
     environment:
       API_MODE: "DistrictSpecific"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
-      SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_ODS_DATASOURCE: "${SQLSERVER_ODS_DATASOURCE:-host.docker.internal}"
       SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
@@ -53,7 +53,7 @@ services:
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       API_INTERNAL_URL: "https://nginx/${ODS_VIRTUAL_NAME:-api}"
-      SQLSERVER_DATASOURCE: "${SQLSERVER_DATASOURCE:-host.docker.internal}"
+      SQLSERVER_ODS_DATASOURCE: "${SQLSERVER_ODS_DATASOURCE:-host.docker.internal}"
       SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
