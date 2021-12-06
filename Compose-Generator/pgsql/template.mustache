@@ -103,6 +103,7 @@ services:
     image: pgbouncer/pgbouncer
     environment:
       DATABASES: "* = host = db-ods-{{token}} port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
     {{#pgBouncerPort}}
     ports:
       - "{{.}}:${PGBOUNCER_LISTEN_PORT:-6432}"
