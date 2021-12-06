@@ -7,7 +7,9 @@ version: "3.8"
 
 services:
   nginx:
-    image: edfialliance/ods-api-web-gateway:${TAG}
+    build:
+      context: ../../Web-Gateway/Alpine
+      dockerfile: Dockerfile
     environment:
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
@@ -24,9 +26,11 @@ services:
       - adminapp
 
   api:
-    image: edfialliance/ods-api-web-api-mssql:${TAG}
+    build:
+      context: ../../Web-Ods-Api/Alpine/mssql
+      dockerfile: Dockerfile
     environment:
-      API_MODE: "SharedInstance"
+      API_MODE: "YearSpecific"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
       SQLSERVER_ODS_DATASOURCE: "${SQLSERVER_ODS_DATASOURCE:-host.docker.internal}"
       SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
@@ -40,9 +44,11 @@ services:
     container_name: ed-fi-ods-api
 
   adminapp:
-    image: edfialliance/ods-admin-app-mssql:${TAG}
+    build:
+      context: ../../Web-Ods-AdminApp/Alpine/mssql
+      dockerfile: Dockerfile
     environment:
-      API_MODE: "SharedInstance"
+      API_MODE: "YearSpecific"
       API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"

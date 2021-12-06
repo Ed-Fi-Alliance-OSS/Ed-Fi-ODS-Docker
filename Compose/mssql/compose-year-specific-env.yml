@@ -26,7 +26,7 @@ services:
   api:
     image: edfialliance/ods-api-web-api-mssql:${TAG}
     environment:
-      API_MODE: "SharedInstance"
+      API_MODE: "YearSpecific"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
       SQLSERVER_ODS_DATASOURCE: "${SQLSERVER_ODS_DATASOURCE:-host.docker.internal}"
       SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
@@ -42,7 +42,7 @@ services:
   adminapp:
     image: edfialliance/ods-admin-app-mssql:${TAG}
     environment:
-      API_MODE: "SharedInstance"
+      API_MODE: "YearSpecific"
       API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
