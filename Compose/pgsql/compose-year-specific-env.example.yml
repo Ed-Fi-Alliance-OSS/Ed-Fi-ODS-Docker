@@ -1,0 +1,162 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+version: "3.8"
+
+services:
+  db-admin:
+    image: edfialliance/ods-api-db-admin:${TAG}
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      API_MODE: YearSpecific
+    volumes:
+      - vol-db-admin:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-admin
+
+  nginx:
+    image: edfialliance/ods-api-web-gateway:${TAG}
+    environment:
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
+      ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+    ports:
+      - "443:443"
+      - "80:80"
+    container_name: ed-fi-gateway
+    restart: always
+    hostname: nginx
+    volumes:
+      - ../../ssl:/ssl/
+    depends_on:
+      - api
+      - adminapp
+
+  api:
+    image: edfialliance/ods-api-web-api:${TAG}
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      ODS_POSTGRES_HOST: EdFi_{0}
+      ADMIN_POSTGRES_HOST: pb-admin
+      API_MODE: YearSpecific
+      ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
+      TPDM_ENABLED: "${TPDM_ENABLED:-true}"
+      ODS_WAIT_POSTGRES_HOSTS: "EdFi_Ods_2021 EdFi_Ods_2022 "
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+    depends_on:
+      - pb-admin
+      - edfi_ods_2021
+      - edfi_ods_2022
+    restart: always
+    hostname: api
+    container_name: ed-fi-ods-api
+
+
+  db-ods-2021:
+    image: edfialliance/ods-api-db-ods:${TAG}
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      TPDM_ENABLED: "${TPDM_ENABLED:-true}"
+      ODS_DB: "EdFi_Ods_2021"
+    volumes:
+      - vol-db-ods-2021:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods-2021
+
+  edfi_ods_2021:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = db-ods-2021 port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+    ports:
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
+    restart: always
+    container_name: ed-fi-pb-ods-2021
+    depends_on:
+      - db-ods-2021
+
+  db-ods-2022:
+    image: edfialliance/ods-api-db-ods:${TAG}
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      TPDM_ENABLED: "${TPDM_ENABLED:-true}"
+      ODS_DB: "EdFi_Ods_2022"
+    volumes:
+      - vol-db-ods-2022:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods-2022
+
+  edfi_ods_2022:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = db-ods-2022 port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+    ports:
+      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
+    restart: always
+    container_name: ed-fi-pb-ods-2022
+    depends_on:
+      - db-ods-2022
+
+  adminapp:
+    image: edfialliance/ods-admin-app:${TAG}
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      ODS_POSTGRES_HOST: EdFi_{0}
+      ADMIN_POSTGRES_HOST: pb-admin
+      API_MODE: YearSpecific
+      API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
+      ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
+      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
+      API_INTERNAL_URL: "https://nginx/${ODS_VIRTUAL_NAME:-api}"
+      ADMINAPP_HEALTHCHECK_TEST: ${ADMINAPP_HEALTHCHECK_TEST?Please consult env.example to set the Admin App healthcheck test}
+      ODS_WAIT_POSTGRES_HOSTS: "EdFi_Ods_2021 EdFi_Ods_2022 "
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+      - adminapp-bulk-hashcache:/app/BulkUploadHashCache
+      - ../../ssl:/ssl/
+    depends_on:
+      - pb-admin
+      - api
+      - edfi_ods_2021
+      - edfi_ods_2022
+    restart: always
+    hostname: adminapp
+    container_name: ed-fi-ods-adminapp
+    healthcheck:
+      test: $$ADMINAPP_HEALTHCHECK_TEST
+      start_period: "60s"
+      retries: 3
+
+  pb-admin:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = db-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+    ports:
+      - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
+    restart: always
+    container_name: ed-fi-pb-admin
+    depends_on:
+      - db-admin
+
+volumes:
+  vol-db-admin:
+    driver: local
+    name: vol-db-admin
+  adminapp-bulk-hashcache:
+    driver: local
+    name: vol-adminapp-bulk-hashcache
+  vol-db-ods-2021: 
+    driver: local
+    name: vol-db-ods-2021
+  vol-db-ods-2022: 
+    driver: local
+    name: vol-db-ods-2022
