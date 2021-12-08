@@ -26,6 +26,7 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      API_MODE: "Sandbox"
     volumes:
       - vol-db-admin:/var/lib/postgresql/data
     restart: always
