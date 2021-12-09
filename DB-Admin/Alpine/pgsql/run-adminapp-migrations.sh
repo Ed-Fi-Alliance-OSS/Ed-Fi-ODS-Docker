@@ -11,7 +11,7 @@ if [[ -z "$POSTGRES_PORT" ]]; then
   export POSTGRES_PORT=5432
 fi
 
-if [ "${API_MODE,,}" != "sandbox" ]; then
+if [ ! -z "${API_MODE}" ] && [ "${API_MODE,,}" != "sandbox" ]; then
     # Force sorting by name following C language sort ordering, so that the sql scripts are run
     # sequentially in the correct alphanumeric order
     echo "Running Admin App database migration scripts..."
