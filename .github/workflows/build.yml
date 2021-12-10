@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Checkout Ed-Fi-ODS-Docker
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
 
           # Full git history is needed to get a proper list of changed files within `super-linter`
@@ -17,7 +17,7 @@ jobs:
 
       # https://github.com/github/super-linter#how-to-use
       - name: Lint Docker Files
-        uses: github/super-linter@v3.15.5
+        uses: github/super-linter@286abe2b0349da9c074c0fed8e8ec0a86cd13279
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
