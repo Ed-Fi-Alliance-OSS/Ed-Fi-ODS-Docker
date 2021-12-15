@@ -7,7 +7,7 @@ version: "3.8"
 
 services:
   nginx:
-      image: edfialliance/ods-api-web-gateway:${TAG}
+    image: edfialliance/ods-api-web-gateway:${TAG}
     environment:
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
@@ -24,9 +24,7 @@ services:
       - adminapp
 
   api:
-    build:
-      context: ../../Web-Ods-Api/Alpine/mssql
-      dockerfile: Dockerfile
+    image: edfialliance/ods-api-web-api-mssql:${TAG}
     environment:
       API_MODE: "DistrictSpecific"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
@@ -42,9 +40,7 @@ services:
     container_name: ed-fi-ods-api
 
   adminapp:
-    build:
-      context: ../../Web-Ods-AdminApp/Alpine/mssql
-      dockerfile: Dockerfile
+    image: edfialliance/ods-admin-app-mssql:${TAG}
     environment:
       API_MODE: "DistrictSpecific"
       API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
