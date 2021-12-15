@@ -73,6 +73,7 @@ services:
     image: pgbouncer/pgbouncer
     environment:
       DATABASES: "* = host = db-ods-2021 port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
     ports:
       - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
@@ -96,6 +97,7 @@ services:
     image: pgbouncer/pgbouncer
     environment:
       DATABASES: "* = host = db-ods-2022 port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
     ports:
       - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
