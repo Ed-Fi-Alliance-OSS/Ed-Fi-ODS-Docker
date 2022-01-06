@@ -86,7 +86,7 @@ services:
     {{/usePreBuiltImages}}
     {{^usePreBuiltImages}}
     build:
-      context: ../../DB-Ods/Alpine/pgsql
+      context: ../../DB-ODS/Alpine/pgsql
       dockerfile: Dockerfile
     {{/usePreBuiltImages}}
     environment:

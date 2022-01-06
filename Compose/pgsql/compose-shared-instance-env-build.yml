@@ -8,7 +8,7 @@ version: "3.8"
 services:
   db-ods:
     build:
-      context: ../../DB-Ods/Alpine/pgsql
+      context: ../../DB-ODS/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
