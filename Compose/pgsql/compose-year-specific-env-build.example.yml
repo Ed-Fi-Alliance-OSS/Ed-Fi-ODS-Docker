@@ -65,7 +65,7 @@ services:
 
   db-ods-2021:
     build:
-      context: ../../DB-Ods/Alpine/pgsql
+      context: ../../DB-ODS/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -91,7 +91,7 @@ services:
 
   db-ods-2022:
     build:
-      context: ../../DB-Ods/Alpine/pgsql
+      context: ../../DB-ODS/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"

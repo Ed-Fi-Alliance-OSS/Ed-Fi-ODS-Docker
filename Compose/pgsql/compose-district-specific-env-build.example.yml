@@ -65,7 +65,7 @@ services:
 
   db-ods-255901:
     build:
-      context: ../../DB-Ods/Alpine/pgsql
+      context: ../../DB-ODS/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -91,7 +91,7 @@ services:
 
   db-ods-255902:
     build:
-      context: ../../DB-Ods/Alpine/pgsql
+      context: ../../DB-ODS/Alpine/pgsql
       dockerfile: Dockerfile
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
