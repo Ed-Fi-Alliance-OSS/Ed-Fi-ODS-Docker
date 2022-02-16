@@ -1,6 +1,6 @@
 # Ed-Fi ODS Database
 
-> :warning: **Microsoft SQL Server images are not supported at the moment.** As a workaround, you can manually set up an external MS SQL Server and consume it from the Docker containers; [here](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) are some examples.
+> :warning: **Microsoft SQL Server images are not supported at the moment.** However, you can connect an external MS SQL Server to ODS / API and Admin App running on containers. Refer to [Docker Deployment](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) for details.
 
 ## License Information
 View [license information](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/LICENSE) for the software contained in this image.
