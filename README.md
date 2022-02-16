@@ -99,7 +99,7 @@ If deploying on local Windows host, you will either need GitBash or WSL to run `
 * Run script generate-cert.sh (i.e. ./generate-cert.sh)
 
 ## PgBouncer
-This compose files use [https://www.pgbouncer.org/|PGBouncer] to manage the connection pools for the database as PostgreSQL does not manage connections. Without this management the database runs out of connections and requires a reboot. There are other solutions available or if the implementor would like to remove this dependency the following needs to be changed.
+These compose files use [PGBouncer](https://www.pgbouncer.org/) to manage the connection pools for the database as PostgreSQL does not manage connections. Without this management the database runs out of connections and requires a reboot. There are other solutions available or if the implementor would like to remove this dependency the following needs to be changed.
 
 1. Remove and/or comment out the `pb-admin` and `pb-ods` services from the compose file.
 2. Update `admin`, and `api` services and change the database environment variables (`ODS_POSTGRES_HOST`, and `ADMIN_POSTGRES_HOST`) to point to `db-ods` and `db-admin` from `pb-ods` and `pb-admin`.

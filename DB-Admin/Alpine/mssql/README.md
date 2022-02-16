@@ -1,30 +1,6 @@
 # Ed-Fi Admin Databases
 
-Provides docker deployment for **_EdFi_Admin_** and **_EdFi_Security_** database
-implementations on PostgreSQL 11. The databases are installed when the image is
-started for the first time.
-
-**Note: This image does not include any pre-installed vendors and is suitable
-for production use.**
-
-## Image Links
-
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/DB-Admin/Dockerfile)
-
-## Image Variants
-
-The only supported image at this time is an Alpine-based implementation using
-[PostgreSQL 11](https://hub.docker.com/_/postgres).
-
-`edfialliance/ods-api-db-admin:<version>`
-
-## Supported Environment Variables
-
-``` none
-API_MODE=<Sandbox | SharedInstance>
-POSTGRES_USER=<default postgres database user>
-POSTGRES_PASSWORD=<password for default postgres user>
-```
+> :warning: **Microsoft SQL Server images are not supported at the moment.** As a workaround, you can manually set up an external MS SQL Server and consume it from the Docker containers; [here](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) are some examples.
 
 ## License Information
 

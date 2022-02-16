@@ -1,14 +1,13 @@
 # Ed-Fi ODS Admin App
 
-Provides docker deployment for [Ed-Fi ODS Admin App
-v2.1.0](https://techdocs.ed-fi.org/display/ADMIN/).
+Provides docker deployment for [Ed-Fi ODS Admin App](https://techdocs.ed-fi.org/display/ADMIN/).
 
 **NOTE: This image is suitable for production use.**
 
 ## Image Links
-
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-Admin/Alpine/pgsql/Dockerfile)
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Ods-Admin/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
+- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Ods-AdminApp/Dockerfile)
 
 ## Image Variants
 
@@ -27,7 +26,11 @@ LOGS_FOLDER=<path to store the logs file>
 ODS_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the ODS database>
 POSTGRES_USER=<default postgres database user>
 POSTGRES_PASSWORD=<password for default postgres user>
-POSTGRES_PORT=<port that postgres run on default to 5432> (OPTIONAL)
+POSTGRES_PORT=<port that postgres run on> (OPTIONAL, default: 5432)
+API_INTERNAL_URL=<the ODS / API endpoint for admin app to internally connect>
+ADMINAPP_VIRTUAL_NAME=<virtual name for admin app's endpoint>
+ADMINAPP_HEALTHCHECK_TEST=<the health check url for admin app>
+ODS_WAIT_POSTGRES_HOSTS=<space-separated list of PostgreSQL hosts that should be reachable before starting admin app (used by multi-server)> (OPTIONAL)
 ```
 
 `API_HOSTNAME` value is required for successfully connecting to ODS/API. This should be the full host (server) name for public access to the API, not including protocol (e.g. "https") or path (e.g. "/api"). For example, if running on a virtual machine called `edfi` on network `my-district.edu` then this value would be `API_HOSTNAME=edfi.my-district.edu`.

@@ -1,19 +1,19 @@
 # Ed-Fi Web Sandbox Admin
-Provides docker deployment for Sandbox Admin tool running SQL Server.
+Provides docker deployment for Sandbox Admin tool.
 
 **NOTE: This image is not recommended for production use.**
 
 ## Image Links
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation.
 
-`edfialliance/ods-api-web-sandbox-admin:<version>`
+`edfialliance/ods-api-web-sandbox-admin-mssql:<version>`
 
 ## Supported Environment Variables
 ```
-API_MODE=<Value that will replace ApiSettings.Mode in app.settings.json, i.e. YearSpecific>
 LOGS_FOLDER=<path to store the log files>
 SQLSERVER_ODS_DATASOURCE=<DNS or IP Address of the SQL Server Instance, i.e. sql.somedns.org or 10.1.5.9,1433
 SQLSERVER_ADMIN_DATASOURCE=<DNS or IP Address of the SQL Server Instance that contains the Admin/Security/Master databases, i.e. sql.somedns.org or 10.1.5.9,1433>
@@ -25,8 +25,6 @@ MINIMAL_KEY=<minimal template key>
 MINIMAL_SECRET=<minimal template secret>
 POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
-ODS_VIRTUAL_NAME=<virtual name for the ods endpoint>
-SANDBOX_ADMIN_VIRTUAL_NAME=<virtual name for the sandbox admin endpoint>
 ```
 
 ## License Information
