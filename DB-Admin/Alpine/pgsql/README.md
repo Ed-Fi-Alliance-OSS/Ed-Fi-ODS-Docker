@@ -8,10 +8,10 @@ started for the first time.
 for production use.**
 
 ## Image Links
-
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/DB-Admin/Alpine/pgsql/Dockerfile)
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/DB-Admin/Dockerfile)
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/DB-Admin/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/DB-Admin/Alpine/pgsql/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/DB-Admin/Alpine/pgsql/Dockerfile)
+- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/DB-Admin/Dockerfile)
+- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/DB-Admin/Dockerfile)
 
 ## Image Variants
 
@@ -24,8 +24,8 @@ The only supported image at this time is an Alpine-based implementation using
 
 ``` none
 API_MODE=<Sandbox | SharedInstance>
-POSTGRES_USER=<default postgres database user>
-POSTGRES_PASSWORD=<password for default postgres user>
+POSTGRES_USER=<default PostgreSQL database user>
+POSTGRES_PASSWORD=<password for default PostgreSQL user>
 ```
 
 ## License Information

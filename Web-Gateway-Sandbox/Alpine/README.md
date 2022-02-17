@@ -1,15 +1,22 @@
 # Ed-Fi Web Gateway Sandbox
-Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API [v5.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284), along with the SwaggerUI, and the Sandbox Admin tool.
+Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API, along with the SwaggerUI, and the Sandbox Admin tool.
 
 ## Image Links
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Gateway-Sandbox/Alpine/Dockerfile)
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Gateway-Sandbox/Dockerfile)
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Gateway-Sandbox/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Gateway-Sandbox/Alpine/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Gateway-Sandbox/Alpine/Dockerfile)
+- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Gateway-Sandbox/Dockerfile)
+- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Gateway-Sandbox/Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation using [nginx](https://hub.docker.com/_/nginx).
 
 `edfialliance/ods-api-web-gateway-sandbox:<version>`
+
+## Supported Environment Variables
+```
+ODS_VIRTUAL_NAME=<virtual name for the ods endpoint>
+SANDBOX_ADMIN_VIRTUAL_NAME=<virtual name for the sandbox admin endpoint>
+```
 
 ## License Information
 View [license information](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/LICENSE) for the software contained in this image.

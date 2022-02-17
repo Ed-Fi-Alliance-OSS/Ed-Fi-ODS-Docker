@@ -4,9 +4,10 @@ Provides docker deployment for Sandbox Admin tool.
 **NOTE: This image is not recommended for production use.**
 
 ## Image Links
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Sandbox-Admin/Dockerfile)
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Sandbox-Admin/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
+- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Sandbox-Admin/Dockerfile)
+- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Sandbox-Admin/Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation.
@@ -16,11 +17,17 @@ The only supported image at this time is an Alpine-based implementation.
 ## Supported Environment Variables
 ```
 LOGS_FOLDER=<path to store the logs file>
-POSTGRES_USER=<default postgres database user>
-POSTGRES_PASSWORD=<password for default postgres user>
-POSTGRES_PORT=<port that postgres run on default to 5432> (OPTIONAL)
+POSTGRES_USER=<default PostgreSQL database user>
+POSTGRES_PASSWORD=<password for default PostgreSQL user>
+POSTGRES_PORT=<port that PostgreSQL run on> (OPTIONAL, default: 5432)
 ADMIN_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the Admin and Security databases>
 ODS_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the ODS database>
+ADMIN_USER=<default admin user for sandbox admin>
+ADMIN_PASSWORD=<default password for the sandbox admin user>
+MINIMAL_KEY=<minimal template key>
+MINIMAL_SECRET=<minimal template secret>
+POPULATED_KEY=<populated template key>
+POPULATED_SECRET=<populated template secret>
 ```
 
 ## License Information

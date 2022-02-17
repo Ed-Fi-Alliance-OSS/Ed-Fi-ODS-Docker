@@ -1,19 +1,18 @@
 # Ed-Fi ODS Admin App
 
-Provides docker deployment for [Ed-Fi ODS Admin App
-v2.1.0](https://techdocs.ed-fi.org/display/ADMIN/) running SQL Server.
+Provides docker deployment for [Ed-Fi ODS Admin App](https://techdocs.ed-fi.org/display/ADMIN/).
 
 **NOTE: This image is suitable for production use.**
 
 ## Image Links
-
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-Admin/Alpine/mssql/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Ods-AdminApp/Alpine/mssql/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-AdminApp/Alpine/mssql/Dockerfile)
 
 ## Image Variants
 
 The only supported image at this time is an Alpine-based implementation.
 
-`edfialliance/ods-admin-app:<version>`
+`edfialliance/ods-admin-app-mssql:<version>`
 
 ## Supported Environment Variables
 
@@ -28,6 +27,9 @@ SQLSERVER_ODS_DATASOURCE=<DNS or IP Address of the SQL Server Instance, i.e. sql
 SQLSERVER_ADMIN_DATASOURCE=<DNS or IP Address of the SQL Server Instance that contains the Admin/Security/Master databases, i.e. sql.somedns.org or 10.1.5.9,1433>
 SQLSERVER_USER=<SQL Username with access to SQL Server Ed-Fi databases, edfiadmin>
 SQLSERVER_PASSWORD=<SQL Password for the SQLSERVER_USER with access to SQL Server Ed-Fi databases, password123!>
+API_INTERNAL_URL=<the ODS / API endpoint for admin app to internally connect>
+ADMINAPP_VIRTUAL_NAME=<virtual name for admin app's endpoint>
+ADMINAPP_HEALTHCHECK_TEST=<the health check url for admin app>
 ```
 
 `API_HOSTNAME` value is required for successfully connecting to ODS/API. This should be the full host (server) name for public access to the API, not including protocol (e.g. "https") or path (e.g. "/api"). For example, if running on a virtual machine called `edfi` on network `my-district.edu` then this value would be `API_HOSTNAME=edfi.my-district.edu`.

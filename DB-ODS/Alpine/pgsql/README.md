@@ -1,13 +1,13 @@
 # Ed-Fi ODS Database
-Provides docker deployment for **_EdFi_Ods_** and the minimal template **_EdFi_Ods_Minimal_Template_** database implementation of [Ed-Fi Data Standard v3.2.0-c](https://techdocs.ed-fi.org/display/EFDS32/Ed-Fi+Data+Standard+v3.2) on PostgreSQL 11. The databases are installed when the image is is started for the first time.
+Provides docker deployment for **_EdFi_Ods_** and the minimal template **_EdFi_Ods_Minimal_Template_** database implementation of Ed-Fi Data Standard on PostgreSQL 11. The databases are installed when the image is started for the first time.
 
 **Note: This image is suitable for production use in _shared instance_ mode.**
 
 ## Image Links
-[2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/DB-ODS/Alpine/pgsql/Dockerfile)
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/DB-ODS/Alpine/pgsql/Dockerfile)
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/DB-ODS/Dockerfile)
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/DB-ODS/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/DB-ODS/Alpine/pgsql/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/DB-ODS/Alpine/pgsql/Dockerfile)
+- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/DB-ODS/Dockerfile)
+- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/DB-ODS/Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation using [PostgreSQL 11](https://hub.docker.com/_/postgres).
@@ -16,10 +16,10 @@ The only supported image at this time is an Alpine-based implementation using [P
 
 ## Supported Environment Variables
 ```
-POSTGRES_USER=<default postgres database user>
-POSTGRES_PASSWORD=<password for default postgres user>
+POSTGRES_USER=<default PostgreSQL database user>
+POSTGRES_PASSWORD=<password for default PostgreSQL user>
 ODS_DB=<name for the edfi database>
-TPDM_ENABLED=<true/false include TPDM tables>
+TPDM_ENABLED=<true/false include TPDM tables> (OPTIONAL, default: true)
 ```
 
 ## License Information

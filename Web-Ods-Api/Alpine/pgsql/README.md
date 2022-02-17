@@ -1,12 +1,13 @@
 # Ed-Fi Web ODS/API
-Provides docker deployment for Ed-Fi ODS/API [v5.1.0](https://techdocs.ed-fi.org/pages/viewpage.action?pageId=83788284).
+Provides docker deployment for Ed-Fi ODS/API.
 
 **NOTE: This image is suitable for production use.**
 
 ## Image Links
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-Api/Alpine/pgsql/Dockerfile)
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Ods/Dockerfile)
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Ods/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Ods-Api/Alpine/pgsql/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-Api/Alpine/pgsql/Dockerfile)
+- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Ods-Api/Dockerfile)
+- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Ods-Api/Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation.
@@ -17,11 +18,13 @@ The only supported image at this time is an Alpine-based implementation.
 ```
 API_MODE=<mode of api>
 LOGS_FOLDER=<path to store the logs file>
-POSTGRES_USER=<default postgres database user>
-POSTGRES_PASSWORD=<password for default postgres user>
-POSTGRES_PORT=<port that postgres run on default to 5432> (OPTIONAL)
+POSTGRES_USER=<default PostgreSQL database user>
+POSTGRES_PASSWORD=<password for default PostgreSQL user>
+POSTGRES_PORT=<port that PostgreSQL run on> (OPTIONAL, default: 5432)
 ADMIN_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the Admin and Security databases>
 ODS_POSTGRES_HOST=<container-resolved name of the PostgreSQL instance containing the ODS database>
+TPDM_ENABLED=<true/false load TPDM extension> (OPTIONAL, default: true)
+ODS_WAIT_POSTGRES_HOSTS=<space-separated list of PostgreSQL hosts that should be reachable before starting the api (used by multi-server)> (OPTIONAL)
 ```
 
 ## License Information

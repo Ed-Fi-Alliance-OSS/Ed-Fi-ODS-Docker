@@ -1,21 +1,6 @@
 # Ed-Fi ODS Database
-Provides docker deployment for **_EdFi_Ods_** and the minimal template **_EdFi_Ods_Minimal_Template_** database implementation of [Ed-Fi Data Standard v3.2.0-c](https://techdocs.ed-fi.org/display/EFDS32/Ed-Fi+Data+Standard+v3.2) on PostgreSQL 11. The databases are installed when the image is is started for the first time.
 
-**Note: This image is suitable for production use in _shared instance_ mode.**
-
-## Image Links
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/DB-ODS/Dockerfile)
-
-## Image Variants
-The only supported image at this time is an Alpine-based implementation using [PostgreSQL 11](https://hub.docker.com/_/postgres).
-
-`edfialliance/ods-api-db-ods:<version>`
-
-## Supported Environment Variables
-``` 
-POSTGRES_USER=<default postgres database user>
-POSTGRES_PASSWORD=<password for default postgres user>
-```
+> :warning: **Microsoft SQL Server images are not supported at the moment.** However, you can connect an external MS SQL Server to ODS / API and Admin App running on containers. Refer to [Docker Deployment](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) for details.
 
 ## License Information
 View [license information](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/main/LICENSE) for the software contained in this image.
