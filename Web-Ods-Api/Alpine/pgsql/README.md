@@ -6,8 +6,8 @@ Provides docker deployment for Ed-Fi ODS/API.
 ## Image Links
 - [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Ods-Api/Alpine/pgsql/Dockerfile)
 - [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-Api/Alpine/pgsql/Dockerfile)
-- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Ods/Dockerfile)
-- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Ods/Dockerfile)
+- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Ods-Api/Dockerfile)
+- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Ods-Api/Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation.

@@ -2,10 +2,10 @@
 Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API, along with the SwaggerUI, and the Sandbox Admin tool.
 
 ## Image Links
-[2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Gateway-Sandbox/Alpine/Dockerfile)
-[2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Gateway-Sandbox/Alpine/Dockerfile)
-[1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Gateway-Sandbox/Dockerfile)
-[1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Gateway-Sandbox/Dockerfile)
+- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Gateway-Sandbox/Alpine/Dockerfile)
+- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Gateway-Sandbox/Alpine/Dockerfile)
+- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Gateway-Sandbox/Dockerfile)
+- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Gateway-Sandbox/Dockerfile)
 
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation using [nginx](https://hub.docker.com/_/nginx).

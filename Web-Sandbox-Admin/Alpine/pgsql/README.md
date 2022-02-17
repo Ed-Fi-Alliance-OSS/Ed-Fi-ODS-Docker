@@ -28,7 +28,6 @@ MINIMAL_KEY=<minimal template key>
 MINIMAL_SECRET=<minimal template secret>
 POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
-
 ```
 
 ## License Information
