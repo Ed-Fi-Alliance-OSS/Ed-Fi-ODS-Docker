@@ -4,6 +4,7 @@ Provides docker deployment for ***EdFi_Ods_Sandbox_\****, the minimal template *
 **NOTE: A vendor for Grandbend is installed by default, and this implementation is not recommended for a production environment.**
 
 ## Image Links
+- [2.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.1/DB-Sandbox/Alpine/pgsql/Dockerfile)
 - [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/DB-Sandbox/Alpine/pgsql/Dockerfile)
 - [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/DB-Sandbox/Alpine/pgsql/Dockerfile)
 - [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/DB-Sandbox/Dockerfile)
