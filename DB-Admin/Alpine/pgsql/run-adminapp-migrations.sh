@@ -5,7 +5,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 set -e
-set -x
+set +x
 
 if [[ -z "$POSTGRES_PORT" ]]; then
   export POSTGRES_PORT=5432

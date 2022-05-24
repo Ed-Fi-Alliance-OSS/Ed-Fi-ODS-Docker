@@ -5,7 +5,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 set -e
-set -x
+set +x
 
 envsubst < /app/appsettings.template.json > /app/temp.json
 
@@ -21,7 +21,7 @@ if [[ -z "$ODS_WAIT_POSTGRES_HOSTS" ]]; then
   export ODS_WAIT_POSTGRES_HOSTS=$ODS_POSTGRES_HOST
 fi
 
-export ODS_WAIT_POSTGRES_HOSTS_ARR=($ODS_WAIT_POSTGRES_HOSTS) 
+export ODS_WAIT_POSTGRES_HOSTS_ARR=($ODS_WAIT_POSTGRES_HOSTS)
 for HOST in ${ODS_WAIT_POSTGRES_HOSTS_ARR[@]}
 do
   until PGPASSWORD=$POSTGRES_PASSWORD psql -h $HOST -p $POSTGRES_PORT -U $POSTGRES_USER -c '\q';
