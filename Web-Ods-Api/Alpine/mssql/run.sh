@@ -5,7 +5,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 set -e
-set -x
+set +x
 
 if [[ "$TPDM_ENABLED" != true ]]; then
     export Plugin__Folder="./Plugin_Disabled"
