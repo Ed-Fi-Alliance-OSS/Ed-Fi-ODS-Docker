@@ -6,7 +6,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 set -e
-set -x
+set +x
 
 mkdir -p ssl
 openssl dhparam -out ssl/dhparam.pem 4096
