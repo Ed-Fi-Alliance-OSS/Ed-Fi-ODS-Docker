@@ -29,7 +29,8 @@ RUN apk --no-cache add dos2unix=~7.4 unzip=~6.0 && \
     dos2unix /docker-entrypoint-initdb.d/2-run-adminapp-migrations.sh && \
     dos2unix /tmp/EdFi_Admin.sql && \
     dos2unix /tmp/EdFi_Security.sql && \
-    dos2unix /tmp/AdminAppScripts/PgSql/*
+    dos2unix /tmp/AdminAppScripts/PgSql/* && \
+    chmod -R 777 /tmp/AdminAppScripts/PgSql
 
 EXPOSE 5432
 
