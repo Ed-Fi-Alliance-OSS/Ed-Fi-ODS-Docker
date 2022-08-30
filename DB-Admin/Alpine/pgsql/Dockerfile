@@ -3,8 +3,8 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-# Tag postgres:11-alpine
-FROM postgres@sha256:386802b61d7226cdcf8710ed6e5e46f993e0da1f3dd2e829cbab12ee91b888ad 
+# Tag postgres:13-alpine
+FROM postgres@sha256:fc3670fa23119159394dfdb98eee89b30ef5a506791aea6ff7d8a4e73a8cd4a4
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV POSTGRES_USER=${POSTGRES_USER}
