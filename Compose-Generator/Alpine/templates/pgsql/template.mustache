@@ -104,6 +104,7 @@ services:
     environment:
       DATABASES: "* = host = db-ods-{{token}} port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
       PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      QUIET: ${PGBOUNCER_QUIET}
     {{#pgBouncerPort}}
     ports:
       - "{{.}}:${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -159,6 +160,7 @@ services:
     environment:
       DATABASES: "* = host = db-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
       PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      QUIET: ${PGBOUNCER_QUIET}
     ports:
       - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
