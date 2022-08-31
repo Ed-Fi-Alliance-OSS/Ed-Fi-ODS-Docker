@@ -1,7 +1,7 @@
 # Ed-Fi Admin Databases
 
 Provides docker deployment for **_EdFi_Admin_** and **_EdFi_Security_** database
-implementations on PostgreSQL 11. The databases are installed when the image is
+implementations on PostgreSQL 13. The databases are installed when the image is
 started for the first time.
 
 **Note: This image does not include any pre-installed vendors and is suitable
@@ -18,7 +18,7 @@ for production use.**
 ## Image Variants
 
 The only supported image at this time is an Alpine-based implementation using
-[PostgreSQL 11](https://hub.docker.com/_/postgres).
+[PostgreSQL 13](https://hub.docker.com/_/postgres).
 
 `edfialliance/ods-api-db-admin:<version>`
 
