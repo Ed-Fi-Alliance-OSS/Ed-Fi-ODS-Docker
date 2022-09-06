@@ -45,6 +45,9 @@ These compose files use [PGBouncer](https://www.pgbouncer.org/) to manage the co
 3. Update the `POSTGRES_PORT` environment variable to point to 5432.
 4. If required expose the port on the services `db-admin`, and `db-ods` services. Note these ports should be independent.
 
+NOTE - By default, PgBouncer logs the configuration file which contains sensitive information such as the host database username and password.  
+This functionality can be disabled by applying the QUIET flag. The latest version of .env.example has the configuration variable ```PGBOUNCER_QUIET="true"``` which will suppress this
+messaging.  However, older .env files that do not supply the PGBOUNCER\_QUIET configuration variable are still at risk of exposing this sensitive information in logs.
 ## Contributing
 
 The Ed-Fi Alliance welcomes code contributions from the community. For more information, see:
