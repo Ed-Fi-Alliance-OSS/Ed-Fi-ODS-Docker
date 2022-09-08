@@ -11,9 +11,9 @@ ENV POSTGRES_USER=${POSTGRES_USER}
 ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 ENV POSTGRES_DB=postgres
 
-ENV ADMIN_VERSION="5.3.154"
-ENV SECURITY_VERSION="5.3.152"
-ENV ADMINAPP_DATABASE_VERSION="2.3.2"
+ENV ADMIN_VERSION="6.0.110"
+ENV SECURITY_VERSION="6.0.126"
+ENV ADMINAPP_DATABASE_VERSION="2.4.37"
 
 COPY init-database.sh /docker-entrypoint-initdb.d/1-init-database.sh
 COPY run-adminapp-migrations.sh /docker-entrypoint-initdb.d/2-run-adminapp-migrations.sh
