@@ -46,6 +46,7 @@ services:
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
       ODS_WAIT_POSTGRES_HOSTS: "EdFi_Ods_2021 EdFi_Ods_2022 "
+      API_HEALTHCHECK_TEST: ${API_HEALTHCHECK_TEST?Please consult env.example to set the API healthcheck test}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -55,6 +56,10 @@ services:
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
+    healthcheck:
+      test: $$API_HEALTHCHECK_TEST
+      start_period: "60s"
+      retries: 3
 
 
   db-ods-2021:
