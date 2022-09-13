@@ -88,6 +88,7 @@ services:
       ADMIN_POSTGRES_HOST: pb-admin
       PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
       OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/oauth/"
+      SANDBOX_HEALTHCHECK_TEST: ${SANDBOX_HEALTHCHECK_TEST?Please consult env.example to set the API healthcheck test}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -96,6 +97,10 @@ services:
     restart: always
     hostname: admin
     container_name: ed-fi-sandbox-admin
+    healthcheck:
+      test: $$SANDBOX_HEALTHCHECK_TEST
+      start_period: "60s"
+      retries: 3
 
   swagger:
     image: edfialliance/ods-api-web-swaggerui:${TAG}
