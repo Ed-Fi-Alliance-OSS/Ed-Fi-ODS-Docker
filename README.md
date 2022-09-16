@@ -47,15 +47,31 @@ These compose files use [PGBouncer](https://www.pgbouncer.org/) to provide a _se
 
 Client-side pooling with npgsql is based on the connection string (see [Npgsql Connection Pool Explained](https://fxjr.blogspot.com/2010/04/npgsql-connection-pool-explained.html)). The pool can be [configured in the connection string](https://www.npgsql.org/doc/connection-string-parameters.html?q=pooling#pooling) with a minimum (_default=0_) and maximum (_default=100_) pool size. When a connection is requested from the client-side pool the first time, the pool will be initialized with the configured minimum number of connections (_default=0_). After that, the pool will continue to increase in size (as needed) up to the configured maximum (_default=100_). Additionally, the pool will release an idle connection after a period of inactivity (_default=300s_).
 
-One of the challenges here is that by default there is a connection limit of 100 in PostgreSQL. So when configuring client-side pools, the nature of the deployment environment will greatly influence what an appropriate configuration would be to avoid connection failures by exceeding the total connection limit of 100. The Admin App and API processes/containers would each have a minimum of 3 connection pools (for EdFi_Admin, EdFi_Security and the EdFi_Ods). In a year-specific deployment, the number of distinct ODS connection strings (and pools) grows for each school year. In a district-specific or instance-based deployment the number of pools could get to be quite large. Factor in additional containers for high availability and/or scale out, and the total number of client connection pools increases further. As a result, client-side pooling may be untenable for all but the simplest of deployments.
+One of the challenges with client-side pooling is that by default there is a connection limit of 100 in PostgreSQL, so when configuring client-side pooling the nature of the deployment environment will greatly influence what an appropriate configuration would be (to avoid connection failures by exceeding the total number of available connections). The Admin App and API processes/containers would each have a minimum of 3 connection pools (for EdFi_Admin, EdFi_Security and the EdFi_Ods). In a year-specific deployment, the number of distinct ODS connection strings (and pools) grows for each school year. In a district-specific or instance-based deployment the number of pools could get to be quite large. Factor in additional containers for high availability and/or scale out, and the total number of client connection pools increases further. As a result, client-side pooling may be untenable for all but the simplest of deployments.
 
-However, to remove PGBouncer as a dependency and configure client-side connection pooling instead, make the following changes:
+The following environment variables can be used to control client-side pooling:
+
+| Name                                 | Description                                                                                                    |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `NPG_POOLING_ENABLED`                | Enables or disables client-side pooling (*default: false*).                                                    |
+| `NPG_API_MAX_POOL_SIZE_ODS`          | The maximum number of connections for each distinct ODS database from each Ed-Fi ODS API container.            |
+| `NPG_API_MAX_POOL_SIZE_ADMIN`        | The maximum number of connections for the EdFi_Admin database from each Ed-Fi ODS API container.               |
+| `NPG_API_MAX_POOL_SIZE_SECURITY`     | The maximum number of connections for the EdFi_Security database from each Ed-Fi ODS API container.            |
+| `NPG_API_MAX_POOL_SIZE_MASTER`       | The maximum number of connections for the 'postgres' default database from each Ed-Fi ODS API container.       |
+| `NPG_ADMIN_MAX_POOL_SIZE_ODS`        | The maximum number of connections for each distinct ODS database from each Admin App container.                |
+| `NPG_ADMIN_MAX_POOL_SIZE_ADMIN`      | The maximum number of connections for the EdFi_Admin database from each Admin App container.                   |
+| `NPG_ADMIN_MAX_POOL_SIZE_SECURITY`   | The maximum number of connections for the EdFi_Security database from each Admin App container.                |
+| `NPG_SANDBOX_MAX_POOL_SIZE_ODS`      | The maximum number of connections for each distinct ODS database from each Ed-Fi Sandbox Admin container.      |
+| `NPG_SANDBOX_MAX_POOL_SIZE_ADMIN`    | The maximum number of connections for the EdFi_Admin database from each Ed-Fi Sandbox Admin container.         |
+| `NPG_SANDBOX_MAX_POOL_SIZE_SECURITY` | The maximum number of connections for the EdFi_Security database from each Ed-Fi Sandbox Admin container.      |
+| `NPG_SANDBOX_MAX_POOL_SIZE_MASTER`   | The maximum number of connections for the 'postgres' default database from each Ed-Fi Sandbox Admin container. |
+
+To remove PGBouncer, make the following changes:
 
 1. Remove and/or comment out the `pb-admin` and `pb-ods*` services from the compose file.
 2. Update `admin`, and `api` services and change the database environment variables (`ODS_POSTGRES_HOST`, and `ADMIN_POSTGRES_HOST`) to point to `db-ods` and `db-admin` from `pb-ods` and `pb-admin`.
 3. Update the `POSTGRES_PORT` environment variable to point to 5432.
 4. If required expose the port on the services `db-admin`, and `db-ods` services. Note these ports should be independent.
-5. Apply connection string settings for [client-side connection pooling](https://www.npgsql.org/doc/connection-string-parameters.html?q=pooling#pooling) in the _appsettings.template.json_ files for the applicable containers.
 
 ## Contributing
 The Ed-Fi Alliance welcomes code contributions from the community. For more information, see:
