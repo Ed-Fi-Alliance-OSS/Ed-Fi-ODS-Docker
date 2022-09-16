@@ -16,6 +16,10 @@ services:
       - vol-db-ods:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      start_period: "60s"
+      retries: 3
 
   db-admin:
     image: edfialliance/ods-api-db-admin:${TAG}
@@ -27,6 +31,10 @@ services:
       - vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      start_period: "60s"
+      retries: 3
 
   nginx:
     image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
@@ -57,6 +65,7 @@ services:
       ADMIN_POSTGRES_HOST: pb-admin
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
+      API_HEALTHCHECK_TEST: ${API_HEALTHCHECK_TEST?Please consult env.example to set the API healthcheck test}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -66,6 +75,10 @@ services:
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
+    healthcheck:
+      test: $$API_HEALTHCHECK_TEST
+      start_period: "60s"
+      retries: 3
 
   admin:
     image: edfialliance/ods-api-web-sandbox-admin:${TAG}
@@ -83,6 +96,7 @@ services:
       ADMIN_POSTGRES_HOST: pb-admin
       PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
       OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/oauth/"
+      SANDBOX_HEALTHCHECK_TEST: ${SANDBOX_HEALTHCHECK_TEST?Please consult env.example to set the API healthcheck test}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -91,6 +105,10 @@ services:
     restart: always
     hostname: admin
     container_name: ed-fi-sandbox-admin
+    healthcheck:
+      test: $$SANDBOX_HEALTHCHECK_TEST
+      start_period: "60s"
+      retries: 3
 
   swagger:
     image: edfialliance/ods-api-web-swaggerui:${TAG}
@@ -99,6 +117,7 @@ services:
       POPULATED_SECRET: "${POPULATED_SECRET}"
       WebApiVersionUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/"
       PathBase: "${DOCS_VIRTUAL_NAME:-docs}"
+      SWAGGER_HEALTHCHECK_TEST: ${SWAGGER_HEALTHCHECK_TEST?Please consult env.example to set the SWAGGER healthcheck test}
     depends_on:
       - api
       - admin
@@ -107,6 +126,10 @@ services:
     restart: always
     hostname: swagger
     container_name: ed-fi-swagger
+    healthcheck:
+      test: $$SWAGGER_HEALTHCHECK_TEST
+      start_period: "60s"
+      retries: 3
 
   pb-admin:
     image: pgbouncer/pgbouncer
