@@ -4,7 +4,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 # Tag postgres:11-alpine
-FROM postgres@sha256:386802b61d7226cdcf8710ed6e5e46f993e0da1f3dd2e829cbab12ee91b888ad 
+FROM postgres@sha256:386802b61d7226cdcf8710ed6e5e46f993e0da1f3dd2e829cbab12ee91b888ad
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV POSTGRES_USER=${POSTGRES_USER}
@@ -13,7 +13,7 @@ ENV POSTGRES_DB=postgres
 
 ENV ADMIN_VERSION="5.3.154"
 ENV SECURITY_VERSION="5.3.152"
-ENV ADMINAPP_DATABASE_VERSION="2.3.2"
+ENV ADMINAPP_DATABASE_VERSION="2.4.48"
 
 COPY init-database.sh /docker-entrypoint-initdb.d/1-init-database.sh
 COPY run-adminapp-migrations.sh /docker-entrypoint-initdb.d/2-run-adminapp-migrations.sh
