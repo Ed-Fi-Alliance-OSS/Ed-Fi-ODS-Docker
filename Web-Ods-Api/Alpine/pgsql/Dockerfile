@@ -10,6 +10,7 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 ENV VERSION="6.0.1192"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
+ENV NPG_POOLING_ENABLED=false
 ENV ODS_VIRTUAL_NAME=api
 ENV ApiSettings__PathBase="${ODS_VIRTUAL_NAME}"
 

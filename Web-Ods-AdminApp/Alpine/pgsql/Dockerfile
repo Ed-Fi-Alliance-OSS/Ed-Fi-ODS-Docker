@@ -10,6 +10,7 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 ENV VERSION="2.4.37"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
+ENV NPG_POOLING_ENABLED=false
 ENV ADMINAPP_VIRTUAL_NAME=adminapp
 ENV API_MODE=SharedInstance
 
