@@ -31,7 +31,7 @@ mv /app/temp.json /app/appsettings.json
 # >&2 echo "Postgres is up - executing command"
 # exec $cmd
 
-if [ -f /ssl/server/crt] then
+if [ -f /ssl/server.crt] then
   cp /ssl/server.crt /usr/local/share/ca-certificates/
   update-ca-certificates
 fi
