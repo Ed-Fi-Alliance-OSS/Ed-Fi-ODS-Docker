@@ -7,7 +7,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet@sha256:4e32cb869308e781e518f721b25bd26b3a91fb3e2100c6d29e72176f75417472
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="2.4.37"
+ENV VERSION="3.0.0"
 ENV PGBOUNCER_LISTEN_PORT=6432
 ENV ADMINAPP_VIRTUAL_NAME=adminapp
 ENV API_MODE=SharedInstance
