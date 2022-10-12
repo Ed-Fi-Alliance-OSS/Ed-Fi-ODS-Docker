@@ -4,6 +4,9 @@ Provides docker deployment for SwaggerUI.
 **NOTE: This image is not recommended for production use.**
 
 ## Image Links
+- [2.2.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.2.0/Web-SwaggerUI/Alpine/Dockerfile)
+- [2.1.4](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.4/Web-SwaggerUI/Alpine/Dockerfile)
+- [2.1.3](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.3/Web-SwaggerUI/Alpine/Dockerfile)
 - [2.1.2](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.2/Web-SwaggerUI/Alpine/Dockerfile)
 - [2.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.1/Web-SwaggerUI/Alpine/Dockerfile)
 - [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-SwaggerUI/Alpine/Dockerfile)
