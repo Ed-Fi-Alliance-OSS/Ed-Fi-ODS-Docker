@@ -8,6 +8,9 @@ started for the first time.
 for production use.**
 
 ## Image Links
+- [2.2.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.2.0/DB-Admin/Alpine/pgsql/Dockerfile)
+- [2.1.4](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.4/DB-Admin/Alpine/pgsql/Dockerfile)
+- [2.1.3](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.3/DB-Admin/Alpine/pgsql/Dockerfile)
 - [2.1.2](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.2/DB-Admin/Alpine/pgsql/Dockerfile)
 - [2.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.1/DB-Admin/Alpine/pgsql/Dockerfile)
 - [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/DB-Admin/Alpine/pgsql/Dockerfile)
