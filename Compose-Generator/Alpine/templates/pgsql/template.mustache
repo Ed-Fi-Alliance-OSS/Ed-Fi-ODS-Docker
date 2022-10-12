@@ -23,6 +23,10 @@ services:
       - vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      start_period: "60s"
+      retries: 3
 
   nginx:
     {{#usePreBuiltImages}}
@@ -108,6 +112,10 @@ services:
       - vol-db-ods-{{token}}:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods-{{token}}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      start_period: "60s"
+      retries: 3
 
   edfi_ods_{{token}}:
     image: pgbouncer/pgbouncer

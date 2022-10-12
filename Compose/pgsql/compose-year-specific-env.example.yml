@@ -16,6 +16,10 @@ services:
       - vol-db-admin:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-admin
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      start_period: "60s"
+      retries: 3
 
   nginx:
     image: edfialliance/ods-api-web-gateway:${TAG}
@@ -45,7 +49,7 @@ services:
       API_MODE: YearSpecific
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
-      ODS_WAIT_POSTGRES_HOSTS: "EdFi_Ods_2021 EdFi_Ods_2022 "
+      ODS_WAIT_POSTGRES_HOSTS: "EdFi_Ods_2022 EdFi_Ods_2023 "
       API_HEALTHCHECK_TEST: ${API_HEALTHCHECK_TEST?Please consult env.example to set the API healthcheck test}
       NPG_POOLING_ENABLED: "${NPG_POOLING_ENABLED:-false}"
       NPG_API_MAX_POOL_SIZE_ODS: "${NPG_API_MAX_POOL_SIZE_ODS}"
@@ -56,8 +60,8 @@ services:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
       - pb-admin
-      - edfi_ods_2021
       - edfi_ods_2022
+      - edfi_ods_2023
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
@@ -66,31 +70,6 @@ services:
       start_period: "60s"
       retries: 3
 
-
-  db-ods-2021:
-    image: edfialliance/ods-api-db-ods:${TAG}
-    environment:
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      TPDM_ENABLED: "${TPDM_ENABLED:-true}"
-      ODS_DB: "EdFi_Ods_2021"
-    volumes:
-      - vol-db-ods-2021:/var/lib/postgresql/data
-    restart: always
-    container_name: ed-fi-db-ods-2021
-
-  edfi_ods_2021:
-    image: pgbouncer/pgbouncer
-    environment:
-      DATABASES: "* = host = db-ods-2021 port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      QUIET: ${PGBOUNCER_QUIET}
-    ports:
-      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
-    restart: always
-    container_name: ed-fi-pb-ods-2021
-    depends_on:
-      - db-ods-2021
 
   db-ods-2022:
     image: edfialliance/ods-api-db-ods:${TAG}
@@ -103,6 +82,10 @@ services:
       - vol-db-ods-2022:/var/lib/postgresql/data
     restart: always
     container_name: ed-fi-db-ods-2022
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      start_period: "60s"
+      retries: 3
 
   edfi_ods_2022:
     image: pgbouncer/pgbouncer
@@ -111,11 +94,40 @@ services:
       PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       QUIET: ${PGBOUNCER_QUIET}
     ports:
-      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-ods-2022
     depends_on:
       - db-ods-2022
+
+  db-ods-2023:
+    image: edfialliance/ods-api-db-ods:${TAG}
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      TPDM_ENABLED: "${TPDM_ENABLED:-true}"
+      ODS_DB: "EdFi_Ods_2023"
+    volumes:
+      - vol-db-ods-2023:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods-2023
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      start_period: "60s"
+      retries: 3
+
+  edfi_ods_2023:
+    image: pgbouncer/pgbouncer
+    environment:
+      DATABASES: "* = host = db-ods-2023 port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
+      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      QUIET: ${PGBOUNCER_QUIET}
+    ports:
+      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
+    restart: always
+    container_name: ed-fi-pb-ods-2023
+    depends_on:
+      - db-ods-2023
 
   adminapp:
     image: edfialliance/ods-admin-app:${TAG}
@@ -131,7 +143,7 @@ services:
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       API_INTERNAL_URL: ${API_INTERNAL_URL?Please consult env.example to set the Api internal url}
       ADMINAPP_HEALTHCHECK_TEST: ${ADMINAPP_HEALTHCHECK_TEST?Please consult env.example to set the Admin App healthcheck test}
-      ODS_WAIT_POSTGRES_HOSTS: "EdFi_Ods_2021 EdFi_Ods_2022 "
+      ODS_WAIT_POSTGRES_HOSTS: "EdFi_Ods_2022 EdFi_Ods_2023 "
       NPG_POOLING_ENABLED: "${NPG_POOLING_ENABLED:-false}"
       NPG_ADMIN_MAX_POOL_SIZE_ODS: "${NPG_ADMIN_MAX_POOL_SIZE_ODS}"
       NPG_ADMIN_MAX_POOL_SIZE_ADMIN: "${NPG_ADMIN_MAX_POOL_SIZE_ADMIN}"
@@ -143,8 +155,8 @@ services:
     depends_on:
       - pb-admin
       - api
-      - edfi_ods_2021
       - edfi_ods_2022
+      - edfi_ods_2023
     restart: always
     hostname: adminapp
     container_name: ed-fi-ods-adminapp
@@ -173,9 +185,9 @@ volumes:
   adminapp-bulk-hashcache:
     driver: local
     name: vol-adminapp-bulk-hashcache
-  vol-db-ods-2021:
-    driver: local
-    name: vol-db-ods-2021
   vol-db-ods-2022:
     driver: local
     name: vol-db-ods-2022
+  vol-db-ods-2023:
+    driver: local
+    name: vol-db-ods-2023
