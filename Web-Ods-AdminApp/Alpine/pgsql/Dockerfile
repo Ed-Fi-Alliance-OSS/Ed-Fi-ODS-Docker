@@ -23,7 +23,7 @@ COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
 COPY log4net.config /app/log4net.txt
 
-RUN apk --no-cache add unzip=~6.0 dos2unix=~7.4 bash=~5.1 gettext=~0.21 postgresql13-client=~13.8-r0 jq=~1.6 icu=~71.1-r2 curl=~7.83.1-r3 && \
+RUN apk --no-cache add unzip=~6 dos2unix=~7 bash=~5 gettext=~0.21 postgresql13-client=~13 jq=~1 icu=~71 curl=~7 && \
     wget -O /app/AdminApp.zip  https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.ODS.AdminApp.Web/versions/${VERSION}/content && \
     unzip /app/AdminApp.zip -d /app && \
     rm -f /app/AdminApp.zip && \
