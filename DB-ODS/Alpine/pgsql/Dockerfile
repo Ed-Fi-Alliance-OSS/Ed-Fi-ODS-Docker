@@ -17,7 +17,7 @@ ENV POSTGRES_DB=postgres
 
 COPY init-database.sh /docker-entrypoint-initdb.d/init-database.sh
 
-RUN apk --no-cache add unzip=~6.0 dos2unix=~7.4 && \
+RUN apk --no-cache add unzip=~6 dos2unix=~7 && \
     # Download and extract Minimal Template for core Ed-Fi Data Model
     wget -O /tmp/OdsMinimalDatabase.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.Minimal.Template.PostgreSQL/versions/${MINVERSION}/content && \
     unzip -p /tmp/OdsMinimalDatabase.zip EdFi.Ods.Minimal.Template.sql > /tmp/EdFi_Ods_Minimal_Template.sql && \
