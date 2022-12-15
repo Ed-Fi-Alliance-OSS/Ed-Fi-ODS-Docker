@@ -17,6 +17,7 @@ server {
 
     ssl_certificate /ssl/server.crt;
     ssl_certificate_key /ssl/server.key;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
     # Sourced from https://enable-cors.org/server_nginx.html with modifications
     location /${ODS_VIRTUAL_NAME} {
