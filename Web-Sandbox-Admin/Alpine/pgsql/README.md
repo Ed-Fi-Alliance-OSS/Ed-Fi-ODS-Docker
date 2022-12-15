@@ -3,17 +3,6 @@ Provides docker deployment for Sandbox Admin tool.
 
 **NOTE: This image is not recommended for production use.**
 
-## Image Links
-- [2.2.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.2.0/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
-- [2.1.4](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.4/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
-- [2.1.3](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.3/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
-- [2.1.2](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.2/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
-- [2.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.1/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
-- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
-- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Sandbox-Admin/Alpine/pgsql/Dockerfile)
-- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Sandbox-Admin/Dockerfile)
-- [1.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.0.0/Web-Sandbox-Admin/Dockerfile)
-
 ## Image Variants
 The only supported image at this time is an Alpine-based implementation.
 
