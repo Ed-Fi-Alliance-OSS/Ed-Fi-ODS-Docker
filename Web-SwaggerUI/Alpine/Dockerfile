@@ -7,7 +7,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet@sha256:4e32cb869308e781e518f721b25bd26b3a91fb3e2100c6d29e72176f75417472
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="6.0.1192"
+ENV VERSION="6.1.901"
 ENV DOCS_VIRTUAL_NAME=docs
 ENV ODS_VIRTUAL_NAME=api
 ENV WebApiVersionUrl="https://localhost/${ODS_VIRTUAL_NAME}/"
