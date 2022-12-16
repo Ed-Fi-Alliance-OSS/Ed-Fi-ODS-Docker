@@ -4,16 +4,6 @@ Provides docker deployment for [Ed-Fi ODS Admin App](https://techdocs.ed-fi.org/
 
 **NOTE: This image is suitable for production use.**
 
-## Image Links
-- [2.2.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.2.0/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
-- [2.1.4](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.4/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
-- [2.1.3](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.3/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
-- [2.1.2](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.2/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
-- [2.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.1/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
-- [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
-- [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-AdminApp/Alpine/pgsql/Dockerfile)
-- [1.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v1.1.0/Web-Ods-AdminApp/Dockerfile)
-
 ## Image Variants
 
 The only supported image at this time is an Alpine-based implementation.
