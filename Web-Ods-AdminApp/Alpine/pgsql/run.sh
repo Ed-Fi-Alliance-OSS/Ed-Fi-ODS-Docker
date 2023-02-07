@@ -7,14 +7,7 @@
 set -e
 set +x
 
-envsubst < /app/appsettings.template.json > /app/temp.json
-
-measurementId=`jq -r '.AppSettings.GoogleAnalyticsMeasurementId' /app/appsettings.json`
-
-tmp=$(mktemp)
-jq --arg variable "$measurementId" '.AppSettings.GoogleAnalyticsMeasurementId = $variable' /app/temp.json > "$tmp" && mv "$tmp" /app/temp.json
-
-mv /app/temp.json /app/appsettings.json
+envsubst < /app/appsettings.template.json > /app/appsettings.json
 
 if [[ -z "$ODS_WAIT_POSTGRES_HOSTS" ]]; then
   # if there are no hosts to wait then fallback to $ODS_POSTGRES_HOST
