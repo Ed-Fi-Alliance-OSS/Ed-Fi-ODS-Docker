@@ -13,7 +13,7 @@ ENV POSTGRES_DB=postgres
 
 ENV ADMIN_VERSION="6.1.45"
 ENV SECURITY_VERSION="6.1.56"
-ENV ADMINAPP_DATABASE_VERSION="3.0.0"
+ENV ADMINAPP_DATABASE_VERSION="3.1.0"
 
 COPY init-database.sh /docker-entrypoint-initdb.d/1-init-database.sh
 COPY run-adminapp-migrations.sh /docker-entrypoint-initdb.d/2-run-adminapp-migrations.sh
