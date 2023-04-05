@@ -22,7 +22,7 @@ COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
 COPY log4net.config /app/log4net.txt
 
-RUN apk --no-cache add unzip=6.0-r8 dos2unix=7.4.2-r0 bash=5.1.0-r0 gettext=0.20.2-r2 icu=67.1-r2 && \
+RUN apk --no-cache add unzip=~6 dos2unix=~7 bash=~5 gettext=~0 icu=~71 && \
     wget -O /app/SandboxAdmin.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.SandboxAdmin/versions/${VERSION}/content && \
     unzip /app/SandboxAdmin.zip -d /app && \
     rm -f /app/SandboxAdmin.zip && \
