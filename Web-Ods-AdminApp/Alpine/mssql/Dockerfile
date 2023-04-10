@@ -3,7 +3,7 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet@sha256:04c3f55d802cdbaf23bf1ef86190bd8c1606cf07ff353619d24b030edc2afe54
+FROM mcr.microsoft.com/dotnet/core/aspnet@sha256:16332ec13dd77a8400edda0fb513b6ae204549adcd957aaa20dad6d26f645b5d
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV VERSION="2.2.0"
@@ -21,7 +21,7 @@ COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
 COPY log4net.config /app/log4net.txt
 
-RUN apk --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main add unzip=~6 dos2unix=7.4.2-r0 bash=~5 gettext=~0 postgresql-client=~11 jq=1.6-r1 icu=~71 && \
+RUN apk --no-cache add unzip=~6.0 dos2unix=~7.4 bash=~5.1 gettext=~0.21 postgresql-client=~13.10 jq=~1.6 icu=~67.1 curl=~7.79 && \
     wget -O /app/AdminApp.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.ODS.AdminApp.Web/versions/${VERSION}/content && \
     unzip /app/AdminApp.zip -d /app && \
     rm -f /app/AdminApp.zip && \
