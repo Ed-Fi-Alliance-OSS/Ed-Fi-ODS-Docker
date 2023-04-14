@@ -3,7 +3,7 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
+FROM mcr.microsoft.com/dotnet/core/aspnet@sha256:16332ec13dd77a8400edda0fb513b6ae204549adcd957aaa20dad6d26f645b5d
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV VERSION="5.2.0-b13315"
@@ -12,7 +12,7 @@ WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
 
-RUN apk add unzip dos2unix bash gettext && \
+RUN apk --no-cache add unzip=~6.0 dos2unix=~7.4 bash=~5.1 gettext=~0.21 && \
     wget -O /app/SwaggerUI.zip https://www.myget.org/F/ed-fi/api/v2/package/EdFi.Suite3.Ods.SwaggerUI/${VERSION} && \
     unzip /app/SwaggerUI.zip -d /app && \
     rm -f /app/SwaggerUI.zip && \

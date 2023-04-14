@@ -3,17 +3,17 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
+FROM mcr.microsoft.com/dotnet/core/aspnet@sha256:16332ec13dd77a8400edda0fb513b6ae204549adcd957aaa20dad6d26f645b5d
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="5.1.0"
+ENV VERSION="5.1.1"
 
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
 COPY run.sh /app/run.sh
 COPY log4net.config /app/log4net.txt
 
-RUN apk add unzip dos2unix bash gettext postgresql-client && \
+RUN apk --no-cache add unzip=~6.0 dos2unix=~7.4 bash=~5.1 gettext=~0.21 postgresql-client=~13.10 && \
     wget -O /app/WebApi.zip  https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.WebApi/versions/${VERSION}/content && \
     unzip /app/WebApi.zip -d /app && \
     rm -f /app/WebApi.zip && \
