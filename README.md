@@ -8,10 +8,16 @@ The compose files expose the databases outside of the Docker network (through Pg
 
 ```yaml
 pb-ods:
-  image: pgbouncer/pgbouncer
+  image: bitnami/pgbouncer
   environment:
-    DATABASES: "* = host = db-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-    PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-ods
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
   ports:
     - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
   restart: always
@@ -24,10 +30,16 @@ would be changed to:
 
 ```yaml
 pb-ods:
-  image: pgbouncer/pgbouncer
+  image: bitnami/pgbouncer
   environment:
-    DATABASES: "* = host = db-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-    PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-ods
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
   restart: always
   container_name: ed-fi-pb-ods
   depends_on:
