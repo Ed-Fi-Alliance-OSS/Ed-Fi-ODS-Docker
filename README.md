@@ -49,9 +49,13 @@ pb-ods:
 ### Supported environment variables
 [.env.example](.env.example) file included in the repository lists the supported environment variables.
 
+### PGBouncer security
+Variables ```POSTGRESQL_USER: "${POSTGRES_USER}"``` and ```POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"``` set the security to use an auth_file. Connections done through an exposed pgbouncer port will require a valid user and password.
+Variables ```PGBOUNCER_SET_DATABASE_USER: "yes"``` and ```PGBOUNCER_SET_DATABASE_PASSWORD: "yes"``` will include the database and password in the connection string, allowing to have access to the databases in the PG server.
+
 ### PGBouncer logging
 By default, PgBouncer logs the configuration file which contains sensitive information such as the host database username and password.  
-This functionality can be disabled by applying the QUIET flag. The latest version of .env.example has the configuration variable ```PGBOUNCER_QUIET="true"``` which will suppress this
+This functionality can be disabled by applying the QUIET flag. The latest version of .env.example has the configuration variable ```PGBOUNCER_EXTRA_FLAGS="--quiet"``` which will suppress this
 messaging.  However, older .env files that do not supply the PGBOUNCER\_QUIET configuration variable are still at risk of exposing this sensitive information in logs.
 
 ### Connection Pooling Options
