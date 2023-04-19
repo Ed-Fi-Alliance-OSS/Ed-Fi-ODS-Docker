@@ -118,11 +118,16 @@ services:
       retries: 3
 
   edfi_ods_{{token}}:
-    image: pgbouncer/pgbouncer
+    image: bitnami/pgbouncer
     environment:
-      DATABASES: "* = host = db-ods-{{token}} port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      QUIET: ${PGBOUNCER_QUIET}
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-ods-{{token}}
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
     {{#pgBouncerPort}}
     ports:
       - "{{.}}:${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -178,11 +183,16 @@ services:
       retries: 3
 
   pb-admin:
-    image: pgbouncer/pgbouncer
+    image: bitnami/pgbouncer
     environment:
-      DATABASES: "* = host = db-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      QUIET: ${PGBOUNCER_QUIET}
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-admin
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
     ports:
       - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always

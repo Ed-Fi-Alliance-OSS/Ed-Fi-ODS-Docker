@@ -8,10 +8,16 @@ The compose files expose the databases outside of the Docker network (through Pg
 
 ```yaml
 pb-ods:
-  image: pgbouncer/pgbouncer
+  image: bitnami/pgbouncer
   environment:
-    DATABASES: "* = host = db-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-    PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-ods
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
   ports:
     - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
   restart: always
@@ -24,10 +30,16 @@ would be changed to:
 
 ```yaml
 pb-ods:
-  image: pgbouncer/pgbouncer
+  image: bitnami/pgbouncer
   environment:
-    DATABASES: "* = host = db-ods port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-    PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-ods
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
   restart: always
   container_name: ed-fi-pb-ods
   depends_on:
@@ -37,9 +49,13 @@ pb-ods:
 ### Supported environment variables
 [.env.example](.env.example) file included in the repository lists the supported environment variables.
 
+### PGBouncer security
+Variables ```POSTGRESQL_USER: "${POSTGRES_USER}"``` and ```POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"``` set the security to use an auth_file. Connections done through an exposed pgbouncer port will require a valid user and password.
+Variables ```PGBOUNCER_SET_DATABASE_USER: "yes"``` and ```PGBOUNCER_SET_DATABASE_PASSWORD: "yes"``` will include the database and password in the connection string, allowing to have access to the databases in the PG server.
+
 ### PGBouncer logging
 By default, PgBouncer logs the configuration file which contains sensitive information such as the host database username and password.  
-This functionality can be disabled by applying the QUIET flag. The latest version of .env.example has the configuration variable ```PGBOUNCER_QUIET="true"``` which will suppress this
+This functionality can be disabled by applying the QUIET flag. The latest version of .env.example has the configuration variable ```PGBOUNCER_EXTRA_FLAGS="--quiet"``` which will suppress this
 messaging.  However, older .env files that do not supply the PGBOUNCER\_QUIET configuration variable are still at risk of exposing this sensitive information in logs.
 
 ### Connection Pooling Options

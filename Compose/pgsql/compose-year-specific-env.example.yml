@@ -88,11 +88,16 @@ services:
       retries: 3
 
   edfi_ods_2022:
-    image: pgbouncer/pgbouncer
+    image: bitnami/pgbouncer
     environment:
-      DATABASES: "* = host = db-ods-2022 port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      QUIET: ${PGBOUNCER_QUIET}
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-ods-2022
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
     ports:
       - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
@@ -117,11 +122,16 @@ services:
       retries: 3
 
   edfi_ods_2023:
-    image: pgbouncer/pgbouncer
+    image: bitnami/pgbouncer
     environment:
-      DATABASES: "* = host = db-ods-2023 port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      QUIET: ${PGBOUNCER_QUIET}
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-ods-2023
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
     ports:
       - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
@@ -166,11 +176,16 @@ services:
       retries: 3
 
   pb-admin:
-    image: pgbouncer/pgbouncer
+    image: bitnami/pgbouncer
     environment:
-      DATABASES: "* = host = db-admin port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD}"
-      PGBOUNCER_LISTEN_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      QUIET: ${PGBOUNCER_QUIET}
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-admin
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
     ports:
       - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
