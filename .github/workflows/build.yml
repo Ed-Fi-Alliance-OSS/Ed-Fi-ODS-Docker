@@ -1,17 +1,23 @@
-name: Lint Docker Files
+name: Lint and Build Docker Files
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - ODS-*
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Lint Docker Files
+    name: Lint and Build Docker Files
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Ed-Fi-ODS-Docker
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
-
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
@@ -22,3 +28,55 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
           VALIDATE_DOCKERFILE_HADOLINT: true
+
+      - name: Build the Compose-Generator Docker image
+        run: docker build .
+        working-directory: Compose-Generator/Alpine
+
+      - name: Build the DB-Admin Docker image
+        run: docker build .
+        working-directory: DB-Admin/Alpine/pgsql
+
+      - name: Build the DB-ODS Docker image
+        run: docker build .
+        working-directory: DB-ODS/Alpine/pgsql
+
+      - name: Build the DB-Sandbox Docker image
+        run: docker build .
+        working-directory: DB-Sandbox/Alpine/pgsql
+
+      - name: Build the Web-Gateway-Sandbox Docker image
+        run: docker build .
+        working-directory: Web-Gateway-Sandbox/Alpine
+
+      - name: Build the Web-Gateway Docker image
+        run: docker build .
+        working-directory: Web-Gateway/Alpine
+
+      - name: Build the mssql Web-Ods-AdminApp Docker image
+        run: docker build .
+        working-directory: Web-Ods-AdminApp/Alpine/mssql
+
+      - name: Build the pgsql Web-Ods-AdminApp Docker image
+        run: docker build .
+        working-directory: Web-Ods-AdminApp/Alpine/pgsql
+
+      - name: Build the mssql Web-Ods-Api Docker image
+        run: docker build .
+        working-directory: Web-Ods-Api/Alpine/mssql
+
+      - name: Build the pgsql Web-Ods-Api Docker image
+        run: docker build .
+        working-directory: Web-Ods-Api/Alpine/pgsql
+
+      - name: Build the mssql Web-Sandbox-Admin Docker image
+        run: docker build .
+        working-directory: Web-Sandbox-Admin/Alpine/mssql
+
+      - name: Build the pgsql Web-Sandbox-Admin Docker image
+        run: docker build .
+        working-directory: Web-Sandbox-Admin/Alpine/pgsql
+
+      - name: Build the Web-SwaggerUI Docker image
+        run: docker build .
+        working-directory: Web-SwaggerUI/Alpine
