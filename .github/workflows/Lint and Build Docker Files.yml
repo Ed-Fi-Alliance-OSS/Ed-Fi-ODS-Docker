@@ -28,8 +28,9 @@ jobs:
           VALIDATE_DOCKERFILE_HADOLINT: true
 
       - name: Build the Docker images
+        shell: pwsh
         run: |
-          $paths = dir -recurse -file -include Docker* | select Directory
-          foreach($path in $paths) {
-            docker build $path.Directory
+          dir -recurse -file -include Docker* | select Directory |
+          ForEach-Object {
+            docker build $_.Directory
           }
