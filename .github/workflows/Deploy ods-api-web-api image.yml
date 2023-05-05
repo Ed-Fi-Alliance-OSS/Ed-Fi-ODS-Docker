@@ -1,4 +1,4 @@
-name: Deploy ods-api-db-sandbox image
+name: Deploy ods-api-web-api image
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    name: Deploy ods-api-db-sandbox image
+    name: Deploy ods-api-web-api image
     runs-on: ubuntu-latest
 
     steps:
@@ -29,10 +29,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96
         with:
-          images: edfialliance/ods-api-db-sandbox
+          images: edfialliance/ods-api-web-api
           labels: |
-            org.opencontainers.image.title=ods-api-db-sandbox
-            org.opencontainers.image.description=Docker Image for the EdFi_Ods_Sandbox_* databases running under PostgreSQL
+            org.opencontainers.image.title=ods-api-web-api
+            org.opencontainers.image.description=Docker Image for the ODS / API Web Api for PostgreSQL
           flavor: |
             latest=false
           tags: |
@@ -43,7 +43,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: DB-Sandbox/Alpine/pgsql
+          context: Web-Ods-Api/Alpine/pgsql
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
