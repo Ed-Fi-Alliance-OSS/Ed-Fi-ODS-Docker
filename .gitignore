@@ -9,3 +9,4 @@ ssl/
 *.7z
 Compose/*/compose.yml
 logs/
+/.vs

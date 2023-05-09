@@ -1,17 +1,21 @@
-name: Lint Docker Files
+name: Lint and Build Docker Files
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, 'ODS-*']
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Lint Docker Files
+    name: Lint and Build Docker Files
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Ed-Fi-ODS-Docker
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
-
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
@@ -22,3 +26,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
           VALIDATE_DOCKERFILE_HADOLINT: true
+
+      - name: Build the Docker images
+        shell: pwsh
+        run: |
+          dir -recurse -file -include Docker* | select Directory |
+          ForEach-Object {
+            docker build $_.Directory
+          }
