@@ -7,7 +7,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet@sha256:201cedd60cb295b2ebea7184561a45c5c0ee337e37300ea0f25cff5a2c762538
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="3.1.0"
+ENV VERSION="3.1.1"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
 ENV NPG_POOLING_ENABLED=false
