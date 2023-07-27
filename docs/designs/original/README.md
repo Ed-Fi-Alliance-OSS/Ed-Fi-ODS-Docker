@@ -19,10 +19,10 @@ Docker describes a container as a "standardized unit of software." Each unit is:
 - **Independent**: design applications with loose coupling so that they can be
   started and stopped independently.
 - **Isolated/secure**: container technology and host operating system keep the
-application processes from interacting with each other except through standard
-network protocols, as depicted in the diagram to the right. Small: good
-containers are purpose-built to be small and lean, requiring minimal hardware
-resources.
+  application processes from interacting with each other except through standard
+  network protocols, as depicted in the diagram to the right. Small: good
+  containers are purpose-built to be small and lean, requiring minimal hardware
+  resources.
 - **Remixable**: deploy multiple instances of the same container and/or use in
   novel combinations.
 
@@ -58,7 +58,8 @@ without vendor lock-in.
 
 ### Key Technologies and Terms
 
-- **Docker**: the most popular container technology; available on Linux, MacOSX, and Windows.
+- **Docker**: the most popular container technology; available on Linux, MacOSX,
+  and Windows.
 - **Image**: pre-built template for a container.
 - **Container**: running instance.
 - **Compose**: single-host (simpler) orchestration.
@@ -69,15 +70,25 @@ without vendor lock-in.
 
 ### Implementation Concerns
 
-- **Host platform**: Windows or Linux? Windows containers are nice-to-have, but Linux containers are the gold standard.
-- **Layering**: being very careful about how Docker images are built to avoid image bloat
-- **Microservices**: prefer to split large monoliths into multiple small and independent applications, to achieve the aims of small, isolated, and elastically scalable containers.
-- **Networking**: expose only necessary ports, leaving other networking ports firewalled from outside the network.
-- **Service Discovery**: use name resolution inside the Docker network to find related services, minimizing the need to setup one service’s configuration for accessing other services.
-- **Logging**: Docker tools query standard out and standard error console logs, so prefer console to file logging.
-- **Storage**: containers are impermanent, so writeable files should be stored in external volumes.
+- **Host platform**: Windows or Linux? Windows containers are nice-to-have, but
+  Linux containers are the gold standard.
+- **Layering**: being very careful about how Docker images are built to avoid
+  image bloat
+- **Microservices**: prefer to split large monoliths into multiple small and
+  independent applications, to achieve the aims of small, isolated, and
+  elastically scalable containers.
+- **Networking**: expose only necessary ports, leaving other networking ports
+  firewalled from outside the network.
+- **Service Discovery**: use name resolution inside the Docker network to find
+  related services, minimizing the need to setup one service’s configuration for
+  accessing other services.
+- **Logging**: Docker tools query standard out and standard error console logs,
+  so prefer console to file logging.
+- **Storage**: containers are impermanent, so writeable files should be stored
+  in external volumes.
 
-These concerns should be addressed by a clear, written Ed-Fi standard for Docker development.
+These concerns should be addressed by a clear, written Ed-Fi standard for Docker
+development.
 
 ## Ed-Fi on Docker - Present
 
@@ -92,7 +103,8 @@ deploy the official released binary packages. At least the user didn't have to
 recompile the application source code first. The solution worked and provided a
 viable means for quickly switching between and testing out these three versions.
 
-There were some problems though, which kept the solution from being more widely useful:
+There were some problems though, which kept the solution from being more widely
+useful:
 
 - Because Active Directory does not work inside of containers, the Security
   Configuration Tool, Admin App, and Server Side Bulk Load services could not be
@@ -103,14 +115,16 @@ There were some problems though, which kept the solution from being more widely 
 - A change in the database deployment process for Tech Suite 3 caused failures
   while trying to deploy the database into SQL Server running in a container.
 - There was no attempt to define microservices.
-- All services running on IIS in Windows, due to the requirement for .NET Framework.
+- All services running on IIS in Windows, due to the requirement for .NET
+  Framework.
 
 The diagram below shows the design layout of the four containers in this
 solution: Web API, ODS Swagger, Sandbox Admin, and SQL Server databases.
 Security certificates and database files are correctly stored on the host
 filesystem.
 
-![Container setup original from the original attempt at Ed-Fi on Docker](image2020-6-19_20-47-18.png)
+![Container setup original from the original attempt at Ed-Fi on
+Docker](image2020-6-19_20-47-18.png)
 
 ## Ed-Fi on Docker - Future
 
@@ -141,7 +155,9 @@ filesystem.
 
 ### Working Vision for Future State
 
-What should the future state platform look like? There will likely be multiple answers depending on the implementation needs. As a starting point for further discussion, we make the following proposals.
+What should the future state platform look like? There will likely be multiple
+answers depending on the implementation needs. As a starting point for further
+discussion, we make the following proposals.
 
 #### Possible Production Configuration
 
@@ -166,7 +182,8 @@ What should the future state platform look like? There will likely be multiple a
 
 - .NET Core web services running with the Kestrel web server, without IIS.
   - Setup logging to console.
-- Introduce an API Gateway layer as a single-point of entry for all HTTPS services.
+- Introduce an API Gateway layer as a single-point of entry for all HTTPS
+  services.
   - Terminate TLS encryption
   - Loading balancing
   - Setup logging to console.
@@ -181,8 +198,8 @@ What should the future state platform look like? There will likely be multiple a
   of the main API application into a separate service.
 - Investigate options for in-memory shared-cache (e.g. Redis).
 
->**Note**
-> The .NET-based Ed-Fi Data Import tool is not listed here at this time for two primary reasons:
+>**Note** The .NET-based Ed-Fi Data Import tool is not listed here at this time
+> for two primary reasons:
 >
 > 1. Longer time frame to get to .NET Core.
 > 2. Not yet converted for PostgreSQL storage of its internal database(s).
@@ -236,7 +253,8 @@ recommendations from that meeting:
 - Leave fault tolerance to the orchestration engines and other products.
 - External caching will be needed for large implementations (e.g. state), but
   there is a considerable cost to refactoring the the ODS / API.
-- No need for Ed-Fi to configure logging tools - just log to the console as planned.
+- No need for Ed-Fi to configure logging tools - just log to the console as
+  planned.
 - Admin App is helpful but not required.
 
 ### Identified Use Cases
