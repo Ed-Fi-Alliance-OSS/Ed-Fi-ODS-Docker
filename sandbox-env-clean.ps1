@@ -19,7 +19,7 @@ else {
 
 $composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
 
-$composeFile = Join-Path -Path $engineFolder -ChildPath compose-sandbox-env-build.yml
+$composeFile = Join-Path -Path $engineFolder -ChildPath compose-sandbox-env.yml
 
 $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
 
