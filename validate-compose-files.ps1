@@ -33,7 +33,7 @@
 param(
     # Specifies the base path where all compose.yml files will be retrieved, searching recursively in all subfolders.
     [string]
-    $ComposeFilesPath = "OdsApi/6.1/Compose"
+    $ComposeFilesPath = "Compose"
 )
 
 $ErrorActionPreference = "Stop"
