@@ -95,6 +95,16 @@ To remove PGBouncer, make the following changes:
 3. Update the `POSTGRES_PORT` environment variable to point to 5432.
 4. If required expose the port on the services `db-admin`, and `db-ods` services. Note these ports should be independent.
 
+## Ed-Fi ODS Docker Tags with  Ed-Fi ODS / API Releases
+
+|       Ed-Fi ODS / API              |                          Ed-Fi ODS Docker Tag                                                         |
+|------------------------------------|-------------------------------------------------------------------------------------------------------|
+| Ed-Fi ODS / API Suite3 v6.1        | [Ed-Fi ODS Docker v2.3.2 ](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.3.2)|
+| Ed-Fi ODS / API Suite3 v6.0        | [Ed-Fi ODS Docker v2.2.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.2.0) |
+| Ed-Fi ODS / API Suite3 v5.3        | [Ed-Fi ODS Docker v2.1.5](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.1.5) |
+| Ed-Fi ODS / API Suite3 v5.2        | [Ed-Fi ODS Docker v2.0.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.0.1) |
+| Ed-Fi ODS / API Suite3 v5.1        | [Ed-Fi ODS Docker v1.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v1.1.1) |
+
 ## Contributing
 The Ed-Fi Alliance welcomes code contributions from the community. For more information, see:
 
