@@ -27,7 +27,7 @@ services:
       - swagger
 
   api:
-    image: edfialliance/ods-api-web-api-mssql:${TAG}
+    image: edfialliance/ods-api-web-api:${TAG}-mssql
     environment:
       PATH_BASE: "${ODS_VIRTUAL_NAME:-api}"
       SQLSERVER_ODS_DATASOURCE: "${SQLSERVER_ODS_DATASOURCE:-host.docker.internal}"
@@ -50,7 +50,7 @@ services:
       retries: 3
 
   admin:
-    image: edfialliance/ods-api-web-sandbox-admin-mssql:${TAG}
+    image: edfialliance/ods-api-web-sandbox-admin:${TAG}-mssql
     environment:
       ADMIN_USER: "${ADMIN_USER}"
       ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
