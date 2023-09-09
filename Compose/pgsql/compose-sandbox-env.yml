@@ -36,9 +36,7 @@ services:
       retries: 3
 
   nginx:
-    build:
-      context: ../../Web-Gateway-Sandbox/Alpine
-      dockerfile: Dockerfile
+    image: edfialliance/ods-api-web-gateway-sandbox:${GATEWAY_TAG}
     environment:
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
       SANDBOX_ADMIN_VIRTUAL_NAME: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
