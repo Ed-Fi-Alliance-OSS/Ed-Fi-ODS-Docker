@@ -1,6 +1,15 @@
 # Ed-Fi-ODS-Docker
 
-This repository hosts the Docker deployment source code for ODS/API. To work with what is offered in this repository, set up your Docker environment by referring to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment).
+This repository showcases how to use Ed-Fi in containers using sample Docker Compose configuration files. The Docker Files for Ed-Fi applications showcased in the repository are maintained in the corresponding application repositories. To work with what is offered in this repository, set up your Docker environment by referring to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment). The previous releases of this repository also hosted the Docker Files for ODS/API and Admin App. Following table provides docker release links for the ODS  API v6.1 and older.
+
+
+|       Ed-Fi ODS / API              |                          Ed-Fi ODS Docker Tag                                                         |
+|------------------------------------|-------------------------------------------------------------------------------------------------------|
+| Ed-Fi ODS / API Suite3 v6.1        | [Ed-Fi ODS Docker v2.3.2 ](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.3.2)|
+| Ed-Fi ODS / API Suite3 v6.0        | [Ed-Fi ODS Docker v2.2.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.2.0) |
+| Ed-Fi ODS / API Suite3 v5.3        | [Ed-Fi ODS Docker v2.1.5](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.1.5) |
+| Ed-Fi ODS / API Suite3 v5.2        | [Ed-Fi ODS Docker v2.0.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.0.1) |
+| Ed-Fi ODS / API Suite3 v5.1        | [Ed-Fi ODS Docker v1.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v1.1.1) |
 
 ### Exposed Ports
 
@@ -54,7 +63,7 @@ Variables ```POSTGRESQL_USER: "${POSTGRES_USER}"``` and ```POSTGRESQL_PASSWORD: 
 Variables ```PGBOUNCER_SET_DATABASE_USER: "yes"``` and ```PGBOUNCER_SET_DATABASE_PASSWORD: "yes"``` will include the database and password in the connection string, allowing to have access to the databases in the PG server.
 
 ### PGBouncer logging
-By default, PgBouncer logs the configuration file which contains sensitive information such as the host database username and password.  
+By default, PgBouncer logs the configuration file which contains sensitive information such as the host database username and password.
 This functionality can be disabled by applying the QUIET flag. The latest version of .env.example has the configuration variable ```PGBOUNCER_EXTRA_FLAGS="--quiet"``` which will suppress this
 messaging.  However, older .env files that do not supply the PGBOUNCER\_QUIET configuration variable are still at risk of exposing this sensitive information in logs.
 
