@@ -23,6 +23,6 @@ jobs:
 
       - name: Validate all compose files
         run: |
-          ./validate-compose-files.ps1 -composeFilesPath OdsApi/6.1/Compose
+          ./validate-compose-files.ps1
         working-directory: .
         shell: pwsh
