@@ -7,9 +7,10 @@ version: "3.8"
 
 services:
   nginx:
-    image: edfialliance/ods-api-web-gateway:${GATEWAY_TAG}
+    build:
+      context: ../../Web-Gateway/Alpine
+      dockerfile: Dockerfile
     environment:
-      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
     ports:
       - "443:443"

@@ -26,6 +26,8 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      ODS_PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      ODS_POSTGRES_HOST: pb-ods
     volumes:
       - vol-db-admin:/var/lib/postgresql/data
       - ../SingleTenant/bootstrap.sh:/docker-entrypoint-initdb.d/bootstrap.sh   # Mount the bootstrap.sh script
@@ -37,9 +39,10 @@ services:
       retries: 3
 
   nginx:
-    image: edfialliance/ods-api-web-gateway:${GATEWAY_TAG}
+    build:
+      context: ../../Web-Gateway/Alpine
+      dockerfile: Dockerfile
     environment:
-      ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
     ports:
       - "443:443"

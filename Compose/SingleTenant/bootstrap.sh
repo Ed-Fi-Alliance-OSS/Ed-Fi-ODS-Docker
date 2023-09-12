@@ -12,6 +12,11 @@ if [[ -z "$POSTGRES_PORT" ]]; then
   export POSTGRES_PORT=5432
 fi
 
+EDFI_ODS_CONNECTION_STRING="host=$ODS_POSTGRES_HOST;port=$ODS_PGBOUNCER_PORT;username=$POSTGRES_USER;password=$POSTGRES_PASSWORD;database=EdFi_Ods;application name=EdFi.Ods.WebApi;"
+
+# Print the EdFi_Ods_ConnectionString
+echo "EDFI_ODS_CONNECTION_STRING is: $EDFI_ODS_CONNECTION_STRING"
+
 echo "Setting up Single Tenant.."
 psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Admin" <<-EOSQL
 insert into dbo.OdsInstances (Name, InstanceType, ConnectionString)
