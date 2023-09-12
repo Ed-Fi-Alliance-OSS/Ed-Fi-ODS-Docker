@@ -26,7 +26,6 @@ services:
   api:
     image: edfialliance/ods-api-web-api-mssql:${TAG}
     environment:
-      API_MODE: "SharedInstance"
       ApiSettings__PathBase: "${ODS_VIRTUAL_NAME:-api}"
       SQLSERVER_ODS_DATASOURCE: "${SQLSERVER_ODS_DATASOURCE:-host.docker.internal}"
       SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
@@ -34,6 +33,7 @@ services:
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
       API_HEALTHCHECK_TEST: ${API_HEALTHCHECK_TEST?Please consult env.example to set the API healthcheck test}
+      ODS_CONNECTION_STRING_ENCRYPTION_KEY: "${ODS_CONNECTION_STRING_ENCRYPTION_KEY}"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     restart: always
@@ -47,7 +47,6 @@ services:
   adminapp:
     image: edfialliance/ods-admin-app-mssql:${TAG}
     environment:
-      API_MODE: "SharedInstance"
       API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
