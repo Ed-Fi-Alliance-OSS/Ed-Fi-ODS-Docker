@@ -14,54 +14,14 @@ fi
 
 EDFI_ODS_CONNECTION_STRING="host=$ODS_POSTGRES_HOST;port=$ODS_PGBOUNCER_PORT;username=$POSTGRES_USER;password=$POSTGRES_PASSWORD;database=EdFi_Ods;application name=EdFi.Ods.WebApi;"
 
-# Print the EdFi_Ods_ConnectionString
-echo "EDFI_ODS_CONNECTION_STRING is: $EDFI_ODS_CONNECTION_STRING"
-
 echo "Setting up Single Tenant.."
 psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Admin" <<-EOSQL
-insert into dbo.OdsInstances (Name, InstanceType, ConnectionString)
-select 'default', 'ODS', '$EDFI_ODS_CONNECTION_STRING'
-where not exists (select 1 from dbo.OdsInstances where Name = 'default');
 
-insert into dbo.Vendors (VendorName)
-select 'Bootstrap Vendor'
-where not exists (select 1 from dbo.Vendors where VendorName = 'Bootstrap Vendor');
+UPDATE dbo.OdsInstances SET ConnectionString = '$EDFI_ODS_CONNECTION_STRING'
+WHERE  EXISTS (SELECT 1 FROM dbo.OdsInstances WHERE Name = 'default' AND InstanceType = 'ODS');
 
-insert into dbo.VendorNamespacePrefixes (NamespacePrefix, Vendor_VendorId)
-select 'uri://ed-fi.org', VendorId from dbo.Vendors
-where not exists (select 1 from dbo.VendorNamespacePrefixes where NamespacePrefix = 'uri://ed-fi.org');
+INSERT INTO dbo.OdsInstances (Name, InstanceType, ConnectionString)
+SELECT 'default', 'ODS', '$EDFI_ODS_CONNECTION_STRING'
+WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstances WHERE Name = 'default' AND InstanceType = 'ODS');
 
-insert into dbo.Applications (ApplicationName, OperationalContextUri, Vendor_VendorId, ClaimSetName)
-select 'Bootstrap Application', 'uri://ed-fi.org', VendorId, 'Ed-Fi Sandbox' from dbo.Vendors
-where not exists (select 1 from dbo.Applications where ApplicationName = 'Bootstrap Application');
-
-insert into dbo.ApplicationEducationOrganizations (EducationOrganizationId, Application_ApplicationId)
-select 255901001, ApplicationId 
-from dbo.Applications 
-where ApplicationName = 'Bootstrap Application'
-    and not exists (select 1 from dbo.ApplicationEducationOrganizations where EducationOrganizationId = 255901001);
-
-insert into dbo.ApiClients (Key, Secret, Name, IsApproved, UseSandbox, SandboxType, SecretIsHashed, Application_ApplicationId)
-select 'minimalKey', 'minimalSecret', 'Bootstrap', true, false, 0, false, ApplicationId from dbo.Applications
-where not exists (select 1 from dbo.ApiClients where Name = 'Bootstrap');
-
-insert into dbo.ApiClientApplicationEducationOrganizations (ApiClient_ApiClientId, ApplicationEdOrg_ApplicationEdOrgId ) 
-select ApiClients.ApiClientId, ApplicationEducationOrganizations.ApplicationEducationOrganizationId 
-from dbo.ApiClients 
-cross join dbo.Applications 
-inner join dbo.ApplicationEducationOrganizations on Applications.ApplicationId = ApplicationEducationOrganizations.Application_ApplicationId
-where ApiClients.Name = 'Bootstrap' and Applications.ApplicationName = 'Bootstrap Application'
-and not exists (select 1 from dbo.ApiClientApplicationEducationOrganizations 
-    where ApiClient_ApiClientId = ApiClients.ApiClientId
-    and ApplicationEdOrg_ApplicationEdOrgId = ApplicationEducationOrganizations.ApplicationEducationOrganizationId);
-
-insert into dbo.ApiClientOdsInstances (apiclient_apiclientid, odsinstance_odsinstanceid)
-select ApiClients.ApiClientId, OdsInstances.OdsInstanceId
-from dbo.ApiClients
-cross join dbo.OdsInstances
-where ApiClients.Name = 'Bootstrap' and OdsInstances.Name = 'default'
-and not exists (select 1 from dbo.ApiClientOdsInstances
-    where apiclient_apiclientid = ApiClients.ApiClientId and odsinstance_odsinstanceid = OdsInstances.odsinstanceid
-);
 EOSQL
-
