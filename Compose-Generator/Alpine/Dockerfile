@@ -7,14 +7,19 @@
 FROM alpine:3.18.3@sha256:7144f7bab3d4c2648d7e59409f15ec52a18006a128c733fcff20d3a4a54ba44a
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="1.4.0"
+ARG VERSION="1.4.0"
 
-COPY run.sh /app/run.sh
-COPY templates/pgsql/template.mustache /app/template.mustache
+# Copy SingleTenant multi year artifacts
+COPY templates/pgsql/SingleTenant-OdsContext/run.sh /singleTenant-odsContext.sh
+COPY templates/pgsql/SingleTenant-OdsContext/appsettings-template.mustache /app/singleTenant-odsContext/appsettings-template.mustache
+COPY templates/pgsql/SingleTenant-OdsContext/bootstrap-template.mustache /app/singleTenant-odsContext/bootstrap-template.mustache
+COPY templates/pgsql/SingleTenant-OdsContext/compose-template.mustache /app/singleTenant-odsContext/compose-template.mustache
 
 RUN wget -O /tmp/mustache.tar.gz https://github.com/cbroglie/mustache/releases/download/v${VERSION}/mustache_${VERSION}_linux_amd64.tar.gz && \
     tar -xvzf /tmp/mustache.tar.gz -C /app && \
     rm -f /tmp/* && \
-    chmod +x /app/*.sh
+    mkdir /output && \
+    chmod +x /*.sh
 
-CMD ["/app/run.sh"]
+ENTRYPOINT ["/bin/sh"]
+CMD ["singleTenant-odsContext.sh"]

@@ -1,7 +1,12 @@
-#!/bin/sh
 # SPDX-License-Identifier: Apache-2.0
 # Licensed to the Ed-Fi Alliance under one or more agreements.
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-/app/mustache parameters /app/template.mustache
+odsContextRouteTemplate: '{schoolYearFromRoute:range(2000,2099)}'
+contextKey: 'schoolYearFromRoute'
+tokens:
+- token: '2022'
+  pgBouncerPort: 5402
+- token: '2023'
+  pgBouncerPort: 5403
