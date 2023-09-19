@@ -91,7 +91,7 @@ services:
       retries: 3
 
   edfi_ods_{{token}}:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -112,7 +112,7 @@ services:
   
   {{/tokens}}
   pb-admin:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"

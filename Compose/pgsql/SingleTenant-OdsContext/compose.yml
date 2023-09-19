@@ -89,7 +89,7 @@ services:
       retries: 3
 
   edfi_ods_2022:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -122,7 +122,7 @@ services:
       retries: 3
 
   edfi_ods_2023:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -140,7 +140,7 @@ services:
       - db-ods-2023
   
   pb-admin:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
