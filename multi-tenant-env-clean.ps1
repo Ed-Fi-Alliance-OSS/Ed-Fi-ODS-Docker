@@ -4,22 +4,13 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 param(
-    [ValidateSet('PostgreSQL', 'SQLServer')]
-    [string] $Engine = 'PostgreSQL'
+    [ValidateSet('pgsql')]
+    [string] $Engine = 'pgsql'
 )
-
-
-if ($Engine -eq 'PostgreSQL') {
-    $engineFolder = "pgsql"
-}
-else {
-    $engineFolder = "mssql"
-}
-
 
 $composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
 
-$composeFile = Join-Path -Path $engineFolder -ChildPath \MultiTenant\compose-multi-tenant-env.yml
+$composeFile = Join-Path -Path $Engine -ChildPath \MultiTenant\compose-multi-tenant-env.yml
 
 $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
 

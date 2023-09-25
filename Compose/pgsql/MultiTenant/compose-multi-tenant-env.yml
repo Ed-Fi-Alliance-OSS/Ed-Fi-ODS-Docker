@@ -43,6 +43,8 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       ODS_PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       ODS_POSTGRES_HOST: pb-ods-tenant1
+      NPG_POOLING_ENABLED: "${NPG_POOLING_ENABLED:-false}"
+      NPG_API_MAX_POOL_SIZE_ODS: "${NPG_API_MAX_POOL_SIZE_ODS}"      
       TENANT_IDENTIFIER: Tenant1
     volumes:
       - vol-db-admin-tenant1:/var/lib/postgresql/data
@@ -61,6 +63,8 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       ODS_PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       ODS_POSTGRES_HOST: pb-ods-tenant2
+      NPG_POOLING_ENABLED: "${NPG_POOLING_ENABLED:-false}" 
+      NPG_API_MAX_POOL_SIZE_ODS: "${NPG_API_MAX_POOL_SIZE_ODS}"        
       TENANT_IDENTIFIER: Tenant2      
     volumes:
       - vol-db-admin-tenant2:/var/lib/postgresql/data
@@ -123,7 +127,7 @@ services:
       retries: 3
 
   pb-admin-tenant1:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -141,7 +145,7 @@ services:
       - db-admin-tenant1
 
   pb-admin-tenant2:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -159,7 +163,7 @@ services:
       - db-admin-tenant2    
 
   pb-ods-tenant1:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -177,7 +181,7 @@ services:
       - db-ods-tenant1
 
   pb-ods-tenant2:
-    image: bitnami/pgbouncer
+    image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
