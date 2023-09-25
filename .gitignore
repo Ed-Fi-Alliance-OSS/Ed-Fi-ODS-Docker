@@ -10,3 +10,4 @@ ssl/
 Compose/*/compose.yml
 logs/
 /.vs
+**/.DS_Store

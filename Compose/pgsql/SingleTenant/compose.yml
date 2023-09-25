@@ -30,7 +30,7 @@ services:
       ODS_POSTGRES_HOST: pb-ods
     volumes:
       - vol-db-admin:/var/lib/postgresql/data
-      - ../SingleTenant/bootstrap.sh:/docker-entrypoint-initdb.d/2-bootstrap.sh   # Mount the bootstrap.sh script
+      - ./bootstrap.sh:/docker-entrypoint-initdb.d/2-bootstrap.sh   # Mount the bootstrap.sh script
     restart: always
     container_name: ed-fi-db-admin
     healthcheck:
@@ -39,9 +39,7 @@ services:
       retries: 3
 
   nginx:
-    build:
-      context: ../../Web-Gateway/Alpine
-      dockerfile: Dockerfile
+    image: edfialliance/ods-api-web-gateway:${GATEWAY_TAG}
     environment:
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
     ports:
@@ -51,7 +49,7 @@ services:
     restart: always
     hostname: nginx
     volumes:
-      - ../../ssl:/ssl/
+      - ../../../ssl:/ssl/
     depends_on:
       - api
 

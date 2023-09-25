@@ -8,17 +8,16 @@ param(
     [string] $Engine = 'PostgreSQL'
 )
 
+$composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
 
 if ($Engine -eq 'PostgreSQL') {
     $engineFolder = "pgsql"
+    $composeFile = Join-Path -Path $engineFolder -ChildPath SingleTenant/compose.yml
 }
 else {
     $engineFolder = "mssql"
+        $composeFile = Join-Path -Path $engineFolder -ChildPath compose-single-tenant-env.yml
 }
-
-$composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
-
-$composeFile = Join-Path -Path $engineFolder -ChildPath compose-single-tenant-env.yml
 
 $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
 
