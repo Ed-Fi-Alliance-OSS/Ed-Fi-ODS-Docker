@@ -112,7 +112,7 @@ services:
       ASPNETCORE_ENVIRONMENT: "docker"
     volumes:
       - ${LOGS_FOLDER}:/app/logs
-      - ./appsettings.Docker.json:/app/appsettings.docker.json
+      - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
     depends_on:
       - pb-ods-tenant1
       - pb-ods-tenant2
