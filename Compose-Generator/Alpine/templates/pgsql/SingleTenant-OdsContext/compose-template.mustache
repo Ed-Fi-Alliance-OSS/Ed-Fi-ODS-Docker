@@ -24,9 +24,7 @@ services:
       retries: 3
 
   nginx:
-    build:
-      context: ../../../Web-Gateway/Alpine
-      dockerfile: Dockerfile
+    image: edfialliance/ods-api-web-gateway:${GATEWAY_TAG}
     environment:
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
     ports:
