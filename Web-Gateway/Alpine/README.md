@@ -9,7 +9,7 @@ The only supported image at this time is an Alpine-based implementation using [n
 ## Supported Environment Variables
 ```
 ODS_VIRTUAL_NAME=<virtual name for the ods endpoint>
-ADMINAPP_VIRTUAL_NAME=<virtual name for the admin app>
+ADMIN_API_VIRTUAL_NAME=<virtual name for the admin api>
 ```
 
 ## License Information
