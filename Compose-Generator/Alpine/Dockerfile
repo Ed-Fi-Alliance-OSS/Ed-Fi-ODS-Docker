@@ -15,6 +15,12 @@ COPY templates/pgsql/SingleTenant-OdsContext/appsettings-template.mustache /app/
 COPY templates/pgsql/SingleTenant-OdsContext/bootstrap-template.mustache /app/singleTenant-odsContext/bootstrap-template.mustache
 COPY templates/pgsql/SingleTenant-OdsContext/compose-template.mustache /app/singleTenant-odsContext/compose-template.mustache
 
+# Copy MultiTenant artifacts
+COPY templates/pgsql/MultiTenant/run.sh /multiTenant.sh
+COPY templates/pgsql/MultiTenant/appsettings-template.mustache /app/multiTenant/appsettings-template.mustache
+COPY templates/pgsql/MultiTenant/bootstrap-template.mustache /app/multiTenant/bootstrap-template.mustache
+COPY templates/pgsql/MultiTenant/compose-template.mustache /app/multiTenant/compose-template.mustache
+
 RUN wget -O /tmp/mustache.tar.gz https://github.com/cbroglie/mustache/releases/download/v${VERSION}/mustache_${VERSION}_linux_amd64.tar.gz && \
     tar -xvzf /tmp/mustache.tar.gz -C /app && \
     rm -f /tmp/* && \
