@@ -34,7 +34,7 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
-      retries: 3      
+      retries: 3
 
   db-admin-tenant1:
     image: edfialliance/ods-api-db-admin:${TAG}
@@ -44,11 +44,11 @@ services:
       ODS_PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       ODS_POSTGRES_HOST: pb-ods-tenant1
       NPG_POOLING_ENABLED: "${NPG_POOLING_ENABLED:-false}"
-      NPG_API_MAX_POOL_SIZE_ODS: "${NPG_API_MAX_POOL_SIZE_ODS}"      
-      TENANT_IDENTIFIER: Tenant1
+      NPG_API_MAX_POOL_SIZE_ODS: "${NPG_API_MAX_POOL_SIZE_ODS}"
+      TENANT_IDENTIFIER: tenant1
     volumes:
       - vol-db-admin-tenant1:/var/lib/postgresql/data
-      - ./bootstrap.sh:/docker-entrypoint-initdb.d/2-bootstrap.sh   # Mount the bootstrap.sh script
+      - ./bootstrap.sh:/docker-entrypoint-initdb.d/2-bootstrap.sh
     restart: always
     container_name: ed-fi-db-admin-tenant1
     healthcheck:
@@ -63,12 +63,12 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       ODS_PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       ODS_POSTGRES_HOST: pb-ods-tenant2
-      NPG_POOLING_ENABLED: "${NPG_POOLING_ENABLED:-false}" 
-      NPG_API_MAX_POOL_SIZE_ODS: "${NPG_API_MAX_POOL_SIZE_ODS}"        
-      TENANT_IDENTIFIER: Tenant2      
+      NPG_POOLING_ENABLED: "${NPG_POOLING_ENABLED:-false}"
+      NPG_API_MAX_POOL_SIZE_ODS: "${NPG_API_MAX_POOL_SIZE_ODS}"
+      TENANT_IDENTIFIER: tenant2
     volumes:
       - vol-db-admin-tenant2:/var/lib/postgresql/data
-      - ./bootstrap.sh:/docker-entrypoint-initdb.d/2-bootstrap.sh   # Mount the bootstrap.sh script      
+      - ./bootstrap.sh:/docker-entrypoint-initdb.d/2-bootstrap.sh
     restart: always
     container_name: ed-fi-db-admin-tenant2
     healthcheck:
@@ -97,11 +97,10 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      ODS_POSTGRES_HOST: pb-ods-tenant1
       ADMIN_POSTGRES_HOST: pb-admin-tenant1
       PATH_BASE: "${ODS_VIRTUAL_NAME:-api}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
-      ODS_WAIT_POSTGRES_HOSTS: "pb-ods-tenant1 pb-ods-tenant2"      
+      ODS_WAIT_POSTGRES_HOSTS: "pb-ods-tenant1 pb-ods-tenant2 "
       API_HEALTHCHECK_TEST: ${API_HEALTHCHECK_TEST?Please consult env.example to set the API healthcheck test}
       NPG_POOLING_ENABLED: "${NPG_POOLING_ENABLED:-false}"
       NPG_API_MAX_POOL_SIZE_ODS: "${NPG_API_MAX_POOL_SIZE_ODS}"
@@ -113,11 +112,13 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
+    entrypoint: ["/bin/sh"] 
+    command: ["-c","envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.docker.json && /app/run.sh"]
     depends_on:
       - pb-ods-tenant1
       - pb-ods-tenant2
       - pb-admin-tenant1
-      - pb-admin-tenant2      
+      - pb-admin-tenant2
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
@@ -160,7 +161,7 @@ services:
     restart: always
     container_name: ed-fi-pb-admin-tenant2
     depends_on:
-      - db-admin-tenant2    
+      - db-admin-tenant2
 
   pb-ods-tenant1:
     image: bitnami/pgbouncer:1.20.0
@@ -196,7 +197,7 @@ services:
     restart: always
     container_name: ed-fi-pb-ods-tenant2
     depends_on:
-      - db-ods-tenant2      
+      - db-ods-tenant2
 
 volumes:
   vol-db-admin-tenant1:
@@ -204,11 +205,10 @@ volumes:
     name: vol-db-admin-tenant1
   vol-db-admin-tenant2:
     driver: local
-    name: vol-db-admin-tenant2  
+    name: vol-db-admin-tenant2
   vol-db-ods-tenant1:
     driver: local
     name: vol-db-ods-tenant1
   vol-db-ods-tenant2:
     driver: local
-    name: vol-db-ods-tenant2    
-
+    name: vol-db-ods-tenant2

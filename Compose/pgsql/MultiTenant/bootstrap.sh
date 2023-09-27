@@ -17,10 +17,10 @@ echo "Setting up Multi Tenant for $TENANT_IDENTIFIER.."
 psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Admin" <<-EOSQL
 
 UPDATE dbo.OdsInstances SET ConnectionString = '$EDFI_ODS_CONNECTION_STRING'
-WHERE  EXISTS (SELECT 1 FROM dbo.OdsInstances WHERE Name = '$TENANT_IDENTIFIER Populated Sandbox' AND InstanceType = 'Sandbox');
+WHERE  EXISTS (SELECT 1 FROM dbo.OdsInstances WHERE Name = '$TENANT_IDENTIFIER ODS' AND InstanceType = 'ODS');
 
 INSERT INTO dbo.OdsInstances (Name, InstanceType, ConnectionString)
-SELECT '$TENANT_IDENTIFIER Populated Sandbox', 'Sandbox', '$EDFI_ODS_CONNECTION_STRING'
-WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstances WHERE Name = '$TENANT_IDENTIFIER Populated Sandbox' AND InstanceType = 'Sandbox');
+SELECT '$TENANT_IDENTIFIER ODS', 'ODS', '$EDFI_ODS_CONNECTION_STRING'
+WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstances WHERE Name = '$TENANT_IDENTIFIER ODS' AND InstanceType = 'ODS');
 
 EOSQL
