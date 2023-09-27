@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+odsContextRouteTemplate: '{schoolYearFromRoute:range(2000,2099)}'
+contextKey: 'schoolYearFromRoute'
+tenants:
+- tenantId: 'tenant1'
+  admin-pgBouncerPort: 5401
+  tokens:
+  - token: '2022'
+    pgBouncerPort: 5402
+  - token: '2023'
+    pgBouncerPort: 5403  
+- tenantId: 'tenant2'
+  admin-pgBouncerPort: 5404
+  tokens:
+  - token: '2022'
+    pgBouncerPort: 5405
+  - token: '2023'
+    pgBouncerPort: 5406  
