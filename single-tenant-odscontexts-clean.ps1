@@ -14,7 +14,7 @@ if ($Engine -eq 'PostgreSQL') {
 
 $composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
 
-$composeFile = Join-Path -Path $engineFolder -ChildPath SingleTenant-OdsContext/compose.yml
+$composeFile = Join-Path -Path $engineFolder -ChildPath SingleTenant-OdsContext/compose-single-tenant-odscontext-env.yml
 
 $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
 

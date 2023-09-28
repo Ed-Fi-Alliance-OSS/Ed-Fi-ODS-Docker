@@ -6,7 +6,7 @@
         "EdFi_Security": "host=pb-admin-{{tenantId}};port=${POSTGRES_PORT};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Security;application name=EdFi.Ods.WebApi;",
         "EdFi_Admin": "host=pb-admin-{{tenantId}};port=${POSTGRES_PORT};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Admin;application name=EdFi.Ods.WebApi;"
       }
-    },
+    }{{^isLast}},{{/isLast}}
     {{/tenants}}
   },
   "ApiSettings": {

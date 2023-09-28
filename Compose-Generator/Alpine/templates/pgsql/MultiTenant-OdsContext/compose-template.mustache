@@ -9,7 +9,7 @@ services:
 {{#tenants}}
 {{#tokens}}
 
-  db-ods--{{tenantId}}-{{token}}:
+  db-ods-{{tenantId}}-{{token}}:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -24,7 +24,7 @@ services:
       start_period: "60s"
       retries: 3
 
- pb-ods-{{tenantId}}-{{token}}:
+  pb-ods-{{tenantId}}-{{token}}:
     image: bitnami/pgbouncer:1.20.0
     environment:
       PGBOUNCER_DATABASE: "*"

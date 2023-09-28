@@ -7,14 +7,16 @@ odsContextRouteTemplate: '{schoolYearFromRoute:range(2000,2099)}'
 contextKey: 'schoolYearFromRoute'
 tenants:
 - tenantId: 'tenant1'
-  admin-pgBouncerPort: 5401
+  admin-pgBouncerPort: 5410
+  isLast: false  # Set isLast to false for the first tenant
   tokens:
   - token: '2022'
     pgBouncerPort: 5402
   - token: '2023'
-    pgBouncerPort: 5403  
+    pgBouncerPort: 5403
 - tenantId: 'tenant2'
-  admin-pgBouncerPort: 5404
+  admin-pgBouncerPort: 5412
+  isLast: true   # Set isLast to true for the last tenant 
   tokens:
   - token: '2022'
     pgBouncerPort: 5405

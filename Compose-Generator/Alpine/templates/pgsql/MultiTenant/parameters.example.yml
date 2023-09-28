@@ -7,6 +7,8 @@ tenants:
 - tenantId: 'tenant1'
   admin-pgBouncerPort: 5401
   ods-pgBouncerPort: 5403
+  isLast: false  # Set isLast to false for the first tenant
 - tenantId: 'tenant2'
   admin-pgBouncerPort: 5402
   ods-pgBouncerPort: 5404
+  isLast: true   # Set isLast to true for the last tenant 

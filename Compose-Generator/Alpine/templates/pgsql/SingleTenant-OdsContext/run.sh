@@ -6,4 +6,4 @@
 
 /app/mustache parameters /app/singleTenant-odsContext/appsettings-template.mustache > output/appsettings.docker.json
 /app/mustache parameters /app/singleTenant-odsContext/bootstrap-template.mustache > output/bootstrap.sh
-/app/mustache parameters /app/singleTenant-odsContext/compose-template.mustache > output/compose.yml
+/app/mustache parameters /app/singleTenant-odsContext/compose-template.mustache > output/compose-single-tenant-odscontext-env.yml
