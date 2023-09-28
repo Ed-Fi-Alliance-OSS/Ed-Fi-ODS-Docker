@@ -15,7 +15,3 @@ $composeFile = Join-Path -Path $Engine -ChildPath \MultiTenant\compose-multi-ten
 $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
 
 docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile up -d --build --remove-orphans
-
-docker exec -it ed-fi-ods-api sh -c "envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.docker.json"
-
-docker restart ed-fi-ods-api
