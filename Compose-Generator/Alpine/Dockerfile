@@ -6,7 +6,6 @@
 # Tag alpine:3.18.3
 FROM alpine:3.18.3@sha256:7144f7bab3d4c2648d7e59409f15ec52a18006a128c733fcff20d3a4a54ba44a
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
-
 ARG VERSION="1.4.0"
 
 # Copy SingleTenant multi year artifacts
@@ -20,6 +19,13 @@ COPY templates/pgsql/MultiTenant/run.sh /multiTenant.sh
 COPY templates/pgsql/MultiTenant/appsettings-template.mustache /app/multiTenant/appsettings-template.mustache
 COPY templates/pgsql/MultiTenant/bootstrap-template.mustache /app/multiTenant/bootstrap-template.mustache
 COPY templates/pgsql/MultiTenant/compose-template.mustache /app/multiTenant/compose-template.mustache
+
+# Copy MultiTenant-OdsContext artifacts
+COPY templates/pgsql/MultiTenant-OdsContext/run.sh /multiTenant-OdsContext.sh
+COPY templates/pgsql/MultiTenant-OdsContext/appsettings-template.mustache /app/multiTenant-OdsContext/appsettings-template.mustache
+COPY templates/pgsql/MultiTenant-OdsContext/bootstrap-template.mustache /app/multiTenant-OdsContext/bootstrap-template.mustache
+COPY templates/pgsql/MultiTenant-OdsContext/compose-template.mustache /app/multiTenant-OdsContext/compose-template.mustache
+
 
 RUN wget -O /tmp/mustache.tar.gz https://github.com/cbroglie/mustache/releases/download/v${VERSION}/mustache_${VERSION}_linux_amd64.tar.gz && \
     tar -xvzf /tmp/mustache.tar.gz -C /app && \

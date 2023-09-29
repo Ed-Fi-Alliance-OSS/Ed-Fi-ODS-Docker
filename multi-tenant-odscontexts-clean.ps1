@@ -14,8 +14,18 @@ if ($Engine -eq 'PostgreSQL') {
 
 $composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
 
-$composeFile = Join-Path -Path $engineFolder -ChildPath SingleTenant-OdsContext/compose-single-tenant-odscontext-env.yml
+$composeFile = Join-Path -Path $engineFolder -ChildPath MultiTenant-OdsContext/compose-multi-tenant-odscontext-env.yml
 
 $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
 
-docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile up -d --build --remove-orphans
+docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile down -v --remove-orphans
+
+@(
+    "multitenant-odscontext-nginx"
+) | ForEach-Object {
+
+    $exists = (&docker images -q $_)
+    if ($exists) {
+        docker rmi $_ -f
+    }
+}
