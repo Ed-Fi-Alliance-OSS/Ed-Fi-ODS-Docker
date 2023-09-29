@@ -8,7 +8,6 @@ version: "3.8"
 services:
 {{#tenants}}
 {{#tokens}}
-
   db-ods-{{tenantId}}-{{token}}:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
     environment:
@@ -23,7 +22,6 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
-
   pb-ods-{{tenantId}}-{{token}}:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -44,9 +42,7 @@ services:
     depends_on:
       - db-ods-{{tenantId}}-{{token}}
 
-
 {{/tokens}}
-
   db-admin-{{tenantId}}:
     image: edfialliance/ods-api-db-admin:${TAG}
     environment:
@@ -67,8 +63,6 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
-
-
   pb-admin-{{tenantId}}:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -90,7 +84,6 @@ services:
       - db-admin-{{tenantId}}
 
 {{/tenants}}
-
   nginx:
     image: edfialliance/ods-api-web-gateway:${GATEWAY_TAG}
     environment:
@@ -105,7 +98,6 @@ services:
       - ../../../ssl:/ssl/
     depends_on:
       - api
-
   api:
     image: edfialliance/ods-api-web-api:${TAG}
     environment:
@@ -134,6 +126,7 @@ services:
       - pb-admin-{{tenantId}}
 {{#tokens}}
       - pb-ods-{{tenantId}}-{{token}}
+
 {{/tokens}}
 {{/tenants}}
     restart: always
@@ -143,18 +136,18 @@ services:
       test: $$API_HEALTHCHECK_TEST
       start_period: "60s"
       retries: 3
-
-
 volumes:
 {{#tenants}}
   vol-db-admin-{{tenantId}}:
     driver: local
     name: vol-db-admin-{{tenantId}}
+
 {{/tenants}}
 {{#tenants}}
 {{#tokens}}
   vol-db-ods-{{tenantId}}-{{token}}:
     driver: local
     name: vol-db-ods-{{tenantId}}-{{token}}
+
 {{/tokens}}
 {{/tenants}}

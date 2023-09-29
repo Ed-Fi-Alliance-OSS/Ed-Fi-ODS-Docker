@@ -7,3 +7,6 @@
 /app/mustache parameters /app/singleTenant-odsContext/appsettings-template.mustache > output/appsettings.docker.json
 /app/mustache parameters /app/singleTenant-odsContext/bootstrap-template.mustache > output/bootstrap.sh
 /app/mustache parameters /app/singleTenant-odsContext/compose-template.mustache > output/compose-single-tenant-odscontext-env.yml
+
+dos2unix /output/*.sh
+chmod 755 /output/bootstrap.sh

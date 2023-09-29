@@ -7,3 +7,6 @@
 /app/mustache parameters /app/multiTenant/appsettings-template.mustache > output/appsettings.dockertemplate.json
 /app/mustache parameters /app/multiTenant/bootstrap-template.mustache > output/bootstrap.sh
 /app/mustache parameters /app/multiTenant/compose-template.mustache > output/compose-multi-tenant-env.yml
+
+dos2unix /output/*.sh
+chmod 755 /output/bootstrap.sh

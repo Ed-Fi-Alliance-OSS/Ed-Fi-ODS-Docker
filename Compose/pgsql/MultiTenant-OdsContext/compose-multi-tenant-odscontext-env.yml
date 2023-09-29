@@ -6,7 +6,6 @@
 version: "3.8"
 
 services:
-
   db-ods-tenant1-2022:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
     environment:
@@ -21,7 +20,6 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
-
   pb-ods-tenant1-2022:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -40,8 +38,6 @@ services:
     depends_on:
       - db-ods-tenant1-2022
 
-
-
   db-ods-tenant1-2023:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
     environment:
@@ -56,7 +52,6 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
-
   pb-ods-tenant1-2023:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -74,8 +69,6 @@ services:
     container_name: ed-fi-pb-ods-tenant1-2023
     depends_on:
       - db-ods-tenant1-2023
-
-
 
   db-admin-tenant1:
     image: edfialliance/ods-api-db-admin:${TAG}
@@ -97,8 +90,6 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
-
-
   pb-admin-tenant1:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -117,7 +108,6 @@ services:
     depends_on:
       - db-admin-tenant1
 
-
   db-ods-tenant2-2022:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
     environment:
@@ -132,7 +122,6 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
-
   pb-ods-tenant2-2022:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -151,8 +140,6 @@ services:
     depends_on:
       - db-ods-tenant2-2022
 
-
-
   db-ods-tenant2-2023:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
     environment:
@@ -167,7 +154,6 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
-
   pb-ods-tenant2-2023:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -185,8 +171,6 @@ services:
     container_name: ed-fi-pb-ods-tenant2-2023
     depends_on:
       - db-ods-tenant2-2023
-
-
 
   db-admin-tenant2:
     image: edfialliance/ods-api-db-admin:${TAG}
@@ -208,8 +192,6 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
-
-
   pb-admin-tenant2:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -228,7 +210,6 @@ services:
     depends_on:
       - db-admin-tenant2
 
-
   nginx:
     image: edfialliance/ods-api-web-gateway:${GATEWAY_TAG}
     environment:
@@ -243,7 +224,6 @@ services:
       - ../../../ssl:/ssl/
     depends_on:
       - api
-
   api:
     image: edfialliance/ods-api-web-api:${TAG}
     environment:
@@ -270,10 +250,14 @@ services:
     depends_on:
       - pb-admin-tenant1
       - pb-ods-tenant1-2022
+
       - pb-ods-tenant1-2023
+
       - pb-admin-tenant2
       - pb-ods-tenant2-2022
+
       - pb-ods-tenant2-2023
+
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
@@ -281,24 +265,28 @@ services:
       test: $$API_HEALTHCHECK_TEST
       start_period: "60s"
       retries: 3
-
-
 volumes:
   vol-db-admin-tenant1:
     driver: local
     name: vol-db-admin-tenant1
+
   vol-db-admin-tenant2:
     driver: local
     name: vol-db-admin-tenant2
+
   vol-db-ods-tenant1-2022:
     driver: local
     name: vol-db-ods-tenant1-2022
+
   vol-db-ods-tenant1-2023:
     driver: local
     name: vol-db-ods-tenant1-2023
+
   vol-db-ods-tenant2-2022:
     driver: local
     name: vol-db-ods-tenant2-2022
+
   vol-db-ods-tenant2-2023:
     driver: local
     name: vol-db-ods-tenant2-2023
+

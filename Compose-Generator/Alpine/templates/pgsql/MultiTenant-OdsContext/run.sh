@@ -9,5 +9,5 @@
 /app/mustache parameters /app/multiTenant-OdsContext/compose-template.mustache > output/compose-multi-tenant-odscontext-env.yml
 
 dos2unix /output/*.sh
-chmod 777 /output/bootstrap.sh
+chmod 755 /output/bootstrap.sh
   
