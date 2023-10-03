@@ -8,7 +8,7 @@ FROM nginx:1.25.1-alpine3.17@sha256:647c5c83418c19eef0cddc647b9899326e3081576390
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV ODS_VIRTUAL_NAME=api
-ENV ADMINAPP_VIRTUAL_NAME=adminapp
+ENV ADMIN_API_VIRTUAL_NAME=adminapi
 
 COPY ./default.conf.template /etc/nginx/templates/
 
