@@ -12,7 +12,7 @@ $composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath C
 
 if ($Engine -eq 'PostgreSQL') {
     $engineFolder = "pgsql"
-    $composeFile = Join-Path -Path $engineFolder -ChildPath SingleTenant/compose.yml
+    $composeFile = Join-Path -Path $engineFolder -ChildPath SingleTenant/compose-single-tenant-env.yml
 }
 else {
     $engineFolder = "mssql"
