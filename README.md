@@ -73,9 +73,9 @@ These compose files use [PGBouncer](https://www.pgbouncer.org/) to provide a _se
 Client-side pooling with npgsql is based on the connection string (see [Npgsql Connection Pool Explained](https://fxjr.blogspot.com/2010/04/npgsql-connection-pool-explained.html)). The pool can be [configured in the connection string](https://www.npgsql.org/doc/connection-string-parameters.html?q=pooling#pooling) with a minimum (_default=0_) and maximum (_default=100_) pool size. When a connection is requested from the client-side pool the first time, the pool will be initialized with the configured minimum number of connections (_default=0_). After that, the pool will continue to increase in size (as needed) up to the configured maximum (_default=100_). Additionally, the pool will release an idle connection after a period of inactivity (_default=300s_).
 
 One of the challenges with client-side pooling is that by default there is a connection limit of 100 in PostgreSQL, so when configuring client-side pooling the nature of the deployment environment will greatly influence what an appropriate configuration would be (to avoid connection failures by exceeding the total number of available connections). Consider the following:
-* The Admin App and API processes/containers would each have a minimum of 3 connection pools (for the EdFi_Admin, EdFi_Security and the EdFi_Ods databases).
-* In a year-specific deployment, the number of distinct ODS connection strings (and pools) grows for each school year.
-* In a district-specific or instance-based deployment the number of pools could get to be quite large.
+* The API processes/containers would each have a minimum of 3 connection pools (for the EdFi_Admin, EdFi_Security and the EdFi_Ods databases).
+* In a SingleTenant/MultiTenant with ODS Context deployment, the number of distinct ODS connection strings (and pools) grows for each school year.
+* In a MultiTenant with ODS Context deployment the number of pools could get to be quite large.
 * Factor in additional containers for high availability and/or scale out, and the total number of client connection pools increases further.
 
 As a result, client-side pooling may be untenable for all but the simplest of deployments.

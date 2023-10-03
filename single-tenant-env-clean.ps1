@@ -23,9 +23,6 @@ $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .
 
 docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile down -v --remove-orphans
 
-# On some systems the images build by `shared-instance-env-up.ps` have names
-# that are prefixed with "ed-fi-ods-", while others do not. So loook for both
-# formats to remove.
 @(
     "ed-fi-ods-docker_api",
     "ed-fi-ods-docker_nginx",
