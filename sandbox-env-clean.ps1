@@ -25,36 +25,6 @@ $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .
 
 docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile down -v --remove-orphans
 
-@(
-    "ed-fi-ods-docker_api",
-    "ed-fi-ods-docker_nginx",
-    "ed-fi-ods-docker_swagger",
-    "ed-fi-ods-docker_db-ods",
-    "ed-fi-ods-docker_db-admin",
-    "ed-fi-ods-docker_pb-admin",
-    "ed-fi-ods-docker_pb-admin",
-    "pgsql_swagger",
-    "pgsql_nginx",
-    "pgsql_admin",
-    "pgsql_db-ods",
-    "pgsql_db-admin",
-    "pgsql_pb-ods",
-    "pgsql-pb-admin",
-    "pgsql_pg-ods",
-    "pgsql_pg-admin",
-    "mssql_swagger",
-    "mssql_nginx",
-    "mssql_admin",
-    "mssql_db-ods",
-    "mssql_db-admin",
-    "mssql_pb-ods",
-    "mssql-pb-admin",
-    "mssql_pg-ods",
-    "mssql_pg-admin"
-) | ForEach-Object {
-
-    $exists = (&docker images -q $_)
-    if ($exists) {
-        docker rmi $_ -f
-    }
-}
+# Remove downloaded images
+docker rmi $(docker images --filter=reference="edfialliance/ods-*" -q)
+docker rmi $(docker images --filter=reference="bitnami/pgbouncer:*" -q)

@@ -20,12 +20,6 @@ $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .
 
 docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile down -v --remove-orphans
 
-@(
-    "singletenant-odscontext-nginx"
-) | ForEach-Object {
-
-    $exists = (&docker images -q $_)
-    if ($exists) {
-        docker rmi $_ -f
-    }
-}
+# Remove downloaded images
+docker rmi $(docker images --filter=reference="edfialliance/ods-*" -q)
+docker rmi $(docker images --filter=reference="bitnami/pgbouncer:*" -q)
