@@ -80,7 +80,7 @@ One of the challenges with client-side pooling is that by default there is a con
 
 As a result, client-side pooling may be untenable for all but the simplest of deployments.
 
-The following environment variables can be used to control client-side pooling with the API, Admin App and Sandbox Admin containers:
+The following environment variables can be used to control client-side pooling with the API, and Sandbox Admin containers:
 
 | Name                                 | Applies To    | Description                                                                                                    |
 | ------------------------------------ | ------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -89,9 +89,6 @@ The following environment variables can be used to control client-side pooling w
 | `NPG_API_MAX_POOL_SIZE_ADMIN`        | API           | The maximum number of connections for the EdFi_Admin database from each Ed-Fi ODS API container.               |
 | `NPG_API_MAX_POOL_SIZE_SECURITY`     | API           | The maximum number of connections for the EdFi_Security database from each Ed-Fi ODS API container.            |
 | `NPG_API_MAX_POOL_SIZE_MASTER`       | API           | The maximum number of connections for the 'postgres' default database from each Ed-Fi ODS API container.       |
-| `NPG_ADMIN_MAX_POOL_SIZE_ODS`        | Admin App     | The maximum number of connections for each distinct ODS database from each Admin App container.                |
-| `NPG_ADMIN_MAX_POOL_SIZE_ADMIN`      | Admin App     | The maximum number of connections for the EdFi_Admin database from each Admin App container.                   |
-| `NPG_ADMIN_MAX_POOL_SIZE_SECURITY`   | Admin App     | The maximum number of connections for the EdFi_Security database from each Admin App container.                |
 | `NPG_SANDBOX_MAX_POOL_SIZE_ODS`      | Sandbox Admin | The maximum number of connections for each distinct ODS database from each Ed-Fi Sandbox Admin container.      |
 | `NPG_SANDBOX_MAX_POOL_SIZE_ADMIN`    | Sandbox Admin | The maximum number of connections for the EdFi_Admin database from each Ed-Fi Sandbox Admin container.         |
 | `NPG_SANDBOX_MAX_POOL_SIZE_SECURITY` | Sandbox Admin | The maximum number of connections for the EdFi_Security database from each Ed-Fi Sandbox Admin container.      |
