@@ -105,7 +105,7 @@ To remove PGBouncer, make the following changes:
 The Ed-Fi Alliance welcomes code contributions from the community. For more information, see:
 
 * [Ed-Fi Contribution Guidelines](https://techdocs.ed-fi.org/display/ETKB/Code+Contribution+Guidelines).
-* [How to Submit an Issue](https://techdocs.ed-fi.org/display/ETKB/How+To%3A+Submit+an+Issue).
+* [How to get Technical Help or Provide Feedback](https://techdocs.ed-fi.org/display/ETKB/How+To%3A+Get+Technical+Help+or+Provide+Feedback).
 * [How Submit a Feature Request](https://techdocs.ed-fi.org/display/ETKB/How+To%3A+Submit+a+Feature+Request).
 
 ## Legal Information
