@@ -23,42 +23,6 @@ $envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .
 
 docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile down -v --remove-orphans
 
-# On some systems the images build by `shared-instance-env-up.ps` have names
-# that are prefixed with "ed-fi-ods-", while others do not. So loook for both
-# formats to remove.
-@(
-    "ed-fi-ods-docker_api",
-    "ed-fi-ods-docker_nginx",
-    "ed-fi-ods-docker_db-ods",
-    "ed-fi-ods-docker_db-admin",
-    "ed-fi-ods-docker_adminapp",
-    "docker_api",
-    "docker_nginx",
-    "docker_db-ods",
-    "docker_db-admin",
-    "docker_adminapp",
-    "pgsql_nginx",
-    "pgsql_adminapp",
-    "pgsql_api",
-    "pgsql_db-ods",
-    "pgsql_db-admin",
-    "pgsql_pb-ods",
-    "pgsql-pb-admin",
-    "pgsql_pg-ods",
-    "pgsql_pg-admin",
-    "mssql_nginx",
-    "mssql_adminapp",
-    "mssql_api",
-    "mssql_db-ods",
-    "mssql_db-admin",
-    "mssql_pb-ods",
-    "mssql-pb-admin",
-    "mssql_pg-ods",
-    "mssql_pg-admin"
-) | ForEach-Object {
-
-    $exists = (&docker images -q $_)
-    if ($exists) {
-        docker rmi $_ -f
-    }
-}
+# Remove downloaded images
+docker rmi $(docker images --filter=reference="edfialliance/ods-*" -q)
+docker rmi $(docker images --filter=reference="bitnami/pgbouncer:*" -q)
