@@ -74,7 +74,8 @@ Client-side pooling with npgsql is based on the connection string (see [Npgsql C
 
 One of the challenges with client-side pooling is that by default there is a connection limit of 100 in PostgreSQL, so when configuring client-side pooling the nature of the deployment environment will greatly influence what an appropriate configuration would be (to avoid connection failures by exceeding the total number of available connections). Consider the following:
 * The API processes/containers would each have a minimum of 3 connection pools (for the EdFi_Admin, EdFi_Security and the EdFi_Ods databases).
-* In a SingleTenant/MultiTenant with ODS Context deployment, the number of distinct ODS connection strings (and pools) grows for each school year.
+* In a SingleTenant deployment, the number of distinct ODS connection strings (and pools) grows for each ODS instance configured.
+* In a MultiTenant deployment, admin and security connection strings (and pools) grow for each tenant, and the number of distinct ODS connection strings (and pools) grow for the ODS instances configured for each tenant, resulting in many pools.
 * In a MultiTenant with ODS Context deployment the number of pools could get to be quite large.
 * Factor in additional containers for high availability and/or scale out, and the total number of client connection pools increases further.
 
