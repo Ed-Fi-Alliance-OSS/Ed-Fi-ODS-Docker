@@ -97,7 +97,6 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      ADMIN_POSTGRES_HOST: pb-admin-tenant1
       PATH_BASE: "${ODS_VIRTUAL_NAME:-api}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
       ODS_WAIT_POSTGRES_HOSTS: "pb-ods-tenant1 pb-ods-tenant2 "
