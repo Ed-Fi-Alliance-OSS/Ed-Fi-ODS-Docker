@@ -45,7 +45,7 @@ services:
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
     ports:
       - "443:443"
-      - "80:80"
+      - "80:8080"
     container_name: ed-fi-gateway
     restart: always
     hostname: nginx
