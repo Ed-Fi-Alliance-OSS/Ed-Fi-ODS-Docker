@@ -27,9 +27,9 @@ WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstances WHERE Name = :'ods_instance_nam
 SELECT LASTVAL() AS ods_instance_id;
 \gset
 
-INSERT INTO dbo.OdsInstanceContext (OdsInstanceId, ContextKey, ContextValue)
+INSERT INTO dbo.OdsInstanceContexts (OdsInstance_OdsInstanceId, ContextKey, ContextValue)
 SELECT :ods_instance_id, :'context_key', :'context_value'
-WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstanceContext WHERE OdsInstanceId = :ods_instance_id AND ContextKey = :'context_key' AND ContextValue = :'context_value');
+WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstanceContexts WHERE OdsInstance_OdsInstanceId = :ods_instance_id AND ContextKey = :'context_key' AND ContextValue = :'context_value');
 
 EOSQL
 
@@ -50,9 +50,9 @@ WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstances WHERE Name = :'ods_instance_nam
 SELECT LASTVAL() AS ods_instance_id;
 \gset
 
-INSERT INTO dbo.OdsInstanceContext (OdsInstanceId, ContextKey, ContextValue)
+INSERT INTO dbo.OdsInstanceContexts (OdsInstance_OdsInstanceId, ContextKey, ContextValue)
 SELECT :ods_instance_id, :'context_key', :'context_value'
-WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstanceContext WHERE OdsInstanceId = :ods_instance_id AND ContextKey = :'context_key' AND ContextValue = :'context_value');
+WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstanceContexts WHERE OdsInstance_OdsInstanceId = :ods_instance_id AND ContextKey = :'context_key' AND ContextValue = :'context_value');
 
 EOSQL
 
