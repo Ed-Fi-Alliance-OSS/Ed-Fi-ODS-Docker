@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+version: "3.8"
+
+services:
+  edfi_ods_2022:
+    ports:
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
+  
+  edfi_ods_2023:
+    ports:
+      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
+  
+  pb-admin:
+    ports:
+      - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"

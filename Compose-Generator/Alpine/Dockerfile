@@ -16,6 +16,7 @@ COPY templates/pgsql/SingleTenant-OdsContext/run.sh /singleTenant-odsContext.sh
 COPY templates/pgsql/SingleTenant-OdsContext/appsettings-template.mustache /app/singleTenant-odsContext/appsettings-template.mustache
 COPY templates/pgsql/SingleTenant-OdsContext/bootstrap-template.mustache /app/singleTenant-odsContext/bootstrap-template.mustache
 COPY templates/pgsql/SingleTenant-OdsContext/compose-template.mustache /app/singleTenant-odsContext/compose-template.mustache
+COPY templates/pgsql/SingleTenant-OdsContext/compose-override-template.mustache /app/singleTenant-odsContext/compose-override-template.mustache
 
 # Copy MultiTenant artifacts
 COPY templates/pgsql/MultiTenant/run.sh /multiTenant.sh
