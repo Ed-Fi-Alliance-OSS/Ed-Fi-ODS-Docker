@@ -8,7 +8,6 @@ param(
     [string] $Engine = 'PostgreSQL'
 )
 
-
 if ($Engine -eq 'PostgreSQL') {
     $engineFolder = "pgsql"
 }
@@ -16,10 +15,22 @@ else {
     $engineFolder = "mssql"
 }
 
-$composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
+$composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'compose-sandbox-env.yml')
+$composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'compose-sandbox-env.override.yml')
+$envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
 
-$composeFile = Join-Path -Path $engineFolder -ChildPath compose-sandbox-env.yml
+$params = @(
+    "-f", $composeFilePath,
+    "--env-file", $envFilePath,
+    "-p", "sandbox-ods",
+    "up",
+    "-d",
+    "--remove-orphans"
+)
 
-$envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
+# If the compose override exists, insert the -f parameter to get it merged
+if (Test-Path $composeOverrideFilePath) {
+    $params = $params[0..1] + "-f" + $composeOverrideFilePath + $params[2..8]
+}
 
-docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile up -d --build --remove-orphans
+& docker compose $params
