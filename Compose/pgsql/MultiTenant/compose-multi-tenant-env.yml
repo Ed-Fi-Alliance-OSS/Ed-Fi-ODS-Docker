@@ -136,8 +136,6 @@ services:
       POSTGRESQL_HOST: db-admin-tenant1
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    ports:
-      - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-admin-tenant1
     depends_on:
@@ -154,8 +152,6 @@ services:
       POSTGRESQL_HOST: db-admin-tenant2
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    ports:
-      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-admin-tenant2
     depends_on:
@@ -172,8 +168,6 @@ services:
       POSTGRESQL_HOST: db-ods-tenant1
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    ports:
-      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-ods-tenant1
     depends_on:
@@ -190,8 +184,6 @@ services:
       POSTGRESQL_HOST: db-ods-tenant2
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    ports:
-      - "5404:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-ods-tenant2
     depends_on:

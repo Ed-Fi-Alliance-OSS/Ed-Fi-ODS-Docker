@@ -31,4 +31,3 @@ SELECT :ods_instance_id, :'context_key', :'context_value'
 WHERE NOT EXISTS (SELECT 1 FROM dbo.OdsInstanceContexts WHERE OdsInstance_OdsInstanceId=:ods_instance_id AND ContextKey=:'context_key' AND ContextValue=:'context_value');
 EOSQL
 done
-

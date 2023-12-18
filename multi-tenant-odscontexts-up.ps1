@@ -5,17 +5,25 @@
 
 param(
     [ValidateSet('PostgreSQL')]
-    [string] $Engine = 'PostgreSQL'
+    [string] $engineFolder = 'pgsql'
 )
 
-if ($Engine -eq 'PostgreSQL') {
-    $engineFolder = "pgsql"
+$composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant-OdsContext', 'compose-multi-tenant-odscontext-env.yml')
+$composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant-OdsContext', 'compose-multi-tenant-odscontext-env.override.yml')
+$envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
+
+$params = @(
+    "-f", $composeFilePath,
+    "--env-file", $envFilePath,
+    "-p", "multi-tenant-ods",
+    "up",
+    "-d",
+    "--remove-orphans"
+)
+
+# If the compose override exists, insert the -f parameter to get it merged
+if (Test-Path $composeOverrideFilePath) {
+    $params = $params[0..1] + "-f" + $composeOverrideFilePath + $params[2..8]
 }
 
-$composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
-
-$composeFile = Join-Path -Path $engineFolder -ChildPath MultiTenant-OdsContext/compose-multi-tenant-odscontext-env.yml
-
-$envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
-
-docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile up -d --build --remove-orphans
+& docker compose $params

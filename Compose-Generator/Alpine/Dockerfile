@@ -23,12 +23,14 @@ COPY templates/pgsql/MultiTenant/run.sh /multiTenant.sh
 COPY templates/pgsql/MultiTenant/appsettings-template.mustache /app/multiTenant/appsettings-template.mustache
 COPY templates/pgsql/MultiTenant/bootstrap-template.mustache /app/multiTenant/bootstrap-template.mustache
 COPY templates/pgsql/MultiTenant/compose-template.mustache /app/multiTenant/compose-template.mustache
+COPY templates/pgsql/MultiTenant/compose-override-template.mustache /app/multiTenant/compose-override-template.mustache
 
 # Copy MultiTenant-OdsContext artifacts
 COPY templates/pgsql/MultiTenant-OdsContext/run.sh /multiTenant-OdsContext.sh
 COPY templates/pgsql/MultiTenant-OdsContext/appsettings-template.mustache /app/multiTenant-OdsContext/appsettings-template.mustache
 COPY templates/pgsql/MultiTenant-OdsContext/bootstrap-template.mustache /app/multiTenant-OdsContext/bootstrap-template.mustache
 COPY templates/pgsql/MultiTenant-OdsContext/compose-template.mustache /app/multiTenant-OdsContext/compose-template.mustache
+COPY templates/pgsql/MultiTenant-OdsContext/compose-override-template.mustache /app/multiTenant-OdsContext/compose-override-template.mustache
 
 RUN mkdir /output && \
     chmod +x /*.sh
