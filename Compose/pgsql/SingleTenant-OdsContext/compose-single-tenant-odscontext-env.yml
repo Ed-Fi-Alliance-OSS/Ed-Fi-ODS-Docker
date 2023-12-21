@@ -122,8 +122,6 @@ services:
       POSTGRESQL_HOST: db-ods-2022
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    ports:
-      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-ods-2022
     depends_on:
@@ -155,8 +153,6 @@ services:
       POSTGRESQL_HOST: db-ods-2023
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    ports:
-      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-ods-2023
     depends_on:
@@ -173,8 +169,6 @@ services:
       POSTGRESQL_HOST: db-admin
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    ports:
-      - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-admin
     depends_on:

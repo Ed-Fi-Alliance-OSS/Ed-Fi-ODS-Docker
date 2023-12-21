@@ -4,17 +4,29 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 param(
-    [ValidateSet('pgsql')]
-    [string] $Engine = 'pgsql'
+    [ValidateSet('PostgreSQL')]
+    [string] $engineFolder = 'pgsql'
 )
 
-$composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
+$composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-env.yml')
+$composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-env.override.yml')
+$envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
 
-$composeFile = Join-Path -Path $Engine -ChildPath \MultiTenant\compose-multi-tenant-env.yml
+$params = @(
+    "-f", $composeFilePath,
+    "--env-file", $envFilePath,
+    "-p", "multi-tenant-ods",
+    "down",
+    "-v",
+    "--remove-orphans"
+)
 
-$envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
+# If the compose override exists, insert the -f parameter to get it merged
+if (Test-Path $composeOverrideFilePath) {
+    $params = $params[0..1] + "-f" + $composeOverrideFilePath + $params[2..8]
+}
 
-docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile down -v --remove-orphans
+& docker compose $params
 
 # Remove downloaded images
 docker rmi $(docker images --filter=reference="edfialliance/ods-*" -q)

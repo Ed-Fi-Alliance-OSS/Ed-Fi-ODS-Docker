@@ -2,7 +2,7 @@
 Provides docker deployment for nginx as a proxy for the Ed-Fi ODS/API, along with the SwaggerUI, and the Sandbox Admin tool.
 
 ## Image Variants
-The only supported image at this time is an Alpine-based implementation using [nginx](https://hub.docker.com/_/nginx).
+The only supported image at this time is an Alpine-based implementation using [nginxinc/nginx-unprivileged](https://hub.docker.com/r/nginxinc/nginx-unprivileged).
 
 `edfialliance/ods-api-web-gateway-sandbox:<version>`
 
@@ -10,6 +10,7 @@ The only supported image at this time is an Alpine-based implementation using [n
 ```
 ODS_VIRTUAL_NAME=<virtual name for the ods endpoint>
 SANDBOX_ADMIN_VIRTUAL_NAME=<virtual name for the sandbox admin endpoint>
+DOCS_VIRTUAL_NAME=<virtual name for the swagger ui endpoint>
 ```
 
 ## License Information

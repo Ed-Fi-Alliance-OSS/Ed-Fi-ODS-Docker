@@ -13,46 +13,13 @@ This repository showcases how to use Ed-Fi in containers using sample Docker Com
 
 ### Exposed Ports
 
-The compose files expose the databases outside of the Docker network (through PgBouncer). To disable this, modify the compose file by removing the `ports` key for the databases PgBouncers. For example:
+The compose files are not configured to allow the databases to be accessed outside of the Docker network using the PgBouncer containers. However, an example *.override.yml file has been provided for each of the examples. If you need to expose the ports, you can rename the override file by removing the '.example' extension and then run the corresponding *-up.ps1 script.
 
-```yaml
-pb-ods:
-  image: bitnami/pgbouncer
-  environment:
-      PGBOUNCER_DATABASE: "*"
-      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
-      POSTGRESQL_USER: "${POSTGRES_USER}"
-      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRESQL_HOST: db-ods
-      PGBOUNCER_SET_DATABASE_USER: "yes"
-      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-  ports:
-    - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
-  restart: always
-  container_name: ed-fi-pb-ods
-  depends_on:
-    - db-ods
+For example, to expose the ports in the Postgres Sandbox example, you can execute the following commands:
+
 ```
-
-would be changed to:
-
-```yaml
-pb-ods:
-  image: bitnami/pgbouncer
-  environment:
-      PGBOUNCER_DATABASE: "*"
-      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
-      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
-      POSTGRESQL_USER: "${POSTGRES_USER}"
-      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRESQL_HOST: db-ods
-      PGBOUNCER_SET_DATABASE_USER: "yes"
-      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-  restart: always
-  container_name: ed-fi-pb-ods
-  depends_on:
-    - db-ods
+PS> Rename-Item -Path ./Compose/pgsql/compose-sandbox-env.override.yml.example -NewName compose-sandbox-env.override.yml
+PS> ./single-tenant-env-up.ps1
 ```
 
 ### Supported environment variables

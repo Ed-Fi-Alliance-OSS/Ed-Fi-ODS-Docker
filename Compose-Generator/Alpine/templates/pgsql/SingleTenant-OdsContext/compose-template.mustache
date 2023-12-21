@@ -124,10 +124,6 @@ services:
       POSTGRESQL_HOST: db-ods-{{token}}
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    {{#pgBouncerPort}}
-    ports:
-      - "{{.}}:${PGBOUNCER_LISTEN_PORT:-6432}"
-    {{/pgBouncerPort}}
     restart: always
     container_name: ed-fi-pb-ods-{{token}}
     depends_on:
@@ -145,8 +141,6 @@ services:
       POSTGRESQL_HOST: db-admin
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-    ports:
-      - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
     restart: always
     container_name: ed-fi-pb-admin
     depends_on:

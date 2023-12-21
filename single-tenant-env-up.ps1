@@ -8,17 +8,30 @@ param(
     [string] $Engine = 'PostgreSQL'
 )
 
-$composeFolder = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath Compose)).Path
-
 if ($Engine -eq 'PostgreSQL') {
     $engineFolder = "pgsql"
-    $composeFile = Join-Path -Path $engineFolder -ChildPath SingleTenant/compose-single-tenant-env.yml
+    $composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'SingleTenant', 'compose-single-tenant-env.yml')
+    $composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'SingleTenant', 'compose-single-tenant-env.override.yml')
 }
 else {
     $engineFolder = "mssql"
-        $composeFile = Join-Path -Path $engineFolder -ChildPath compose-single-tenant-env.yml
+    $composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'compose-single-tenant-env.yml')
 }
 
-$envFile = (Join-Path -Path (Resolve-Path -Path $PSScriptRoot).Path -ChildPath .env)
+$envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
 
-docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env-file $envFile up -d --build --remove-orphans
+$params = @(
+    "-f", $composeFilePath,
+    "--env-file", $envFilePath,
+    "-p", "single-tenant-ods",
+    "up",
+    "-d",
+    "--remove-orphans"
+)
+
+# If the compose override exists, insert the -f parameter to get it merged
+if (Test-Path $composeOverrideFilePath) {
+    $params = $params[0..1] + "-f" + $composeOverrideFilePath + $params[2..8]
+}
+
+& docker compose $params

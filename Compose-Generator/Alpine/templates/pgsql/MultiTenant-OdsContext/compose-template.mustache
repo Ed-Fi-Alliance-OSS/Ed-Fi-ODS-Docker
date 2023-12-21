@@ -22,6 +22,7 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
+
   pb-ods-{{tenantId}}-{{token}}:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -33,10 +34,6 @@ services:
       POSTGRESQL_HOST: db-ods-{{tenantId}}-{{token}}
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-{{#pgBouncerPort}}
-    ports:
-      - "{{.}}:${PGBOUNCER_LISTEN_PORT:-6432}"
-{{/pgBouncerPort}}
     restart: always
     container_name: ed-fi-pb-ods-{{tenantId}}-{{token}}
     depends_on:
@@ -63,6 +60,7 @@ services:
       test: ["CMD-SHELL", "pg_isready  -U ${POSTGRES_USER}"]
       start_period: "60s"
       retries: 3
+
   pb-admin-{{tenantId}}:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -74,10 +72,6 @@ services:
       POSTGRESQL_HOST: db-admin-{{tenantId}}
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
-{{#admin-pgBouncerPort}}
-    ports:
-      - "{{.}}:${PGBOUNCER_LISTEN_PORT:-6432}"
-{{/admin-pgBouncerPort}}
     restart: always
     container_name: ed-fi-pb-admin-{{tenantId}}
     depends_on:
@@ -97,6 +91,7 @@ services:
       - ../../../ssl:/ssl/
     depends_on:
       - api
+
   api:
     image: edfialliance/ods-api-web-api:${TAG}
     environment:
@@ -124,7 +119,6 @@ services:
       - pb-admin-{{tenantId}}
 {{#tokens}}
       - pb-ods-{{tenantId}}-{{token}}
-
 {{/tokens}}
 {{/tenants}}
     restart: always
@@ -134,18 +128,17 @@ services:
       test: $$API_HEALTHCHECK_TEST
       start_period: "60s"
       retries: 3
+
 volumes:
 {{#tenants}}
   vol-db-admin-{{tenantId}}:
     driver: local
     name: vol-db-admin-{{tenantId}}
-
 {{/tenants}}
 {{#tenants}}
 {{#tokens}}
   vol-db-ods-{{tenantId}}-{{token}}:
     driver: local
     name: vol-db-ods-{{tenantId}}-{{token}}
-
 {{/tokens}}
 {{/tenants}}
