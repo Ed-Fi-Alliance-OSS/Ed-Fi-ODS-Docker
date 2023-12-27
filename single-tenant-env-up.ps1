@@ -16,6 +16,7 @@ if ($Engine -eq 'PostgreSQL') {
 else {
     $engineFolder = "mssql"
     $composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'compose-single-tenant-env.yml')
+    $composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'compose-single-tenant-env.override.yml')
 }
 
 $envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
