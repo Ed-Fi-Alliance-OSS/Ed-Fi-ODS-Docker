@@ -28,6 +28,7 @@ services:
     image: edfialliance/ods-api-web-gateway:${GATEWAY_TAG}
     environment:
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+      ADMIN_API_VIRTUAL_NAME: "${ADMIN_API_VIRTUAL_NAME:-adminapi}"
     ports:
       - "443:443"
     container_name: ed-fi-gateway
@@ -37,6 +38,7 @@ services:
       - ../../../ssl:/ssl/
     depends_on:
       - api
+      - adminapi
 
   api:
     image: edfialliance/ods-api-web-api:${TAG}
