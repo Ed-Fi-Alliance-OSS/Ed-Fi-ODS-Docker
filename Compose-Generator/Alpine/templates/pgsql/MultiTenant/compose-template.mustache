@@ -25,7 +25,7 @@ services:
   {{/tenants}}
   {{#tenants}}
   db-admin-{{tenantId}}:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    image: "${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}"
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -114,13 +114,17 @@ services:
         AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
         AppSettings__MultiTenancy: "${MULTITENANCY_ENABLED:-true}"
         ASPNETCORE_ENVIRONMENT: "multitenantdocker"
+        Authentication__AllowRegistration: "true"
+        SwaggerSettings__EnableSwagger: "true"
+        SwaggerSettings__DefaultTenant: ${SWAGGER_DEFAULT_TENANT:-tenant1}
       volumes:
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
     entrypoint: ["/bin/sh"]
     command: ["-c","envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.multitenantdocker.json && /app/run.sh"]
     depends_on:
-{{#tenants}}
-      - pb-admin-{{tenantId}}     
+      {{#tenants}}
+      - pb-admin-{{tenantId}}
+      {{/tenants}} 
     restart: always
     hostname: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
     container_name: ed-fi-adminapi

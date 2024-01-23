@@ -69,7 +69,7 @@ services:
       - db-ods-tenant1-2023
 
   db-admin-tenant1:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    image: "${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}"
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -168,7 +168,7 @@ services:
       - db-ods-tenant2-2023
 
   db-admin-tenant2:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    image: "${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}"
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -273,6 +273,9 @@ services:
       AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
       AppSettings__MultiTenancy: "${MULTITENANCY_ENABLED:-true}"
       ASPNETCORE_ENVIRONMENT: "multitenantdocker"
+      Authentication__AllowRegistration: "true"
+      SwaggerSettings__EnableSwagger: "true"
+      SwaggerSettings__DefaultTenant: ${SWAGGER_DEFAULT_TENANT:-tenant1}
     volumes:
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
     entrypoint: ["/bin/sh"]

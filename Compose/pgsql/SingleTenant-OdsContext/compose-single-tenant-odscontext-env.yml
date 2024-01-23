@@ -88,6 +88,8 @@ services:
       API_INTERNAL_URL: ${API_INTERNAL_URL}
       AppSettings__DefaultPageSizeOffset: ${PAGING_OFFSET:-0}
       AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
+      Authentication__AllowRegistration: "true"
+      SwaggerSettings__EnableSwagger: "true"
     depends_on:
       - pb-admin
     restart: always
