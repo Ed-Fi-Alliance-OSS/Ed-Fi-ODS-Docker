@@ -5,6 +5,7 @@ A Sandbox environment is generally used to support API client developers in deve
 
 Includes the following web applications:
 * Ed-Fi Web API
+* Ed-FI ODS Admin Api
 * Ed-Fi Sandbox Admin
 * SwaggerUI
 

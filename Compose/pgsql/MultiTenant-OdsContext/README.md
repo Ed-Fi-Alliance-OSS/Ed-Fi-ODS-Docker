@@ -3,5 +3,6 @@ This configuration shows a basic example of a multi tenant configuration with an
 
 Includes the following web applications:
 * Ed-Fi Web API
+* Ed-FI ODS Admin Api
 
 See [Ed-Fi Docker Compose Architecture](https://techdocs.ed-fi.org/display/EDFITOOLS/Ed-Fi+Docker+Compose+Architecture) for more information.
