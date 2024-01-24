@@ -132,8 +132,8 @@ services:
       retries: 3
 
   adminapi:
-      image: edfialliance/ods-admin-api:${ADMINAPI_TAG}
-      environment:
+    image: edfialliance/ods-admin-api:${ADMINAPI_TAG}
+    environment:
         ADMIN_WAIT_POSTGRES_HOSTS: "{{#tenants}}pb-admin-{{tenantId}} {{/tenants}}"
         POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
         POSTGRES_USER: "${POSTGRES_USER}"
@@ -150,7 +150,7 @@ services:
         Authentication__AllowRegistration: "true"
         SwaggerSettings__EnableSwagger: "true"
         SwaggerSettings__DefaultTenant: ${SWAGGER_DEFAULT_TENANT:-tenant1}
-      volumes:
+    volumes:
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
     entrypoint: ["/bin/sh"]
     command: ["-c","envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.multitenantdocker.json && /app/run.sh"]
