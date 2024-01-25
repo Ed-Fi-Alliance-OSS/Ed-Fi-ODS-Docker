@@ -69,7 +69,7 @@ services:
       - db-ods-tenant1-2023
 
   db-admin-tenant1:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    image: "${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}"
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -168,7 +168,7 @@ services:
       - db-ods-tenant2-2023
 
   db-admin-tenant2:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    image: "${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}"
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -208,6 +208,7 @@ services:
     image: edfialliance/ods-api-web-gateway:${GATEWAY_TAG}
     environment:
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
+      ADMIN_API_VIRTUAL_NAME: "${ADMIN_API_VIRTUAL_NAME:-adminapi}"
     ports:
       - "443:443"
     container_name: ed-fi-gateway
@@ -217,6 +218,7 @@ services:
       - ../../../ssl:/ssl/
     depends_on:
       - api
+      - adminapi
 
   api:
     image: edfialliance/ods-api-web-api:${TAG}
@@ -252,6 +254,40 @@ services:
     container_name: ed-fi-ods-api
     healthcheck:
       test: $$API_HEALTHCHECK_TEST
+      start_period: "60s"
+      retries: 3
+
+  adminapi:
+    image: edfialliance/ods-admin-api:${ADMINAPI_TAG}
+    environment:
+      ADMIN_WAIT_POSTGRES_HOSTS: "pb-admin-tenant1 pb-admin-tenant2 "
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      DATABASEENGINE: "PostgreSql"
+      AUTHORITY: ${AUTHORITY}
+      ISSUER_URL: ${ISSUER_URL}
+      SIGNING_KEY: ${SIGNING_KEY}
+      ADMIN_API_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
+      AppSettings__DefaultPageSizeOffset: ${PAGING_OFFSET:-0}
+      AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
+      AppSettings__MultiTenancy: "${MULTITENANCY_ENABLED:-true}"
+      ASPNETCORE_ENVIRONMENT: "multitenantdocker"
+      Authentication__AllowRegistration: "true"
+      SwaggerSettings__EnableSwagger: "true"
+      SwaggerSettings__DefaultTenant: ${SWAGGER_DEFAULT_TENANT:-tenant1}
+    volumes:
+      - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
+    entrypoint: ["/bin/sh"]
+    command: ["-c","envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.multitenantdocker.json && /app/run.sh"]
+    depends_on:
+      - pb-admin-tenant1
+      - pb-admin-tenant2
+    restart: always
+    hostname: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
+    container_name: ed-fi-adminapi
+    healthcheck:
+      test: ${ADMIN_API_HEALTHCHECK_TEST}
       start_period: "60s"
       retries: 3
 
