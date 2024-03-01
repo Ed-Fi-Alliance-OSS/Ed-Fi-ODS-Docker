@@ -9,14 +9,12 @@ services:
   pb-admin-tenant1:
     ports:
       - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
-
-  pb-admin-tenant2:
-    ports:
-      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
-
   pb-ods-tenant1:
     ports:
       - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
+  pb-admin-tenant2:
+    ports:
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
   pb-ods-tenant2:
     ports:
       - "5404:${PGBOUNCER_LISTEN_PORT:-6432}"
