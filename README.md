@@ -63,10 +63,9 @@ The following environment variables can be used to control client-side pooling w
 
 To remove PGBouncer, make the following changes:
 
-1. Remove and/or comment out the `pb-admin` and `pb-ods*` services from the compose file.
-2. Update `admin`, and `api` services and change the database environment variables (`ODS_POSTGRES_HOST`, and `ADMIN_POSTGRES_HOST`) to point to `db-ods` and `db-admin` from `pb-ods` and `pb-admin`.
-3. Update the `POSTGRES_PORT` environment variable to point to 5432.
-4. If required expose the port on the services `db-admin`, and `db-ods` services. Note these ports should be independent.
+1. Remove or comment out the `pb-*` services in the compose file.
+2. Replace the remaining instances of `pb-*` to `db-*` in the compose file, and if applicable, also in the `bootstrap.sh`, `appsettings.dockertemplate.json` and `*.override.yml` files.
+3. Add `POSTGRES_PORT=5432` to your .env and replace all instances of `PGBOUNCER_LISTEN_PORT` and `ODS_PGBOUNCER_PORT` to `POSTGRES_PORT` in the compose file, and if applicable, also in the `bootstrap.sh` and `*.override.yml` files.
 
 ## Contributing
 The Ed-Fi Alliance welcomes code contributions from the community. For more information, see:
