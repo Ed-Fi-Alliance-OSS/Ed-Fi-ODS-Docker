@@ -18,7 +18,7 @@ psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Admin" <<-
 \set ods_instance_type 'ODS'
 \set context_key '${CONTEXT_KEY}'
 \set context_value '2022'
-\set ods_instance_connection_string 'host=edfi_ods_2022;port=${ODS_PGBOUNCER_PORT};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Ods;pooling=${NPG_POOLING_ENABLED};minimum pool size=10;maximum pool size=${NPG_API_MAX_POOL_SIZE_ODS};Application Name=EdFi.Ods.WebApi'
+\set ods_instance_connection_string 'host=pb_ods_2022;port=${ODS_PGBOUNCER_PORT};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Ods;pooling=${NPG_POOLING_ENABLED};minimum pool size=10;maximum pool size=${NPG_API_MAX_POOL_SIZE_ODS};Application Name=EdFi.Ods.WebApi'
 
 INSERT INTO dbo.OdsInstances (Name, InstanceType, ConnectionString)
 SELECT :'ods_instance_name', :'ods_instance_type', :'ods_instance_connection_string'
@@ -41,7 +41,7 @@ psql --username "$POSTGRES_USER" --port $POSTGRES_PORT --dbname "EdFi_Admin" <<-
 \set ods_instance_type 'ODS'
 \set context_key '${CONTEXT_KEY}'
 \set context_value '2023'
-\set ods_instance_connection_string 'host=edfi_ods_2023;port=${ODS_PGBOUNCER_PORT};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Ods;pooling=${NPG_POOLING_ENABLED};minimum pool size=10;maximum pool size=${NPG_API_MAX_POOL_SIZE_ODS};Application Name=EdFi.Ods.WebApi'
+\set ods_instance_connection_string 'host=pb_ods_2023;port=${ODS_PGBOUNCER_PORT};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Ods;pooling=${NPG_POOLING_ENABLED};minimum pool size=10;maximum pool size=${NPG_API_MAX_POOL_SIZE_ODS};Application Name=EdFi.Ods.WebApi'
 
 INSERT INTO dbo.OdsInstances (Name, InstanceType, ConnectionString)
 SELECT :'ods_instance_name', :'ods_instance_type', :'ods_instance_connection_string'

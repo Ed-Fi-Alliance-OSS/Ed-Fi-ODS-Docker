@@ -11,26 +11,25 @@ RUN go install github.com/cbroglie/mustache/...@v1.4.0
 FROM alpine:3.18.5@sha256:34871e7290500828b39e22294660bee86d966bc0017544e848dd9a255cdf59e0
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
+COPY templates/pgsql/compose-override-template.mustache /app/compose-override-template.mustache
+
 # Copy SingleTenant multi year artifacts
 COPY templates/pgsql/SingleTenant-OdsContext/run.sh /singleTenant-odsContext.sh
 COPY templates/pgsql/SingleTenant-OdsContext/appsettings-template.mustache /app/singleTenant-odsContext/appsettings-template.mustache
 COPY templates/pgsql/SingleTenant-OdsContext/bootstrap-template.mustache /app/singleTenant-odsContext/bootstrap-template.mustache
 COPY templates/pgsql/SingleTenant-OdsContext/compose-template.mustache /app/singleTenant-odsContext/compose-template.mustache
-COPY templates/pgsql/SingleTenant-OdsContext/compose-override-template.mustache /app/singleTenant-odsContext/compose-override-template.mustache
 
 # Copy MultiTenant artifacts
 COPY templates/pgsql/MultiTenant/run.sh /multiTenant.sh
 COPY templates/pgsql/MultiTenant/appsettings-template.mustache /app/multiTenant/appsettings-template.mustache
 COPY templates/pgsql/MultiTenant/bootstrap-template.mustache /app/multiTenant/bootstrap-template.mustache
 COPY templates/pgsql/MultiTenant/compose-template.mustache /app/multiTenant/compose-template.mustache
-COPY templates/pgsql/MultiTenant/compose-override-template.mustache /app/multiTenant/compose-override-template.mustache
 
 # Copy MultiTenant-OdsContext artifacts
 COPY templates/pgsql/MultiTenant-OdsContext/run.sh /multiTenant-OdsContext.sh
 COPY templates/pgsql/MultiTenant-OdsContext/appsettings-template.mustache /app/multiTenant-OdsContext/appsettings-template.mustache
 COPY templates/pgsql/MultiTenant-OdsContext/bootstrap-template.mustache /app/multiTenant-OdsContext/bootstrap-template.mustache
 COPY templates/pgsql/MultiTenant-OdsContext/compose-template.mustache /app/multiTenant-OdsContext/compose-template.mustache
-COPY templates/pgsql/MultiTenant-OdsContext/compose-override-template.mustache /app/multiTenant-OdsContext/compose-override-template.mustache
 
 RUN mkdir /output && \
     chmod +x /*.sh

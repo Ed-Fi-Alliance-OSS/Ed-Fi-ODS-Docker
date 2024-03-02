@@ -6,14 +6,12 @@
 version: "3.8"
 
 services:
-  edfi_ods_2022:
-    ports:
-      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
-  
-  edfi_ods_2023:
-    ports:
-      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
-  
   pb-admin:
     ports:
       - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
+  pb_ods_2022:
+    ports:
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
+  pb_ods_2023:
+    ports:
+      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"

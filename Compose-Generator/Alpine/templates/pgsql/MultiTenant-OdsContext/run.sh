@@ -7,7 +7,7 @@
 /app/mustache parameters /app/multiTenant-OdsContext/appsettings-template.mustache > output/appsettings.dockertemplate.json
 /app/mustache parameters /app/multiTenant-OdsContext/bootstrap-template.mustache > output/bootstrap.sh
 /app/mustache parameters /app/multiTenant-OdsContext/compose-template.mustache > output/compose-multi-tenant-odscontext-env.yml
-/app/mustache parameters /app/multiTenant-OdsContext/compose-override-template.mustache > output/compose-multi-tenant-odscontext-env.override.yml
+/app/mustache parameters /app/compose-override-template.mustache > output/compose-multi-tenant-odscontext-env.override.yml
 
 dos2unix /output/*.sh
 chmod 755 /output/bootstrap.sh

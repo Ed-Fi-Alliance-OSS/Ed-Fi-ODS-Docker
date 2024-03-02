@@ -6,25 +6,21 @@
 version: "3.8"
 
 services:
-  pb-ods-tenant1-2022:
-    ports:
-      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
-
-  pb-ods-tenant1-2023:
-    ports:
-      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
-
   pb-admin-tenant1:
     ports:
       - "5410:${PGBOUNCER_LISTEN_PORT:-6432}"
-  pb-ods-tenant2-2022:
+  pb-ods-tenant1-2022:
     ports:
-      - "5405:${PGBOUNCER_LISTEN_PORT:-6432}"
-
-  pb-ods-tenant2-2023:
+      - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
+  pb-ods-tenant1-2023:
     ports:
-      - "5406:${PGBOUNCER_LISTEN_PORT:-6432}"
-
+      - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
   pb-admin-tenant2:
     ports:
       - "5412:${PGBOUNCER_LISTEN_PORT:-6432}"
+  pb-ods-tenant2-2022:
+    ports:
+      - "5405:${PGBOUNCER_LISTEN_PORT:-6432}"
+  pb-ods-tenant2-2023:
+    ports:
+      - "5406:${PGBOUNCER_LISTEN_PORT:-6432}"
