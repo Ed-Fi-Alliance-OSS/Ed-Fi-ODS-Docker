@@ -3,13 +3,12 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-# Tag postgres:13-alpine
-FROM postgres@sha256:fc3670fa23119159394dfdb98eee89b30ef5a506791aea6ff7d8a4e73a8cd4a4
+FROM postgres:13.13-alpine3.18@sha256:3cf9bba86013877375df15001a31b10be6834e56e69ac1cb1605f469c5c5bdd6
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV MINVERSION="6.1.176"
-ENV MINTPDMVERSION="6.1.135"
+ENV MINVERSION="6.2.819"
+ENV MINTPDMVERSION="6.2.649"
 
 ENV POSTGRES_USER=${POSTGRES_USER}
 ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
