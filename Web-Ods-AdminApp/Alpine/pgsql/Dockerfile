@@ -4,7 +4,8 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine3.18-amd64@sha256:269b84c8f0704adcc8ae84f51057f9b5a768ac02965afa42e43bd3ff61de980a AS base
-RUN apk --no-cache add unzip=~6 dos2unix=~7 bash=~5 gettext=~0 icu=~74 curl=~8
+RUN apk --no-cache add unzip=~6 dos2unix=~7 bash=~5 gettext=~0 icu=~74 curl=~8 && \
+    addgroup -S edfi && adduser -S edfi -G edfi
 
 # Start a new layer so that the above layer can be cached
 FROM base AS build
@@ -24,22 +25,25 @@ ENV API_MODE=SharedInstance
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 WORKDIR /app
-COPY appsettings.template.json /app/appsettings.template.json
-COPY run.sh /app/run.sh
+COPY --chmod=600 appsettings.template.json /app/appsettings.template.json
+COPY --chmod=500 run.sh /app/run.sh
 COPY log4net.config /app/log4net.txt
 
-RUN wget -O /app/AdminApp.zip  https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.ODS.AdminApp.Web/versions/${VERSION}/content && \
+RUN umask 0077 && \
+    wget -O /app/AdminApp.zip  https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.ODS.AdminApp.Web/versions/${VERSION}/content && \
     unzip /app/AdminApp.zip AdminApp/* -d /app/ && \
     cp -r /app/AdminApp/. /app/ && \
     rm -f /app/AdminApp.zip && \
     rm -r /app/AdminApp && \
     cp /app/log4net.txt /app/log4net.config && \
+    rm -f /app/log4net.txt && \
     dos2unix /app/*.json && \
     dos2unix /app/*.sh && \
     dos2unix /app/log4net.config && \
-    chmod 700 /app/*.sh -- ** && \
-    rm -f /app/*.exe
+    rm -f /app/*.exe && \
+    apk del unzip dos2unix curl && \
+    chown -R edfi /app
 
 EXPOSE 80
-
+USER edfi
 ENTRYPOINT [ "/app/run.sh" ]
