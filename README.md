@@ -1,6 +1,6 @@
 # Ed-Fi-ODS-Docker
 
-This repository hosts the Docker deployment source code for ODS/API. To work with what is offered in this repository, set up your Docker environment by referring to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment).
+This repository hosts the Docker deployment source code for ODS/API. To work with what is offered in this repository, set up your Docker environment by referring to the [Docker Deployment document (v2)](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment+2.xt).
 
 ## Exposed Ports
 
