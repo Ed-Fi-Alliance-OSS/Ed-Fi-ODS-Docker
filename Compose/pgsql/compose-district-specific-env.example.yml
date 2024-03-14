@@ -140,7 +140,7 @@ services:
       - db-ods-255902
 
   adminapp:
-    image: edfialliance/ods-admin-app:${TAG}
+    image: edfialliance/ods-admin-app:${ADMINAPP_TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"

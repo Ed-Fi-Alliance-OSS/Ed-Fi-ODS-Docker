@@ -92,9 +92,7 @@ services:
       retries: 3
 
   adminapp:
-    build:
-      context: ../../Web-Ods-AdminApp/Alpine/pgsql
-      dockerfile: Dockerfile
+    image: edfialliance/ods-admin-app:${ADMINAPP_TAG}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
