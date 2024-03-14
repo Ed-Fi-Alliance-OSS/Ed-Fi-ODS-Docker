@@ -66,5 +66,9 @@
         "exclude": [
             "css", "json", "xml", "config", "plaintext", "markdown", "batch"
         ]
-    }
+    },
+    "cSpell.words": [
+        "adminapp",
+        "edfi"
+    ]
 }
