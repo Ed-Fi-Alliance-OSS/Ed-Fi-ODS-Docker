@@ -32,5 +32,5 @@ RUN apk --no-cache add dos2unix=~7 unzip=~6 && \
     chmod -R 777 /tmp/AdminAppScripts/PgSql
 
 EXPOSE 5432
-
+USER postgres
 CMD ["docker-entrypoint.sh", "postgres"]

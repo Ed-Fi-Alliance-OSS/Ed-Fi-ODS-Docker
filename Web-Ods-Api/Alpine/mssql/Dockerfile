@@ -17,6 +17,7 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 ENV VERSION="6.2.2329"
+ENV ASPNETCORE_HTTP_PORTS=80
 
 WORKDIR /app
 COPY --chmod=600 appsettings.template.json /app/appsettings.template.json

@@ -18,6 +18,7 @@ ENV PGBOUNCER_LISTEN_PORT=6432
 ENV ODS_VIRTUAL_NAME=api
 ENV PathBase=admin
 ENV OAuthUrl="https://localhost/${ODS_VIRTUAL_NAME}/oauth/"
+ENV ASPNETCORE_HTTP_PORTS=80
 
 # Alpine image does not contain Globalization Cultures library so we need to install ICU library to get fopr LINQ expression to work
 # Disable the globaliztion invariant mode (set in base image)
