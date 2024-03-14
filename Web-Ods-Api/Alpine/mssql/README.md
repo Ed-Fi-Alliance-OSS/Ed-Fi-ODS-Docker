@@ -16,6 +16,7 @@ SQLSERVER_ODS_DATASOURCE=<DNS or IP Address of the SQL Server Instance, i.e. sql
 SQLSERVER_ADMIN_DATASOURCE=<DNS or IP Address of the SQL Server Instance that contains the Admin/Security/Master databases, i.e. sql.somedns.org or 10.1.5.9,1433>
 SQLSERVER_USER=<SQL Username with access to SQL Server Ed-Fi databases, edfiadmin>
 SQLSERVER_PASSWORD=<SQL Password for the SQLSERVER_USER with access to SQL Server Ed-Fi databases, password123!>
+SQLSERVER_ENCRYPT=<true/false to encrypt connections to SQL Server; if true, then the container must have the proper certificate>
 TPDM_ENABLED=<true/false load TPDM extension> (OPTIONAL, default: true)
 ```
 
