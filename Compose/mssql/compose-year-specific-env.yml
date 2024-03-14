@@ -48,10 +48,10 @@ services:
     image: edfialliance/ods-admin-app-mssql:${TAG}
     environment:
       API_MODE: "YearSpecific"
-      API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       API_INTERNAL_URL: ${API_INTERNAL_URL?Please consult env.example to set the Api internal url}
+      API_EXTERNAL_URL: ${API_EXTERNAL_URL?Please consult env.example to set the Api internal url}
       SQLSERVER_ODS_DATASOURCE: "${SQLSERVER_ODS_DATASOURCE:-host.docker.internal}"
       SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
