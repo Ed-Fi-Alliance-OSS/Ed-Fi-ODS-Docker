@@ -40,7 +40,7 @@ services:
       start_period: "60s"
       retries: 3
 
-  nginx:
+  nginx-sandbox:
     build:
       context: ../../Web-Gateway-Sandbox/Alpine
       dockerfile: Dockerfile
@@ -57,7 +57,7 @@ services:
       - ../../ssl:/ssl/
     depends_on:
       - api
-      - admin
+      - sandbox-admin
       - swagger
 
   api:
@@ -84,7 +84,7 @@ services:
     depends_on:
       - pb-ods
       - pb-admin
-      - admin
+      - sandbox-admin
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
@@ -93,7 +93,7 @@ services:
       start_period: "60s"
       retries: 3
 
-  admin:
+  sandbox-admin:
     build:
       context: ../../Web-Sandbox-Admin/Alpine/pgsql
       dockerfile: Dockerfile
@@ -142,7 +142,7 @@ services:
       SWAGGER_HEALTHCHECK_TEST: ${SWAGGER_HEALTHCHECK_TEST?Please consult env.example to set the SWAGGER healthcheck test}
     depends_on:
       - api
-      - admin
+      - sandbox-admin
       - pb-ods
       - pb-admin
     restart: always

@@ -6,7 +6,7 @@
 version: "3.8"
 
 services:
-  nginx:
+  nginx-sandbox:
     image: edfialliance/ods-api-web-gateway-sandbox:${TAG}
     environment:
       ODS_VIRTUAL_NAME: "${ODS_VIRTUAL_NAME:-api}"
@@ -21,7 +21,7 @@ services:
       - ../../ssl:/ssl/
     depends_on:
       - api
-      - admin
+      - sandbox-admin
       - swagger
 
   api:
@@ -39,7 +39,7 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
-      - admin
+      - sandbox-admin
     restart: always
     hostname: api
     container_name: ed-fi-ods-api
@@ -48,7 +48,7 @@ services:
       start_period: "60s"
       retries: 3
 
-  admin:
+  sandbox-admin:
     image: edfialliance/ods-api-web-sandbox-admin-mssql:${TAG}
     environment:
       ADMIN_USER: "${ADMIN_USER}"
@@ -85,7 +85,7 @@ services:
       SWAGGER_HEALTHCHECK_TEST: ${SWAGGER_HEALTHCHECK_TEST?Please consult env.example to set the SWAGGER healthcheck test}
     depends_on:
       - api
-      - admin
+      - sandbox-admin
     restart: always
     hostname: swagger
     container_name: ed-fi-swagger
