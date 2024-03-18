@@ -1,6 +1,13 @@
 # Ed-Fi-ODS-Docker
 
-This repository hosts the Docker deployment source code for ODS/API. To work with what is offered in this repository, set up your Docker environment by referring to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment).
+This repository hosts the Docker deployment source code for ODS/API. To work with what is offered in this repository, set up your Docker environment by referring to the [Docker Deployment document (v2)](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment+2.xt).
+
+## Tags for this release
+
+The active Docker tags in this release are:
+
+* `TAG=2.3.1` covering ODS/API 6.2 (running .NET 8)
+* `ADMINAPP_TAG=v3.2.1` covering Admin App 3.2.1 (running .NET Core 3.1)
 
 ## Exposed Ports
 

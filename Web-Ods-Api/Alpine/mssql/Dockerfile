@@ -16,7 +16,8 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 # Disable the globaliztion invariant mode (set in base image)
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
-ENV VERSION="6.2.2329"
+ENV VERSION="6.2.2456"
+ENV ASPNETCORE_HTTP_PORTS=80
 
 WORKDIR /app
 COPY --chmod=600 appsettings.template.json /app/appsettings.template.json
@@ -36,9 +37,6 @@ RUN umask 0077 && \
     apk del unzip dos2unix curl && \
     chown -R edfi /app
 
-EXPOSE 80
+EXPOSE ${ASPNETCORE_HTTP_PORTS}
 USER edfi
-
-EXPOSE 80
-
-ENTRYPOINT [ "/app/run.sh" ]
+ENTRYPOINT ["/app/run.sh"]

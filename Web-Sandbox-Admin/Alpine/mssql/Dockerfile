@@ -12,12 +12,13 @@ FROM base AS build
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="6.2.2329"
+ENV VERSION="6.2.2456"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
 ENV ODS_VIRTUAL_NAME=api
 ENV PathBase=admin
 ENV OAuthUrl="https://localhost/${ODS_VIRTUAL_NAME}/oauth/"
+ENV ASPNETCORE_HTTP_PORTS=80
 
 # Alpine image does not contain Globalization Cultures library so we need to install ICU library to get fopr LINQ expression to work
 # Disable the globaliztion invariant mode (set in base image)
@@ -42,6 +43,6 @@ RUN umask 0077 && \
     apk del unzip dos2unix curl && \
     chown -R edfi /app
 
-EXPOSE 80
+EXPOSE ${ASPNETCORE_HTTP_PORTS}
 USER edfi
 ENTRYPOINT ["/app/run.sh"]

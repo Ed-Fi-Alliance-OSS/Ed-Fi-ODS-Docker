@@ -12,20 +12,21 @@ FROM base AS build
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="6.2.2329"
+ENV VERSION="6.2.2456"
 ENV DOCS_VIRTUAL_NAME=docs
 ENV ODS_VIRTUAL_NAME=api
 ENV WebApiVersionUrl="https://localhost/${ODS_VIRTUAL_NAME}/"
 ENV UseReverseProxyHeaders=true
 ENV PathBase="${DOCS_VIRTUAL_NAME}"
+ENV ASPNETCORE_HTTP_PORTS=80
 
 # Alpine image does not contain Globalization Cultures library so we need to install ICU library to get fopr LINQ expression to work
 # Disable the globaliztion invariant mode (set in base image)
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 WORKDIR /app
-COPY appsettings.template.json /app/appsettings.template.json
-COPY run.sh /app/run.sh
+COPY --chmod=600 appsettings.template.json /app/appsettings.template.json
+COPY --chmod=500 run.sh /app/run.sh
 
 RUN umask 0077 && \
     wget -O /app/SwaggerUI.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.Ods.SwaggerUI/versions/${VERSION}/content && \
@@ -37,6 +38,6 @@ RUN umask 0077 && \
     apk del unzip dos2unix curl && \
     chown -R edfi /app
 
-EXPOSE 80
+EXPOSE ${ASPNETCORE_HTTP_PORTS}
 USER edfi
 ENTRYPOINT ["/app/run.sh"]

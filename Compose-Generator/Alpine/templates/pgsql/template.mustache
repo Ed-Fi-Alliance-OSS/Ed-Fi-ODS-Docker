@@ -140,12 +140,7 @@ services:
 
   adminapp:
     {{#usePreBuiltImages}}
-    image: edfialliance/ods-admin-app:${TAG}
-    {{/usePreBuiltImages}}
-    {{^usePreBuiltImages}}
-    build:
-      context: ../../Web-Ods-AdminApp/Alpine/pgsql
-      dockerfile: Dockerfile
+    image: edfialliance/ods-admin-app:${ADMINAPP_TAG}
     {{/usePreBuiltImages}}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
