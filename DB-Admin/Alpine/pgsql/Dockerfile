@@ -4,7 +4,12 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 # Tag postgres:11-alpine
-FROM postgres@sha256:386802b61d7226cdcf8710ed6e5e46f993e0da1f3dd2e829cbab12ee91b888ad
+FROM postgres:11.18-alpine@sha256:45c707738d68fd75da5353e5387670bd1988b82c4617b2f354b0d3901b7eeb27 AS base
+RUN apk --upgrade --no-cache add dos2unix=~7.4 unzip=~6.0 openssl=~3 libxml2=~2.10 ncurses=~6 e2fsprogs=~1.46
+
+# Start a new layer so that the above layer can be cached
+FROM base AS base-upgraded
+
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV POSTGRES_USER=${POSTGRES_USER}
@@ -18,8 +23,7 @@ ENV ADMINAPP_DATABASE_VERSION="2.4.48"
 COPY init-database.sh /docker-entrypoint-initdb.d/1-init-database.sh
 COPY run-adminapp-migrations.sh /docker-entrypoint-initdb.d/2-run-adminapp-migrations.sh
 
-RUN apk --no-cache add dos2unix=~7.4 unzip=~6.0 && \
-    wget -O /tmp/EdFi_Admin.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Database.Admin.PostgreSQL/versions/${ADMIN_VERSION}/content && \
+RUN wget -O /tmp/EdFi_Admin.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Database.Admin.PostgreSQL/versions/${ADMIN_VERSION}/content && \
     wget -O /tmp/EdFi_Security.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Database.Security.PostgreSQL/versions/${SECURITY_VERSION}/content && \
     wget -O /tmp/EdFi_AdminApp_Scripts.zip https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.ODS.AdminApp.Database/versions/${ADMINAPP_DATABASE_VERSION}/content && \
     unzip -p /tmp/EdFi_Admin.zip EdFi_Admin.sql > /tmp/EdFi_Admin.sql && \
@@ -30,7 +34,8 @@ RUN apk --no-cache add dos2unix=~7.4 unzip=~6.0 && \
     dos2unix /tmp/EdFi_Admin.sql && \
     dos2unix /tmp/EdFi_Security.sql && \
     dos2unix /tmp/AdminAppScripts/PgSql/* && \
-    chmod -R 777 /tmp/AdminAppScripts/PgSql
+    chmod -R 777 /tmp/AdminAppScripts/PgSql && \
+    apk del unzip dos2unix
 
 EXPOSE 5432
 

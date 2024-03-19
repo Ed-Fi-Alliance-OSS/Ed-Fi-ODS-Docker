@@ -9,6 +9,9 @@ set +x
 
 envsubst < /app/appsettings.template.json > /app/appsettings.json
 
+# Fix error that prevents loading correctly the app
+mv /app/wwwroot/css/Site.css /app/wwwroot/css/site.css
+
 until PGPASSWORD=$POSTGRES_PASSWORD psql -h $ODS_POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -c '\q';
 do
   >&2 echo "Postgres is unavailable - sleeping"
