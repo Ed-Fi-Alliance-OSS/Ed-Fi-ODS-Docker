@@ -37,6 +37,8 @@ RUN apk --no-cache add postgresql14-client=~14.11 && \
     dos2unix /app/*.json && \
     dos2unix /app/*.sh && \
     dos2unix /app/log4net.config && \
+    # Fix error that prevents loading correctly the app
+    mv /app/wwwroot/css/Site.css /app/wwwroot/css/site.css  && \
     chmod 700 /app/run.sh && \
     rm -f /app/*.exe && \
     apk del unzip dos2unix
