@@ -40,7 +40,7 @@ services:
     container_name: ed-fi-ods-api
 
   adminapp:
-    image: edfialliance/ods-admin-app-mssql:${TAG}
+    image: edfialliance/ods-admin-app-mssql:${ADMINAPP_TAG}
     environment:
       API_MODE: "SharedInstance"
       API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
@@ -52,6 +52,7 @@ services:
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
       ADMINAPP_HEALTHCHECK_TEST: ${ADMINAPP_HEALTHCHECK_TEST?Please consult env.example to set the Admin App healthcheck test}
+      SQLSERVER_ENCRYPT: ${SQLSERVER_ENCRYPT:-false}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache

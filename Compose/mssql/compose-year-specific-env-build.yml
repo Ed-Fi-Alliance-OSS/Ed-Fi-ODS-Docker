@@ -44,20 +44,19 @@ services:
     container_name: ed-fi-ods-api
 
   adminapp:
-    build:
-      context: ../../Web-Ods-AdminApp/Alpine/mssql
-      dockerfile: Dockerfile
+    image: edfialliance/ods-admin-app-mssql:${ADMINAPP_TAG}
     environment:
       API_MODE: "YearSpecific"
-      API_EXTERNAL_URL: "https://${API_HOSTNAME:-localhost}/${ODS_VIRTUAL_NAME:-api}"
       ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
       ADMINAPP_VIRTUAL_NAME: "${ADMINAPP_VIRTUAL_NAME:-adminapp}"
       API_INTERNAL_URL: ${API_INTERNAL_URL?Please consult env.example to set the Api internal url}
+      API_EXTERNAL_URL: ${API_EXTERNAL_URL?Please consult env.example to set the Api internal url}
       SQLSERVER_ODS_DATASOURCE: "${SQLSERVER_ODS_DATASOURCE:-host.docker.internal}"
       SQLSERVER_ADMIN_DATASOURCE: "${SQLSERVER_ADMIN_DATASOURCE:-host.docker.internal}"
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
       ADMINAPP_HEALTHCHECK_TEST: ${ADMINAPP_HEALTHCHECK_TEST?Please consult env.example to set the Admin App healthcheck test}
+      SQLSERVER_ENCRYPT: ${SQLSERVER_ENCRYPT:-false}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - adminapp-bulk-hashcache:/app/BulkUploadHashCache
