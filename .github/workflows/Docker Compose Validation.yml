@@ -5,6 +5,8 @@
 
 name: Docker Compose Validation
 
+permissions: read-all
+
 on:
   push:
     branches:
