@@ -12,7 +12,7 @@ FROM base AS base-upgraded
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="5.3.1499"
+ENV VERSION="5.4.2272"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
 ENV ODS_VIRTUAL_NAME=api

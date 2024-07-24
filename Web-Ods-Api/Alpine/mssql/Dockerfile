@@ -16,7 +16,7 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 # Disable the globaliztion invariant mode (set in base image)
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
-ENV VERSION="5.3.1499"
+ENV VERSION="5.4.2272"
 
 WORKDIR /app
 COPY appsettings.template.json /app/appsettings.template.json
