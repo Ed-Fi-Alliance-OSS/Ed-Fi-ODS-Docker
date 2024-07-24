@@ -4,8 +4,8 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 # Tag postgres:11-alpine
-FROM postgres:11.18-alpine@sha256:45c707738d68fd75da5353e5387670bd1988b82c4617b2f354b0d3901b7eeb27 AS base
-RUN apk --upgrade --no-cache add dos2unix=~7.4 unzip=~6.0 openssl=~3 libxml2=~2.10 ncurses=~6 e2fsprogs=~1.46
+FROM postgres:11.22-alpine3.19@sha256:33a78858869c44785eee197a60cf281c5c80376bb725992f092ec5e7e072f3de AS base
+RUN apk --upgrade --no-cache add dos2unix=~7.5 unzip=~6.0 openssl=~3 libxml2=~2.11 ncurses=~6 e2fsprogs=~1.47 busybox=~1.36
 
 # Start a new layer so that the above layer can be cached
 FROM base AS base-upgraded

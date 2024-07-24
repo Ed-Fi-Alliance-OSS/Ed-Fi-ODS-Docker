@@ -6,7 +6,7 @@ This repository hosts the Docker deployment source code for ODS/API. To work wit
 
 The active Docker tags in this release are:
 
-* `TAG=2.1.6` covering ODS/API 5.3 (running .NET Core 3.1)
+* `TAG=2.1.7` covering ODS/API 5.4 (running .NET 8)
 * `ADMINAPP_TAG=v3.2.1` covering Admin App 3.2.1 (running .NET 6)
 
 ### Exposed Ports
