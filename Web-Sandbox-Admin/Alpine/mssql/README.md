@@ -26,6 +26,7 @@ MINIMAL_KEY=<minimal template key>
 MINIMAL_SECRET=<minimal template secret>
 POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
+SQLSERVER_ENCRYPT=<true/false to encrypt connections to SQL Server; if true, then the container must have the proper certificate>
 ```
 
 ## License Information

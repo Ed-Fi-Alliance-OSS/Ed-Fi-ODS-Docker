@@ -38,6 +38,7 @@ services:
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
+      SQLSERVER_ENCRYPT: ${SQLSERVER_ENCRYPT:-false}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     depends_on:
@@ -63,6 +64,7 @@ services:
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
       PathBase: "${SANDBOX_ADMIN_VIRTUAL_NAME:-admin}"
       OAuthUrl: "https://localhost/${ODS_VIRTUAL_NAME:-api}/oauth/"
+      SQLSERVER_ENCRYPT: ${SQLSERVER_ENCRYPT:-false}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     restart: always
