@@ -4,6 +4,12 @@ Provides docker deployment for **_EdFi_Ods_** and the minimal template **_EdFi_O
 **Note: This image is suitable for production use in _shared instance_ mode.**
 
 ## Image Links
+- [2.1.7](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.7/DB-ODS/Alpine/pgsql/Dockerfile)
+- [2.1.6](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.6/DB-ODS/Alpine/pgsql/Dockerfile)
+- [2.1.5](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.5/DB-ODS/Alpine/pgsql/Dockerfile)
+- [2.1.4](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.4/DB-ODS/Alpine/pgsql/Dockerfile)
+- [2.1.3](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.3/DB-ODS/Alpine/pgsql/Dockerfile)
+- [2.1.2](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.2/DB-ODS/Alpine/pgsql/Dockerfile)
 - [2.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.1/DB-ODS/Alpine/pgsql/Dockerfile)
 - [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/DB-ODS/Alpine/pgsql/Dockerfile)
 - [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/DB-ODS/Alpine/pgsql/Dockerfile)

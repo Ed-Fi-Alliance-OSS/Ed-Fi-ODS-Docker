@@ -4,6 +4,12 @@ Provides docker deployment for Sandbox Admin tool.
 **NOTE: This image is not recommended for production use.**
 
 ## Image Links
+- [2.1.7](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.7/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
+- [2.1.6](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.6/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
+- [2.1.5](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.5/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
+- [2.1.4](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.4/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
+- [2.1.3](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.3/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
+- [2.1.2](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.2/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
 - [2.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.1/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
 - [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
 - [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Sandbox-Admin/Alpine/mssql/Dockerfile)
@@ -26,6 +32,7 @@ MINIMAL_KEY=<minimal template key>
 MINIMAL_SECRET=<minimal template secret>
 POPULATED_KEY=<populated template key>
 POPULATED_SECRET=<populated template secret>
+SQLSERVER_ENCRYPT=<true/false to encrypt connections to SQL Server; if true, then the container must have the proper certificate>
 ```
 
 ## License Information

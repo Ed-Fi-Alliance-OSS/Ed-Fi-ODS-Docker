@@ -4,6 +4,12 @@ Provides docker deployment for Ed-Fi ODS/API.
 **NOTE: This image is suitable for production use.**
 
 ## Image Links
+- [2.1.7](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.7/Web-Ods-Api/Alpine/mssql/Dockerfile)
+- [2.1.6](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.6/Web-Ods-Api/Alpine/mssql/Dockerfile)
+- [2.1.5](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.5/Web-Ods-Api/Alpine/mssql/Dockerfile)
+- [2.1.4](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.4/Web-Ods-Api/Alpine/mssql/Dockerfile)
+- [2.1.3](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.3/Web-Ods-Api/Alpine/mssql/Dockerfile)
+- [2.1.2](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.2/Web-Ods-Api/Alpine/mssql/Dockerfile)
 - [2.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.1/Web-Ods-Api/Alpine/mssql/Dockerfile)
 - [2.1.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.1.0/Web-Ods-Api/Alpine/mssql/Dockerfile)
 - [2.0.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/blob/v2.0.0/Web-Ods-Api/Alpine/mssql/Dockerfile)
@@ -21,6 +27,7 @@ SQLSERVER_ODS_DATASOURCE=<DNS or IP Address of the SQL Server Instance, i.e. sql
 SQLSERVER_ADMIN_DATASOURCE=<DNS or IP Address of the SQL Server Instance that contains the Admin/Security/Master databases, i.e. sql.somedns.org or 10.1.5.9,1433>
 SQLSERVER_USER=<SQL Username with access to SQL Server Ed-Fi databases, edfiadmin>
 SQLSERVER_PASSWORD=<SQL Password for the SQLSERVER_USER with access to SQL Server Ed-Fi databases, password123!>
+SQLSERVER_ENCRYPT=<true/false to encrypt connections to SQL Server; if true, then the container must have the proper certificate>
 TPDM_ENABLED=<true/false load TPDM extension> (OPTIONAL, default: true)
 ```
 

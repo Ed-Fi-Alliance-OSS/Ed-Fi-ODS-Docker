@@ -37,6 +37,7 @@ services:
       SQLSERVER_USER: "${SQLSERVER_USER}"
       SQLSERVER_PASSWORD: "${SQLSERVER_PASSWORD}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
+      SQLSERVER_ENCRYPT: ${SQLSERVER_ENCRYPT:-false}
     volumes:
       - ${LOGS_FOLDER}:/app/logs
     restart: always
