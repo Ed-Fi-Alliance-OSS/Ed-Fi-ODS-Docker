@@ -38,6 +38,6 @@ RUN umask 0077 && \
     apk del unzip dos2unix curl && \
     chown -R edfi /app
 
-EXPOSE ${ASPNETCORE_HTTP_PORTS}
+EXPOSE 80
 USER edfi
 ENTRYPOINT ["/app/run.sh"]
