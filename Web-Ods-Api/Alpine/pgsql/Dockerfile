@@ -13,7 +13,7 @@ RUN apk --no-cache add postgresql13-client=~13
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="6.2.2456"
+ENV VERSION="6.2.3630"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
 ENV NPG_POOLING_ENABLED=false

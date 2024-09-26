@@ -16,7 +16,7 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 # Disable the globaliztion invariant mode (set in base image)
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
-ENV VERSION="6.2.2456"
+ENV VERSION="6.2.3630"
 ENV ASPNETCORE_HTTP_PORTS=80
 
 WORKDIR /app
