@@ -12,7 +12,7 @@ FROM base AS build
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="6.2.2456"
+ENV VERSION="6.2.3630"
 ENV DOCS_VIRTUAL_NAME=docs
 ENV ODS_VIRTUAL_NAME=api
 ENV WebApiVersionUrl="https://localhost/${ODS_VIRTUAL_NAME}/"
