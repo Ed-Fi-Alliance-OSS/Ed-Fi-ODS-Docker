@@ -1,6 +1,6 @@
 # Getting Started with Docker Containers for Ed-Fi ODS
 
-This guide provides basic instructions to help you get started by creating the Docker containers for a sandbox Ed-Fi ODS instance using the files in this repository. For detailed information on using this repository, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
+This guide provides basic instructions for creating and tearing down Docker containers for a sandbox Ed-Fi ODS instance using the files in this repository. For detailed information on using this repository, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
 
 ## Prerequisites
 
@@ -9,13 +9,13 @@ Before you begin, make sure you have the following installed:
 - **Docker**: [Install Docker](https://docs.docker.com/get-docker/).
 - **Docker Compose**: [Install Docker Compose](https://docs.docker.com/compose/install/).
 - **PowerShell**: Required to run certain scripts.
-- **Bash shell environemnt**: Required to run the script to generate a self-signed SSL certificate.
+- **Bash shell environment**: Required to run the script to generate a self-signed SSL certificate.
 
 ## Setting Up the Environment
 
 ### Step 1: Clone or Extract the Repository
 
-If you haven't done so already, clone the repository or extract its contents.
+If you still need to do so, clone the repository or extract its contents.
 
 ```
 git clone https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker.git
@@ -24,8 +24,7 @@ cd Ed-Fi-ODS-Docker
 
 ### Step 2: Generate an encryption key for the ODS connection strings
 
-The ODS database connection strings are stored in the EdFi_Admin database and encrypted at-rest. To support the encryption and decryption of the ODS database connection strings, a Base64 encoded 256-bit encryption key must be provided via an environmental variable in the next step. To generate a new random encryption key, run the following commands in PowerShell.
-
+The ODS database connection strings are stored in the EdFi_Admin database and encrypted at rest. To support encryption and decryption, a Base64-encoded 256-bit encryption key must be provided via an environmental variable in the next step. To generate a new random encryption key, run the following commands in PowerShell.
 ```PowerShell
 $aes = [System.Security.Cryptography.Aes]::Create()
 $aes.KeySize = 256
@@ -70,17 +69,16 @@ SWAGGER_HEALTHCHECK_TEST="curl -f http://localhost/health"
 
 ### Step 4: Generate an SSL certificate
 
-The deployment requires a valid SSL certificate. To create a self-signed SSL certificate, run the included `generate-cert.sh` script. (On a Windows host, you will need to use Git Bash or WSL). The certificate generation process may take a few minutes to complete.
-
+The deployment requires a valid SSL certificate. Run the included `generate-cert.sh` script to create a self-signed SSL certificate. (On a Windows host, you must use Git Bash or WSL). The certificate generation process may take a few minutes to complete.
 ```sh
 ./generate-cert.sh
 ```
 
 ### Step 5: Customize the Docker compose configuration (optional)
 
-You will find a `compose-sandbox-env.yml` file under the `Compose/pgsql` folder. This is used by the `sandbox-env-up.ps1` PowerShell helper script to set up the required services.
+Under the ' Compose/pgsql ' folder, you will find a `compose-sandbox-env.yml` file. The `sandbox-env-up.ps1` PowerShell helper script uses this file to set up the required services.
 
-There is a corresponding `compose-sandbox-env.override.yml.example` file in the same folder. If additional custimization is needed, rename this file as `compose-sandbox-env.override.yml` and edit it to include any settings which you wish to change, such as port numbers or volume mappings. The PowerShell helper script will automatically apply values defined in `compose-sandbox-env.override.yml` file when calling Docker Compose, overriding the default settings.
+A corresponding `compose-sandbox-env.override.yml.example` file is in the same folder. If additional customization is needed, rename this file as `compose-sandbox-env.override.yml` and edit it to include any settings you wish to change, such as port numbers or volume mappings. The PowerShell helper script will automatically apply values defined in the `compose-sandbox-env.override.yml` file when calling Docker Compose, overriding the default settings.
 
 ## Creating and Running the Containers
 
@@ -94,7 +92,7 @@ Execute the `sandbox-env-up.ps1` helper script using PowerShell with administrat
 
 ### Step 7: Check Running Containers
 
-Verify the necessary containers are up and running as expected, including services such as the Swagger UI and ODS API, by running the following command.
+Run the following command to verify that the necessary containers are up and running as expected, including services such as the Swagger UI and ODS API.
 
 ```sh
 docker ps
@@ -102,7 +100,7 @@ docker ps
 
 ### Step 8: Connect to the ODS Web Interfaces
 
-Once the containers have started and finished initializing, the sandbox ODS web applications can be connected to using the following URLs (NOTE: these URLs may be different depending on customizations applied in the previous steps):
+Once the containers have started and finished initializing, the sandbox ODS web applications can be accessed using the following URLs (NOTE: these URLs may be different if settings were customized in the previous steps):
 
 | Application | URL |
 |:----------|:----------|
@@ -113,7 +111,7 @@ Once the containers have started and finished initializing, the sandbox ODS web 
 
 ### Step 5: Clean Up the Environment
 
-To remove the Ed-Fi ODS Sandbox Docker containers and volumes, run the following PowerShell script.
+Run the following PowerShell script to remove the Ed-Fi ODS Sandbox Docker containers and volumes.
 
 ```sh
 ./sandbox-env-clean.ps1
@@ -123,12 +121,12 @@ To remove the Ed-Fi ODS Sandbox Docker containers and volumes, run the following
 
 - **Creating Custom Compose Files**:
 
-The example compose files in this repository create ODS instnaces for the years 2022 and 2023. The `Compose-Generator` folder in this repository contains a Docker file along with a mustache template which can be used to generating customized composes files. Instructions for usign this tool can be found in the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
+The example compose files in this repository create ODS instances for the years 2022 and 2023. The `Compose-Generator` folder in this repository contains a Docker file along with a mustache template for generating customized compose files. Instructions for using this tool can be found in the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
 
 
 ## Troubleshooting
 
-- **Port Conflicts**: If you encounter port conflicts, ensure there are no other services running on the host machine which use port 443, or modify which port the web gateway uses by creating a `compose-sandbox-env.override.yml` file as described in Step 5.
+- **Port Conflicts**: If you encounter port conflicts, ensure no other services are running on the host machine which use port 443, or modify which port the web gateway uses by creating a `compose-sandbox-env.override.yml` file as described in Step 5.
 
 
 For more information, consult the included [README.md](./README.md) files in the repository and the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
