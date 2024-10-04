@@ -2,7 +2,7 @@
 
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker)
 
-This repository provides sample Docker Compose configuration files to demonstrate using Ed-Fi in containers. The Docker files for Ed-Fi applications can be found in the respective application repositories. Basic startup instructions are available in the [Getting Started document](GETTTING_STARTED.md). For detailed information on using this repository, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in the Tech Docs. Previous versions of this repository also included the Docker files for ODS/API and Admin App. The table below contains links to the docker releases for ODS API v6.1 and older.
+This repository provides sample Docker Compose configuration files to demonstrate using Ed-Fi in containers. The Docker files for Ed-Fi applications can be found in the respective application repositories. Basic startup instructions are available in the [Getting Started](GETTING_STARTED.md) document. For detailed information on using this repository, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in the Tech Docs. Previous versions of this repository also included the Docker files for ODS/API and Admin App. The table below contains links to the docker releases for ODS API v6.1 and older.
 
 
 |       Ed-Fi ODS / API              |                          Ed-Fi ODS Docker Tag                                                         |
