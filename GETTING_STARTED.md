@@ -80,8 +80,6 @@ Under the ' Compose/pgsql ' folder, you will find a `compose-sandbox-env.yml` fi
 
 A corresponding `compose-sandbox-env.override.yml.example` file is in the same folder. If additional customization is needed, rename this file as `compose-sandbox-env.override.yml` and edit it to include any settings you wish to change, such as port numbers or volume mappings. The PowerShell helper script will automatically apply values defined in the `compose-sandbox-env.override.yml` file when calling Docker Compose, overriding the default settings.
 
-## Creating and Running the Containers
-
 ### Step 6: Launch the containers
 
 Execute the `sandbox-env-up.ps1` helper script using PowerShell with administrative privileges:
@@ -109,7 +107,7 @@ Once the containers have started and finished initializing, the sandbox ODS web 
 | ODS API | https://localhost/api |
 
 
-### Step 5: Clean Up the Environment
+### Step 9: Clean Up the Environment
 
 Run the following PowerShell script to remove the Ed-Fi ODS Sandbox Docker containers and volumes.
 
