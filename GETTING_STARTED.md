@@ -119,7 +119,7 @@ Run the following PowerShell script to remove the Ed-Fi ODS Sandbox Docker conta
 
 - **Creating Custom Compose Files**:
 
-The example compose files in this repository create ODS instances for the years 2022 and 2023. The `Compose-Generator` folder in this repository contains a Docker file along with a mustache template for generating customized compose files. Instructions for using this tool can be found in the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
+In addition to the example compose files in the `Compose` folder,  the `Compose-Generator` folder in this repository contains a Docker file and a Mustache template for generating customized compose files. Instructions for using this tool can be found in the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
 
 
 ## Troubleshooting
