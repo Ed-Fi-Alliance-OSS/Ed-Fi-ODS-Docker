@@ -1,13 +1,12 @@
 # Getting Started with Docker Containers for Ed-Fi ODS
 
-This guide provides basic instructions for creating and tearing down Docker containers for a sandbox Ed-Fi ODS instance using the files in this repository. For detailed information on using this repository, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
+This guide provides basic instructions for creating and tearing down Docker containers for the Ed-Fi ODS API sandbox installation using the files in this repository. For more detailed information, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
 
 ## Prerequisites
 
 Before you begin, make sure you have the following installed:
 
-- **Docker**: [Install Docker](https://docs.docker.com/get-docker/).
-- **Docker Compose**: [Install Docker Compose](https://docs.docker.com/compose/install/).
+- **Docker Desktop**: [Install Docker](https://docs.docker.com/get-docker/).
 - **PowerShell**: Required to run certain scripts.
 - **Bash shell environment**: Required to run the script to generate a self-signed SSL certificate.
 
@@ -125,7 +124,3 @@ In addition to the example compose files in the `Compose` folder,  the `Compose-
 ## Troubleshooting
 
 - **Port Conflicts**: If you encounter port conflicts, ensure no other services are running on the host machine which use port 443, or modify which port the web gateway uses by creating a `compose-sandbox-env.override.yml` file as described in Step 5.
-
-
-For more information, consult the included [README.md](./README.md) files in the repository and the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
-

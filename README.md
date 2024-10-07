@@ -2,18 +2,13 @@
 
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker)
 
-This repository provides sample Docker Compose configuration files to demonstrate using Ed-Fi in containers. The Docker files for Ed-Fi applications can be found in the respective application repositories. Basic startup instructions are available in the [Getting Started](GETTING_STARTED.md) document. For detailed information on using this repository, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in the Tech Docs. Previous versions of this repository also included the Docker files for ODS/API and Admin App. The table below contains links to the docker releases for ODS API v6.1 and older.
+This repository provides sample Docker Compose configuration files to demonstrate using Ed-Fi in containers. The Docker files for Ed-Fi applications can be found in the respective application repositories. Basic startup instructions are available in the [Getting Started](docs/GETTING_STARTED.md) document. For detailed information on using this repository, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in the Tech Docs. Previous versions of this repository also included the Docker files for ODS/API and Admin App. The table below contains links to the docker releases for ODS API v6.1 and older.
 
 
 |       Ed-Fi ODS / API              |                          Ed-Fi ODS Docker Tag                                                         |
 |------------------------------------|-------------------------------------------------------------------------------------------------------|
 | Ed-Fi ODS / API Suite3 v6.2        | [Ed-Fi ODS Docker v2.3.3 ](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.3.3)|
-| Ed-Fi ODS / API Suite3 v6.1        | [Ed-Fi ODS Docker v2.3.2 ](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.3.2)|
-| Ed-Fi ODS / API Suite3 v6.0        | [Ed-Fi ODS Docker v2.2.0](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.2.0) |
 | Ed-Fi ODS / API Suite3 v5.4        | [Ed-Fi ODS Docker v2.1.7](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.1.7) |
-| Ed-Fi ODS / API Suite3 v5.3        | [Ed-Fi ODS Docker v2.1.6](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.1.6) |
-| Ed-Fi ODS / API Suite3 v5.2        | [Ed-Fi ODS Docker v2.0.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.0.1) |
-| Ed-Fi ODS / API Suite3 v5.1        | [Ed-Fi ODS Docker v1.1.1](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v1.1.1) |
 
 ### Exposed Ports
 
