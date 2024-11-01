@@ -2,9 +2,9 @@ name: Lint and Build Docker Files
 
 on:
   push:
-    branches: [main]
+    branches: [main-6x]
   pull_request:
-    branches: [main, 'ODS-*']
+    branches: [main-6x, 'ODS-*']
   workflow_dispatch:
 
 jobs:

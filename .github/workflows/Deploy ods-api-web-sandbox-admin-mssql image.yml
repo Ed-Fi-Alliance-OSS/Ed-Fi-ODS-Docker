@@ -2,7 +2,7 @@ name: Deploy ods-api-web-sandbox-admin-mssql image
 
 on:
   push:
-    branches: [main]
+    branches: [main-6x]
   release:
     types: [published]
   workflow_dispatch:
