@@ -9,11 +9,11 @@ RUN apk --no-cache add unzip=~6 dos2unix=~7 bash=~5 gettext=~0 icu=~74 curl=~8 &
 
 # Start a new layer so that the above layer can be cached
 FROM base AS build
-RUN apk --no-cache add postgresql13-client=~13
+RUN apk --no-cache add postgresql-client
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
-ENV VERSION="6.2.3630"
+ENV VERSION="6.2.3907"
 ENV POSTGRES_PORT=5432
 ENV PGBOUNCER_LISTEN_PORT=6432
 ENV NPG_POOLING_ENABLED=false
