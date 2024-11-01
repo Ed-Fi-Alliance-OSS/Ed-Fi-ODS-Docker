@@ -9,7 +9,7 @@ RUN apk --no-cache add unzip=~6 dos2unix=~7 bash=~5 gettext=~0 icu=~74 curl=~8 &
 
 # Start a new layer so that the above layer can be cached
 FROM base AS build
-RUN apk --no-cache add postgresql-client
+RUN apk --no-cache add postgresql16-client=~16
 
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
