@@ -4,7 +4,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 # Tag aspnet:8-alpine
-FROM mcr.microsoft.com/dotnet/aspnet:8.0.3-alpine3.19@sha256:646b1c5ff36375f35f6149b0ce19ca095f97b4b882b90652801e9fbe82bcfa8a AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0.10-alpine3.20@sha256:09bd97b2f28a084168e6d4e2f1c32385753cd7166c8d87af71a0dba2919d7aa2 AS base
 RUN apk --upgrade --no-cache add unzip=~6.0 dos2unix=~7.5 bash=~5.2 gettext=~0.22 icu=~74.1 openssl=~3.1 e2fsprogs=~1.47 busybox=~1.36
 
 # Start a new layer so that the above layer can be cached
