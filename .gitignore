@@ -7,7 +7,7 @@
 ssl/
 .env
 *.7z
-Compose/*/compose.yml
+Compose/**/compose.yml
 logs/
 /.vs
 **/.DS_Store
