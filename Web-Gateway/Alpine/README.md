@@ -10,6 +10,8 @@ The only supported image at this time is an Alpine-based implementation using [n
 ```
 ODS_VIRTUAL_NAME=<virtual name for the ods endpoint>
 ADMIN_API_VIRTUAL_NAME=<virtual name for the admin api>
+ADMIN_CONSOLE_VIRTUAL_NAME=<virtual name for the admin console>
+KEYCLOAK_VIRTUAL_NAME=<virtual name for the idp Keycloak>
 ```
 
 ## License Information

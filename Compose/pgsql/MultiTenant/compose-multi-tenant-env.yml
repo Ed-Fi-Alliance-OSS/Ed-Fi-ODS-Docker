@@ -112,7 +112,7 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
-    entrypoint: ["/bin/sh"] 
+    entrypoint: ["/bin/sh"]
     command: ["-c","envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.docker.json && /app/run.sh"]
     depends_on:
       - pb-ods-tenant1
@@ -142,10 +142,14 @@ services:
       AppSettings__DefaultPageSizeOffset: ${PAGING_OFFSET:-0}
       AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
       AppSettings__MultiTenancy: "${MULTITENANCY_ENABLED:-true}"
+      AppSettings__DatabaseEngine: "PostgreSQL"
       ASPNETCORE_ENVIRONMENT: "multitenantdocker"
       Authentication__AllowRegistration: "true"
       SwaggerSettings__EnableSwagger: "true"
       SwaggerSettings__DefaultTenant: ${SWAGGER_DEFAULT_TENANT:-tenant1}
+      AppSettings__EnableAdminConsoleAPI: ${ENABLE_ADMINCONSOLE:-true}
+      AdminConsoleSettings__CorsSettings__EnableCors: ${ADMINCONSOLE_ENABLE_CORS:-true}
+      AdminConsoleSettings__CorsSettings__AllowedOrigins: ${ADMINCONSOLE_ALLOWED_ORIGINS:-"[https://localhost/adminconsole]"}
     volumes:
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
     entrypoint: ["/bin/sh"]
@@ -160,6 +164,62 @@ services:
       test: ${ADMIN_API_HEALTHCHECK_TEST}
       start_period: "60s"
       retries: 3
+
+  db-idp-keycloak:
+    image: postgres:16.2
+    volumes:
+      - vol-db-idp-keycloak:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${KEYCLOAK_POSTGRES_DB:-keycloak_db}
+      POSTGRES_USER: ${KEYCLOAK_POSTGRES_USER:-edfi}
+      POSTGRES_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD:-P@55w0rd}
+    container_name: ed-fi-db-idp-keycloak
+
+  idp-keycloak:
+    image: quay.io/keycloak/keycloak:23.0.6
+    command: start-dev --import-realm
+    environment:
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-localhost}
+      KC_HOSTNAME_PORT: ${KEYCLOAK_HOSTNAME_PORT:-28080}
+      KC_HOSTNAME_STRICT_BACKCHANNEL: ${KEYCLOAK_HOSTNAME_STRICT_BACKCHANNEL:-false}
+      KC_HTTP_ENABLED: ${KEYCLOAK_HTTP_ENABLED:-true}
+      KC_HOSTNAME_STRICT_HTTPS: ${KEYCLOAK_HOSTNAME_STRICT_HTTPS:-false}
+      KC_HEALTH_ENABLED: ${KEYCLOAK_HEALTH_ENABLED:-true}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db-idp-keycloak/${KEYCLOAK_POSTGRES_DB:-keycloak_db}
+      KC_DB_USERNAME: ${KEYCLOAK_POSTGRES_USER:-edfi}
+      KC_DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD:-P@55w0rd}
+    ports:
+      - ${KEYCLOAK_HOSTNAME_PORT:-28080}:8080
+    restart: always
+    depends_on:
+      - pb-idp-keycloak
+    hostname: ${KEYCLOAK_VIRTUAL_NAME:-idp_keycloak}
+    container_name: ed-fi-idp-keycloak
+
+  admin-console:
+    image: edfialliance/admin-console-web:${ADMINCONSOLE_TAG:-pre}
+    restart: always
+    hostname: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
+    container_name: ed-fi-adminconsole
+
+  pb-idp-keycloak:
+    image: bitnami/pgbouncer:1.20.0
+    environment:
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${KEYCLOAK_POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${KEYCLOAK_POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-idp-keycloak
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
+    restart: always
+    container_name: ed-fi-pb-idp-keycloak
+    depends_on:
+      - db-idp-keycloak
 
   pb-admin-tenant1:
     image: bitnami/pgbouncer:1.20.0
@@ -238,3 +298,6 @@ volumes:
   vol-db-ods-tenant2:
     driver: local
     name: vol-db-ods-tenant2
+  vol-db-idp-keycloak:
+    driver: local
+    name: vol-db-idp-keycloak
