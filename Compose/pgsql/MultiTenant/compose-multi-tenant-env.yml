@@ -187,7 +187,7 @@ services:
       retries: 3
 
   db-idp-keycloak:
-    image: postgres:16.2
+    image: postgres:${KEYCLOAK_DB_IMAGE_TAG:-16.2}
     volumes:
       - vol-db-idp-keycloak:/var/lib/postgresql/data
     environment:
@@ -197,7 +197,7 @@ services:
     container_name: ed-fi-db-idp-keycloak
 
   idp-keycloak:
-    image: quay.io/keycloak/keycloak:23.0.6
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_IMAGE_TAG:-23.0.6}
     command: start-dev --import-realm
     environment:
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-localhost}
@@ -228,7 +228,11 @@ services:
 
   admin-console-healthcheck-cli:
     image: edfialliance/admin-console-healthcheck:${ADMINCONSOLE_HEALTHCHECK_TAG:-pre}
-    # environment:
+    environment:
+      AdminApiSettings__ApiUrl: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_URL:-https://localhost/adminapi}
+      AdminApiSettings__AccessTokenUrl: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_TOKEN_URL:-https://localhost/adminapi/connect/token}
+      AdminApiSettings__ClientId: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_CLIENTID:-test}
+      AdminApiSettings__ClientSecret: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_CLIENTSECRET:-test}
     restart: always
     container_name: ed-fi-adminconsole-healthcheck-cli
 
