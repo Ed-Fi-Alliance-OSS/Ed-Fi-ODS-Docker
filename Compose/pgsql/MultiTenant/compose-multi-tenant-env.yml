@@ -192,7 +192,7 @@ services:
       KC_DB_USERNAME: ${KEYCLOAK_POSTGRES_USER:-edfi}
       KC_DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD:-P@55w0rd}
     ports:
-      - ${KEYCLOAK_HOSTNAME_PORT:-28080}:8080
+      - ${KEYCLOAK_HOSTNAME_PORT:-28080}:8484
     restart: always
     depends_on:
       - pb-idp-keycloak
@@ -205,6 +205,14 @@ services:
     hostname: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
     container_name: ed-fi-adminconsole
 
+  # admin-console-healthcheck-cli:
+  #   image: edfialliance/admin-console-healthcheck:${ADMINCONSOLE_HEALTHCHECK_TAG:-pre}
+  #   environment:
+
+  #   restart: always
+  #   hostname: ${ADMINCONSOLE_HEALTHCHECK_VIRTUAL_NAME:-adminconsole_hc_cli}
+  #   container_name: ed-fi-adminconsole-healthcheck-cli
+
   pb-idp-keycloak:
     image: bitnami/pgbouncer:1.20.0
     environment:
@@ -216,6 +224,7 @@ services:
       POSTGRESQL_HOST: db-idp-keycloak
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
     restart: always
     container_name: ed-fi-pb-idp-keycloak
     depends_on:
@@ -232,6 +241,7 @@ services:
       POSTGRESQL_HOST: db-admin-tenant1
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
     restart: always
     container_name: ed-fi-pb-admin-tenant1
     depends_on:
@@ -248,6 +258,7 @@ services:
       POSTGRESQL_HOST: db-admin-tenant2
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
     restart: always
     container_name: ed-fi-pb-admin-tenant2
     depends_on:
@@ -264,6 +275,7 @@ services:
       POSTGRESQL_HOST: db-ods-tenant1
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
     restart: always
     container_name: ed-fi-pb-ods-tenant1
     depends_on:
@@ -280,6 +292,7 @@ services:
       POSTGRESQL_HOST: db-ods-tenant2
       PGBOUNCER_SET_DATABASE_USER: "yes"
       PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
     restart: always
     container_name: ed-fi-pb-ods-tenant2
     depends_on:

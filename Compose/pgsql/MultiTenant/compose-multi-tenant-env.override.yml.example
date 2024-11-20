@@ -6,6 +6,9 @@
 version: "3.8"
 
 services:
+  pb-idp-keycloak:
+    ports:
+      - "5400:${PGBOUNCER_LISTEN_PORT:-6432}"
   pb-admin-tenant1:
     ports:
       - "5401:${PGBOUNCER_LISTEN_PORT:-6432}"
