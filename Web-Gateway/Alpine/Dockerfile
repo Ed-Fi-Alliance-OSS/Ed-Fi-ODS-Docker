@@ -10,7 +10,7 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 ENV ODS_VIRTUAL_NAME=api
 ENV ADMIN_API_VIRTUAL_NAME=adminapi
 ENV ADMIN_CONSOLE_VIRTUAL_NAME=adminconsole
-ENV KEYCLOAK_VIRTUAL_NAME=idp_keycloak
+ENV KEYCLOAK_VIRTUAL_NAME=keycloak
 
 COPY ./default.conf.template /etc/nginx/templates/
 

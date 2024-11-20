@@ -89,6 +89,8 @@ services:
     environment:
       ODS_VIRTUAL_NAME: ${ODS_VIRTUAL_NAME:-api}
       ADMIN_API_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
+      ADMIN_CONSOLE_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminconsole}
+      KEYCLOAK_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-keycloak}
     ports:
       - '443:443'
     container_name: ed-fi-gateway
@@ -99,6 +101,8 @@ services:
     depends_on:
       - api
       - adminapi
+      - admin-console
+      - idp-keycloak
 
   api:
     image: edfialliance/ods-api-web-api:${TAG}
@@ -222,13 +226,11 @@ services:
     hostname: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
     container_name: ed-fi-adminconsole
 
-  # admin-console-healthcheck-cli:
-  #   image: edfialliance/admin-console-healthcheck:${ADMINCONSOLE_HEALTHCHECK_TAG:-pre}
-  #   environment:
-
-  #   restart: always
-  #   hostname: ${ADMINCONSOLE_HEALTHCHECK_VIRTUAL_NAME:-adminconsole_hc_cli}
-  #   container_name: ed-fi-adminconsole-healthcheck-cli
+  admin-console-healthcheck-cli:
+    image: edfialliance/admin-console-healthcheck:${ADMINCONSOLE_HEALTHCHECK_TAG:-pre}
+    # environment:
+    restart: always
+    container_name: ed-fi-adminconsole-healthcheck-cli
 
   pb-idp-keycloak:
     image: bitnami/pgbouncer:1.20.0
