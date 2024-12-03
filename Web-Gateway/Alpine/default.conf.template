@@ -47,7 +47,7 @@ server {
     }
 
 
-    location /adminconsole {
+    location /${ADMIN_CONSOLE_VIRTUAL_NAME} {
         set $path adminconsole:8598;
         resolver 127.0.0.11;
         proxy_pass http://$path/;
@@ -70,7 +70,7 @@ server {
     }
 
 
-    location /keycloak {
+    location /${KEYCLOAK_VIRTUAL_NAME} {
         proxy_pass http://keycloak:8080/;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
