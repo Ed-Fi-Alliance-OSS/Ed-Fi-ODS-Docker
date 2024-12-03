@@ -8,6 +8,7 @@ version: '3.8'
 services:
   db-ods-tenant1:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
+    profiles: ["default"]
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -25,6 +26,7 @@ services:
 
   db-ods-tenant2:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
+    profiles: ["default"]
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -42,6 +44,7 @@ services:
 
   db-admin-tenant1:
     image: ${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}
+    profiles: ["default"]
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -64,6 +67,7 @@ services:
 
   db-admin-tenant2:
     image: ${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}
+    profiles: ["default"]
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -85,6 +89,7 @@ services:
       retries: 3
 
   nginx:
+    profiles: ["default"]
     build:
       context: ../../../Web-Gateway/Alpine
       dockerfile: Dockerfile
@@ -108,6 +113,7 @@ services:
 
   api:
     image: edfialliance/ods-api-web-api:${TAG}
+    profiles: ["default"]
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -148,6 +154,7 @@ services:
 
   adminapi:
     image: edfialliance/ods-admin-api:${ADMINAPI_TAG}
+    profiles: ["default"]
     environment:
       ADMIN_WAIT_POSTGRES_HOSTS: 'pb-admin-tenant1 pb-admin-tenant2 '
       POSTGRES_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
@@ -190,6 +197,7 @@ services:
 
   db-idp-keycloak:
     image: postgres:${KEYCLOAK_DB_IMAGE_TAG:-16.2}
+    profiles: ["default"]
     volumes:
       - vol-db-idp-keycloak:/var/lib/postgresql/data
     environment:
@@ -201,6 +209,7 @@ services:
   idp-keycloak:
     image: quay.io/keycloak/keycloak:${KEYCLOAK_IMAGE_TAG:-23.0.6}
     command: start-dev --import-realm
+    profiles: ["default"]
     environment:
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-localhost}
       KC_HOSTNAME_PORT: ${KEYCLOAK_HOSTNAME_PORT:-28080}
@@ -233,6 +242,7 @@ services:
 
   admin-console:
     image: edfialliance/admin-console-web:${ADMINCONSOLE_TAG:-pre}
+    profiles: ["default"]
     restart: always
     hostname: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
     container_name: ed-fi-adminconsole
@@ -241,16 +251,18 @@ services:
 
   admin-console-healthcheck-cli:
     image: edfialliance/admin-console-healthcheck:${ADMINCONSOLE_HEALTHCHECK_TAG:-pre}
+    profiles: ["manual"]
     environment:
       AdminApiSettings__ApiUrl: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_URL:-https://localhost/adminapi}
       AdminApiSettings__AccessTokenUrl: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_TOKEN_URL:-https://localhost/adminapi/connect/token}
       AdminApiSettings__ClientId: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_CLIENTID:-test}
       AdminApiSettings__ClientSecret: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_CLIENTSECRET:-test}
-    restart: always
+    restart: no
     container_name: ed-fi-adminconsole-healthcheck-cli
 
   pb-idp-keycloak:
     image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
     environment:
       PGBOUNCER_DATABASE: '*'
       PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
@@ -268,6 +280,7 @@ services:
 
   pb-admin-tenant1:
     image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
     environment:
       PGBOUNCER_DATABASE: '*'
       PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
@@ -285,6 +298,7 @@ services:
 
   pb-admin-tenant2:
     image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
     environment:
       PGBOUNCER_DATABASE: '*'
       PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
@@ -302,6 +316,7 @@ services:
 
   pb-ods-tenant1:
     image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
     environment:
       PGBOUNCER_DATABASE: '*'
       PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
@@ -319,6 +334,7 @@ services:
 
   pb-ods-tenant2:
     image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
     environment:
       PGBOUNCER_DATABASE: '*'
       PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
