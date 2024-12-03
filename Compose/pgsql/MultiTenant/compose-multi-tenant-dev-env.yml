@@ -207,7 +207,9 @@ services:
     container_name: ed-fi-db-idp-keycloak
 
   idp-keycloak:
-    image: quay.io/keycloak/keycloak:${KEYCLOAK_IMAGE_TAG:-23.0.6}
+    build:
+      context: ../../../KeyCloak/
+      dockerfile: Dockerfile
     command: start-dev --import-realm
     profiles: ["default"]
     environment:
