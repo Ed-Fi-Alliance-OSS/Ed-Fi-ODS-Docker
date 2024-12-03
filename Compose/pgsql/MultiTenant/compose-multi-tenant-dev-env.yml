@@ -1,0 +1,370 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+version: '3.8'
+
+services:
+  db-ods-tenant1:
+    image: edfialliance/ods-api-db-ods-minimal:${TAG}
+    profiles: ["default"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TPDM_ENABLED: ${TPDM_ENABLED:-true}
+    volumes:
+      - vol-db-ods-tenant1:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods-tenant1
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready  -U ${POSTGRES_USER}
+      start_period: 60s
+      retries: 3
+
+  db-ods-tenant2:
+    image: edfialliance/ods-api-db-ods-minimal:${TAG}
+    profiles: ["default"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TPDM_ENABLED: ${TPDM_ENABLED:-true}
+    volumes:
+      - vol-db-ods-tenant2:/var/lib/postgresql/data
+    restart: always
+    container_name: ed-fi-db-ods-tenant2
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready  -U ${POSTGRES_USER}
+      start_period: 60s
+      retries: 3
+
+  db-admin-tenant1:
+    image: ${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}
+    profiles: ["default"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      ODS_PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      ODS_POSTGRES_HOST: pb-ods-tenant1
+      NPG_POOLING_ENABLED: ${NPG_POOLING_ENABLED:-false}
+      NPG_API_MAX_POOL_SIZE_ODS: ${NPG_API_MAX_POOL_SIZE_ODS}
+      TENANT_IDENTIFIER: tenant1
+    volumes:
+      - vol-db-admin-tenant1:/var/lib/postgresql/data
+      - ./bootstrap.sh:/docker-entrypoint-initdb.d/2-bootstrap.sh
+    restart: always
+    container_name: ed-fi-db-admin-tenant1
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready  -U ${POSTGRES_USER}
+      start_period: 60s
+      retries: 3
+
+  db-admin-tenant2:
+    image: ${ADMIN_DB_IMAGE:-edfialliance/ods-api-db-admin:${TAG}}
+    profiles: ["default"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      ODS_PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      ODS_POSTGRES_HOST: pb-ods-tenant2
+      NPG_POOLING_ENABLED: ${NPG_POOLING_ENABLED:-false}
+      NPG_API_MAX_POOL_SIZE_ODS: ${NPG_API_MAX_POOL_SIZE_ODS}
+      TENANT_IDENTIFIER: tenant2
+    volumes:
+      - vol-db-admin-tenant2:/var/lib/postgresql/data
+      - ./bootstrap.sh:/docker-entrypoint-initdb.d/2-bootstrap.sh
+    restart: always
+    container_name: ed-fi-db-admin-tenant2
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready  -U ${POSTGRES_USER}
+      start_period: 60s
+      retries: 3
+
+  nginx:
+    profiles: ["default"]
+    build:
+      context: ../../../Web-Gateway/Alpine
+      dockerfile: Dockerfile
+    environment:
+      ODS_VIRTUAL_NAME: ${ODS_VIRTUAL_NAME:-api}
+      ADMIN_API_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
+      ADMIN_CONSOLE_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminconsole}
+      KEYCLOAK_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-keycloak}
+    ports:
+      - '443:443'
+    container_name: ed-fi-gateway
+    restart: always
+    hostname: nginx
+    volumes:
+      - ../../../ssl:/ssl/
+    depends_on:
+      - api
+      - adminapi
+      - admin-console
+      - idp-keycloak
+
+  api:
+    image: edfialliance/ods-api-web-api:${TAG}
+    profiles: ["default"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      PATH_BASE: ${ODS_VIRTUAL_NAME:-api}
+      TPDM_ENABLED: ${TPDM_ENABLED:-true}
+      ODS_WAIT_POSTGRES_HOSTS: 'pb-ods-tenant1 pb-ods-tenant2 '
+      API_HEALTHCHECK_TEST: ${API_HEALTHCHECK_TEST?Please consult env.example to set
+        the API healthcheck test}
+      NPG_POOLING_ENABLED: ${NPG_POOLING_ENABLED:-false}
+      NPG_API_MAX_POOL_SIZE_ODS: ${NPG_API_MAX_POOL_SIZE_ODS}
+      NPG_API_MAX_POOL_SIZE_ADMIN: ${NPG_API_MAX_POOL_SIZE_ADMIN}
+      NPG_API_MAX_POOL_SIZE_SECURITY: ${NPG_API_MAX_POOL_SIZE_SECURITY}
+      NPG_API_MAX_POOL_SIZE_MASTER: ${NPG_API_MAX_POOL_SIZE_MASTER}
+      ODS_CONNECTION_STRING_ENCRYPTION_KEY: ${ODS_CONNECTION_STRING_ENCRYPTION_KEY}
+      ASPNETCORE_ENVIRONMENT: docker
+    volumes:
+      - ${LOGS_FOLDER}:/app/logs
+      - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
+    entrypoint:
+      - /bin/sh
+    command:
+      - '-c'
+      - envsubst < /app/appsettings.dockertemplate.json >
+        /app/appsettings.docker.json && /app/run.sh
+    depends_on:
+      - pb-ods-tenant1
+      - pb-ods-tenant2
+      - pb-admin-tenant1
+      - pb-admin-tenant2
+    restart: always
+    hostname: api
+    container_name: ed-fi-ods-api
+    healthcheck:
+      test: $$API_HEALTHCHECK_TEST
+      start_period: 60s
+      retries: 3
+
+  adminapi:
+    image: edfialliance/ods-admin-api:${ADMINAPI_TAG}
+    profiles: ["default"]
+    environment:
+      ADMIN_WAIT_POSTGRES_HOSTS: 'pb-admin-tenant1 pb-admin-tenant2 '
+      POSTGRES_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASEENGINE: PostgreSql
+      AUTHORITY: ${AUTHORITY}
+      ISSUER_URL: ${ISSUER_URL}
+      SIGNING_KEY: ${SIGNING_KEY}
+      ADMIN_API_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
+      AppSettings__DefaultPageSizeOffset: ${PAGING_OFFSET:-0}
+      AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
+      AppSettings__MultiTenancy: ${MULTITENANCY_ENABLED:-true}
+      AppSettings__DatabaseEngine: PostgreSQL
+      ASPNETCORE_ENVIRONMENT: multitenantdocker
+      Authentication__AllowRegistration: 'true'
+      SwaggerSettings__EnableSwagger: 'true'
+      SwaggerSettings__DefaultTenant: ${SWAGGER_DEFAULT_TENANT:-tenant1}
+      AppSettings__EnableAdminConsoleAPI: ${ENABLE_ADMINCONSOLE:-true}
+      AdminConsoleSettings__CorsSettings__EnableCors: ${ADMINCONSOLE_ENABLE_CORS:-true}
+      AdminConsoleSettings__CorsSettings__AllowedOrigins: ${ADMINCONSOLE_ALLOWED_ORIGINS:-"[https://localhost/adminconsole]"}
+    volumes:
+      - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
+    entrypoint:
+      - /bin/sh
+    command:
+      - '-c'
+      - envsubst < /app/appsettings.dockertemplate.json >
+        /app/appsettings.multitenantdocker.json && /app/run.sh
+    depends_on:
+      - pb-admin-tenant1
+      - pb-admin-tenant2
+    restart: always
+    hostname: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
+    container_name: ed-fi-adminapi
+    healthcheck:
+      test: ${ADMIN_API_HEALTHCHECK_TEST}
+      start_period: 60s
+      retries: 3
+
+  db-idp-keycloak:
+    image: postgres:${KEYCLOAK_DB_IMAGE_TAG:-16.2}
+    profiles: ["default"]
+    volumes:
+      - vol-db-idp-keycloak:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${KEYCLOAK_POSTGRES_DB:-keycloak_db}
+      POSTGRES_USER: ${KEYCLOAK_POSTGRES_USER:-edfi}
+      POSTGRES_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD:-P@55w0rd}
+    container_name: ed-fi-db-idp-keycloak
+
+  idp-keycloak:
+    build:
+      context: ../../../KeyCloak/
+      dockerfile: Dockerfile
+    command: start-dev --import-realm
+    profiles: ["default"]
+    environment:
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-localhost}
+      KC_HOSTNAME_PORT: ${KEYCLOAK_HOSTNAME_PORT:-28080}
+      KC_HOSTNAME_STRICT_BACKCHANNEL: ${KEYCLOAK_HOSTNAME_STRICT_BACKCHANNEL:-false}
+      KC_HTTP_ENABLED: ${KEYCLOAK_HTTP_ENABLED:-true}
+      KC_HTTPS_ENABLED: true
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: ${KEYCLOAK_HOSTNAME_STRICT_HTTPS:-false}
+      KC_HEALTH_ENABLED: ${KEYCLOAK_HEALTH_ENABLED:-true}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db-idp-keycloak/${KEYCLOAK_POSTGRES_DB:-keycloak_db}
+      KC_PROXY: edge
+      KC_PROXY_HEADERS: forwarded
+      PROXY_ADDRESS_FORWARDING: true
+      KC_DB_USERNAME: ${KEYCLOAK_POSTGRES_USER:-edfi}
+      KC_DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD:-P@55w0rd}
+      KC_HTTP_RELATIVE_PATH: /
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: true
+      KC_SPI_LOGIN_PROTOCOL_OPENID_CONNECT_LEGACY_IFRAME_CHECK: true
+      KC_LOG: console 
+    ports:
+      - ${KEYCLOAK_HOSTNAME_PORT:-28080}:8080
+    restart: always
+    depends_on:
+      - pb-idp-keycloak
+    hostname: ${KEYCLOAK_VIRTUAL_NAME:-idp_keycloak}
+    container_name: ed-fi-idp-keycloak
+
+  admin-console:
+    image: edfialliance/admin-console-web:${ADMINCONSOLE_TAG:-pre}
+    profiles: ["default"]
+    restart: always
+    hostname: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
+    container_name: ed-fi-adminconsole
+    ports:
+      - "${ADMIN_CONSOLE_PORT:-8598}:${ADMIN_CONSOLE_PORT:-8598}"
+
+  admin-console-healthcheck-cli:
+    image: edfialliance/admin-console-healthcheck:${ADMINCONSOLE_HEALTHCHECK_TAG:-pre}
+    profiles: ["manual"]
+    environment:
+      AdminApiSettings__ApiUrl: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_URL:-https://localhost/adminapi}
+      AdminApiSettings__AccessTokenUrl: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_TOKEN_URL:-https://localhost/adminapi/connect/token}
+      AdminApiSettings__ClientId: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_CLIENTID:-test}
+      AdminApiSettings__ClientSecret: ${ADMINCONSOLE_HEALTHCHECK_ADMIN_API_CLIENTSECRET:-test}
+    restart: no
+    container_name: ed-fi-adminconsole-healthcheck-cli
+
+  pb-idp-keycloak:
+    image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
+    environment:
+      PGBOUNCER_DATABASE: '*'
+      PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: ${KEYCLOAK_POSTGRES_USER}
+      POSTGRESQL_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
+      POSTGRESQL_HOST: db-idp-keycloak
+      PGBOUNCER_SET_DATABASE_USER: 'yes'
+      PGBOUNCER_SET_DATABASE_PASSWORD: 'yes'
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
+    restart: always
+    container_name: ed-fi-pb-idp-keycloak
+    depends_on:
+      - db-idp-keycloak
+
+  pb-admin-tenant1:
+    image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
+    environment:
+      PGBOUNCER_DATABASE: '*'
+      PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: ${POSTGRES_USER}
+      POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRESQL_HOST: db-admin-tenant1
+      PGBOUNCER_SET_DATABASE_USER: 'yes'
+      PGBOUNCER_SET_DATABASE_PASSWORD: 'yes'
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
+    restart: always
+    container_name: ed-fi-pb-admin-tenant1
+    depends_on:
+      - db-admin-tenant1
+
+  pb-admin-tenant2:
+    image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
+    environment:
+      PGBOUNCER_DATABASE: '*'
+      PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: ${POSTGRES_USER}
+      POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRESQL_HOST: db-admin-tenant2
+      PGBOUNCER_SET_DATABASE_USER: 'yes'
+      PGBOUNCER_SET_DATABASE_PASSWORD: 'yes'
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
+    restart: always
+    container_name: ed-fi-pb-admin-tenant2
+    depends_on:
+      - db-admin-tenant2
+
+  pb-ods-tenant1:
+    image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
+    environment:
+      PGBOUNCER_DATABASE: '*'
+      PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: ${POSTGRES_USER}
+      POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRESQL_HOST: db-ods-tenant1
+      PGBOUNCER_SET_DATABASE_USER: 'yes'
+      PGBOUNCER_SET_DATABASE_PASSWORD: 'yes'
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
+    restart: always
+    container_name: ed-fi-pb-ods-tenant1
+    depends_on:
+      - db-ods-tenant1
+
+  pb-ods-tenant2:
+    image: bitnami/pgbouncer:1.20.0
+    profiles: ["default"]
+    environment:
+      PGBOUNCER_DATABASE: '*'
+      PGBOUNCER_PORT: ${PGBOUNCER_LISTEN_PORT:-6432}
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: ${POSTGRES_USER}
+      POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRESQL_HOST: db-ods-tenant2
+      PGBOUNCER_SET_DATABASE_USER: 'yes'
+      PGBOUNCER_SET_DATABASE_PASSWORD: 'yes'
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS: extra_float_digits
+    restart: always
+    container_name: ed-fi-pb-ods-tenant2
+    depends_on:
+      - db-ods-tenant2
+
+volumes:
+  vol-db-admin-tenant1:
+    driver: local
+    name: vol-db-admin-tenant1
+  vol-db-admin-tenant2:
+    driver: local
+    name: vol-db-admin-tenant2
+  vol-db-ods-tenant1:
+    driver: local
+    name: vol-db-ods-tenant1
+  vol-db-ods-tenant2:
+    driver: local
+    name: vol-db-ods-tenant2
+  vol-db-idp-keycloak:
+    driver: local
+    name: vol-db-idp-keycloak
