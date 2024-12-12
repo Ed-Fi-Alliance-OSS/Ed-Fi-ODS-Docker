@@ -10,11 +10,14 @@ psql --host=localhost --port 5432 --username=$POSTGRES_USER --dbname="EdFi_Ods" 
 rm ./$PGSQL_BACKUPFILE_SQL_FILENAME $PGSQL_BACKUPFILE_7Z_FILENAME
 
 wget https://pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_apis/packaging/feeds/EdFi/nuget/packages/EdFi.Suite3.RestApi.Databases.Standard.$PGSQL_CHANGEVERSION_DATA_STANDARD/versions/$PGSQL_CHANGEVERSION_VERSION/content -O $PGSQL_CHANGEVERSION_SCRIPTS_FILENAME
-unzip $PGSQL_CHANGEVERSION_SCRIPTS_FILENAME -d ./EdFi.Suite3.RestApi.Databases.Standard/
+unzip -q $PGSQL_CHANGEVERSION_SCRIPTS_FILENAME -d ./EdFi.Suite3.RestApi.Databases.Standard/
 
 cd /tmp/EdFi.Suite3.RestApi.Databases.Standard/Ed-Fi-ODS/Application/EdFi.Ods.Standard/Standard/$PGSQL_CHANGEVERSION_DATA_STANDARD/Artifacts/PgSql/Structure/Ods/Changes
 psql --host=localhost --port 5432 --username=$POSTGRES_USER --dbname="EdFi_Ods" -f './0010-CreateChangesSchema.sql';
 psql --host=localhost --port 5432 --username=$POSTGRES_USER --dbname="EdFi_Ods" -f './0020-CreateChangeVersionSequence.sql';
 psql --host=localhost --port 5432 --username=$POSTGRES_USER --dbname="EdFi_Ods" -f './0030-AddColumnChangeVersionForTables.sql';
 psql --host=localhost --port 5432 --username=$POSTGRES_USER --dbname="EdFi_Ods" -f './0070-AddIndexChangeVersionForTables.sql';
+
+rm /tmp/EdFi.Suite3.RestApi.Databases.Standard.zip
+rm -rf /tmp/EdFi.Suite3.RestApi.Databases.Standard
 EOF
