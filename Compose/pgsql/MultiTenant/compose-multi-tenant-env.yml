@@ -105,6 +105,7 @@ services:
     hostname: nginx
     volumes:
       - ../../../ssl:/ssl/
+      - shared_data:/usr/share/nginx/html/adminconsole
     depends_on:
       - api
       - adminapi
@@ -239,22 +240,26 @@ services:
       - pb-idp-keycloak
     hostname: ${KEYCLOAK_VIRTUAL_NAME:-idp_keycloak}
     container_name: ed-fi-idp-keycloak
-
+   
   admin-console:
     image: edfialliance/admin-console-web:${ADMINCONSOLE_TAG:-pre}
     profiles: ["default", "gateway"]
     environment:
-      EG_auth__authority: ${ADMIN_CONSOLE_AUTH:-http://localhost:28080/realms/myrealm/}
-      EG_app__basePath: "/adminconsole/"
+      EG_auth__authority: ${ADMIN_CONSOLE_AUTH:-https://localhost/auth/realms/myrealm/}
+      #EG_app__basePath: "/edficonsole/"
       EG_auth__redirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/callback"
       EG_auth__silentRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/silent-renew"
       EG_auth__postLogoutRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}"
       NODE_ENV: production
+    volumes:
+      - shared_data:/app
+    #  - /app/node_modules
     restart: always
     hostname: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
     container_name: ed-fi-adminconsole
     ports:
       - "${ADMIN_CONSOLE_PORT:-8598}:${ADMIN_CONSOLE_PORT:-8598}"
+    
 
   admin-console-healthcheck-cli:
     image: edfialliance/admin-console-healthcheck:${ADMINCONSOLE_HEALTHCHECK_TAG:-pre}
@@ -373,3 +378,4 @@ volumes:
   vol-db-idp-keycloak:
     driver: local
     name: vol-db-idp-keycloak
+  shared_data:
