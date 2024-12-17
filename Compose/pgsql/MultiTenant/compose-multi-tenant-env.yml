@@ -96,8 +96,8 @@ services:
     environment:
       ODS_VIRTUAL_NAME: ${ODS_VIRTUAL_NAME:-api}
       ADMIN_API_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
-      ADMIN_CONSOLE_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminconsole}
-      KEYCLOAK_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-keycloak}
+      ADMIN_CONSOLE_VIRTUAL_NAME: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
+      KEYCLOAK_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-auth}
     ports:
       - '443:443'
     container_name: ed-fi-gateway

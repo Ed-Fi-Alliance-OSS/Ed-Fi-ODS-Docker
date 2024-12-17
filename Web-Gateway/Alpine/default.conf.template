@@ -117,7 +117,6 @@ server {
         proxy_send_timeout 60s;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
-        # Agregar encabezados CORS si es necesario
         add_header 'Access-Control-Allow-Origin' '*';
         add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
         add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization';
