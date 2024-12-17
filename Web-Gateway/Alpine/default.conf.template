@@ -5,8 +5,13 @@
 
 server {
     listen 80 default_server;
+    listen [::]:80;
 
-    server_name _;
+    server_name  localhost;
+    
+    location /auth/realms/ {
+        return 301 https://$host$request_uri;
+    }
 
     return 301 https://$host$request_uri;
 }
@@ -64,6 +69,13 @@ server {
         expires max;
     }
 
+    location /assets {
+        alias /usr/share/nginx/html/adminconsole/dist/assets/;
+        try_files $uri =404;
+        access_log off;
+        expires max;
+    }
+
     location /edficonsole/v2.3/v7.2/ds4/saas/tx/config.json {
         set $path admin-console:8598;
         resolver 127.0.0.11;
@@ -73,40 +85,7 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
-
-    location /config {
-        set $path admin-console:8598;
-        resolver 127.0.0.11;
-        proxy_pass http://$path/edficonsole/v2.3/v7.2/ds4/saas/tx/config.json;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-   
-    #location ~* /edficonsole/v2.3/v7.2/ds4/saas/tx/assets/.*\.css$ {
-    #    set $path adminconsole:8598;
-    #    resolver 127.0.0.11;
-    #    proxy_pass http://$path/edficonsole/v2.3/v7.2/ds4/saas/tx/assets/;
-    #    proxy_set_header Content-Type text/css;
-    #}
-
-    #location ~* /edficonsole/v2.3/v7.2/ds4/saas/tx/assets/.*\.js$ {
-    #    set $path adminconsole:8598;
-    #    resolver 127.0.0.11;
-    #    proxy_pass http://$path/edficonsole/v2.3/v7.2/ds4/saas/tx/assets/;
-    #    proxy_set_header Content-Type application/javascript;
-    #}
-
-    
-    #location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
-    #    try_files $uri =404;
-    #    expires 1y;
-    #    add_header Cache-Control "public, must-revalidate, proxy-revalidate";
-    #}
-
-      
+     
     location /auth {
         proxy_pass http://keycloak:8080/auth;
         proxy_http_version 1.1;
@@ -122,9 +101,16 @@ server {
         proxy_connect_timeout 60s;
         proxy_read_timeout 60s;
         proxy_send_timeout 60s;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        # Agregar encabezados CORS si es necesario
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization';
+        add_header Content-Security-Policy "frame-src 'self' https://locahost";
     }
 
-    location /auth/admin {
+    location /autddh/admin {
         proxy_pass http://keycloak:8080/auth/admin;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
@@ -140,6 +126,8 @@ server {
         proxy_read_timeout 60s;
         proxy_send_timeout 60s;
     }
+
+   
     #location /keycloak/admin {
     #    proxy_pass http://keycloak:8080/admin;
     #    proxy_http_version 1.1;

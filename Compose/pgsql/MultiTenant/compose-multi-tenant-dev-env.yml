@@ -3,8 +3,6 @@
 # The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 # See the LICENSE and NOTICES files in the project root for more information.
 
-version: '3.8'
-
 services:
   db-ods-tenant1:
     image: edfialliance/ods-api-db-ods-minimal:${TAG}
@@ -208,39 +206,43 @@ services:
     container_name: ed-fi-db-idp-keycloak
 
   idp-keycloak:
-    build:
-      context: ../../../KeyCloak/
-      dockerfile: Dockerfile
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_IMAGE_TAG:-26.0}
     command: start-dev --import-realm
-    profiles: ["default"]
+    profiles: ["default", "keycloak"]
     environment:
-      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-localhost}
+      KC_HOSTNAME: "https://${KEYCLOAK_HOSTNAME:-localhost}/${KEYCLOAK_RELATIVE_PATH:-auth}/"
       KC_HOSTNAME_PORT: ${KEYCLOAK_HOSTNAME_PORT:-28080}
-      KC_HOSTNAME_STRICT_BACKCHANNEL: ${KEYCLOAK_HOSTNAME_STRICT_BACKCHANNEL:-false}
-      KC_HTTP_ENABLED: ${KEYCLOAK_HTTP_ENABLED:-true}
+      KC_HOSTNAME_STRICT_BACKCHANNEL: true
+      KC_HTTP_ENABLED: true
       KC_HTTPS_ENABLED: true
-      KC_HOSTNAME_STRICT: false
-      KC_HOSTNAME_STRICT_HTTPS: ${KEYCLOAK_HOSTNAME_STRICT_HTTPS:-false}
+      KC_HOSTNAME_STRICT: true
+      KC_HOSTNAME_STRICT_HTTPS: true
       KC_HEALTH_ENABLED: ${KEYCLOAK_HEALTH_ENABLED:-true}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://db-idp-keycloak/${KEYCLOAK_POSTGRES_DB:-keycloak_db}
-      KC_PROXY: edge
+      KC_PROXY: passthrough
       KC_PROXY_HEADERS: forwarded
       PROXY_ADDRESS_FORWARDING: true
       KC_DB_USERNAME: ${KEYCLOAK_POSTGRES_USER:-edfi}
       KC_DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD:-P@55w0rd}
       KC_HTTP_RELATIVE_PATH: "/${KEYCLOAK_RELATIVE_PATH:-auth}/"
-      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: true
-      KC_SPI_LOGIN_PROTOCOL_OPENID_CONNECT_LEGACY_IFRAME_CHECK: true
-      KC_LOG: console 
+      KC_SPI_LOGIN_PROTOCOL_OPENID_CONNECT_LEGACY_IFRAME_CHECK: false
+      KC_LOG_LEVEL: ${KEYCLOAK_LOG_LEVEL:-OFF}
+      KC_LOG: console
+      KC_HTTPS_CERTIFICATE_FILE: /ssl/server.crt
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /ssl/server.key
+      KC_IMPORT: /opt/keycloak/data/import/realm-and-users.json.json
     ports:
-      - ${KEYCLOAK_HOSTNAME_PORT:-28080}:8080
+      - ${KEYCLOAK_PORT:-28080}:8080
     restart: always
     depends_on:
       - pb-idp-keycloak
     hostname: ${KEYCLOAK_VIRTUAL_NAME:-idp_keycloak}
+    volumes:
+      - ../../../ssl:/ssl/
+      - ../../../KeyCloak/realm-and-users.json:/opt/keycloak/data/import/realm-and-users.json.json
     container_name: ed-fi-idp-keycloak
 
   admin-console:
@@ -249,9 +251,10 @@ services:
     environment:
       EG_auth__authority: ${ADMIN_CONSOLE_AUTH:-https://localhost/auth/realms/myrealm/}
       #EG_app__basePath: "/edficonsole/"
-      EG_auth__redirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/callback"
-      EG_auth__silentRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/silent-renew"
-      EG_auth__postLogoutRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}"
+      EG_auth__redirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/callback
+      EG_auth__silentRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/silent-renew
+      EG_auth__postLogoutRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
+      EG_auth__clientId:  ac
       NODE_ENV: production
     volumes:
       - shared_data:/app
