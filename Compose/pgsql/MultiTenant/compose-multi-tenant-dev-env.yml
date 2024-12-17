@@ -208,7 +208,7 @@ services:
   idp-keycloak:
     image: quay.io/keycloak/keycloak:${KEYCLOAK_IMAGE_TAG:-26.0}
     command: start-dev --import-realm
-    profiles: ["default", "keycloak"]
+    profiles: ["default"]
     environment:
       KC_HOSTNAME: "https://${KEYCLOAK_HOSTNAME:-localhost}/${KEYCLOAK_RELATIVE_PATH:-auth}/"
       KC_HOSTNAME_PORT: ${KEYCLOAK_HOSTNAME_PORT:-28080}
@@ -250,11 +250,12 @@ services:
     profiles: ["default"]
     environment:
       EG_auth__authority: ${ADMIN_CONSOLE_AUTH:-https://localhost/auth/realms/myrealm/}
-      #EG_app__basePath: "/edficonsole/"
+      EG_app__basePath: /${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
       EG_auth__redirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/callback
       EG_auth__silentRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/silent-renew
       EG_auth__postLogoutRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
-      EG_auth__clientId:  ac
+      EG_auth__clientId: ac
+      EG_auth__scope: ${ADMIN_CONSOLE_SCOPE:-edfiadmin/full-access}
       NODE_ENV: production
     volumes:
       - shared_data:/app
