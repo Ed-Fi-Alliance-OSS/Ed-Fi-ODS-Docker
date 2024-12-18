@@ -5,14 +5,8 @@
 
 server {
     listen 80 default_server;
-    listen [::]:80;
-
-    server_name  localhost;
     
-    location /auth/realms/ {
-        return 301 https://$host$request_uri;
-    }
-
+    server_name _;
     return 301 https://$host$request_uri;
 }
 

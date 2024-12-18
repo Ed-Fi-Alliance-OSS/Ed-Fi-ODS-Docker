@@ -96,7 +96,7 @@ services:
       ODS_VIRTUAL_NAME: ${ODS_VIRTUAL_NAME:-api}
       ADMIN_API_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
       ADMIN_CONSOLE_VIRTUAL_NAME: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
-      KEYCLOAK_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-auth}
+      KEYCLOAK_VIRTUAL_NAME: ${KEYCLOAK_VIRTUAL_NAME:-auth}
       ADMIN_CONSOLE_BASE_PATH: ${ADMIN_CONSOLE_BASE_PATH:-edficonsole/v2.3/v7.2/ds4/saas/tx}
     ports:
       - '443:443'
@@ -220,8 +220,8 @@ services:
       KC_HOSTNAME_STRICT: true
       KC_HOSTNAME_STRICT_HTTPS: true
       KC_HEALTH_ENABLED: ${KEYCLOAK_HEALTH_ENABLED:-true}
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://db-idp-keycloak/${KEYCLOAK_POSTGRES_DB:-keycloak_db}
       KC_PROXY: passthrough
@@ -235,7 +235,7 @@ services:
       KC_LOG: console
       KC_HTTPS_CERTIFICATE_FILE: /ssl/server.crt
       KC_HTTPS_CERTIFICATE_KEY_FILE: /ssl/server.key
-      KC_IMPORT: /opt/keycloak/data/import/realm-and-users.json.json
+      KC_DIR: /opt/keycloak/data/import
     ports:
       - ${KEYCLOAK_PORT:-28080}:8080
     restart: always
@@ -244,7 +244,7 @@ services:
     hostname: ${KEYCLOAK_VIRTUAL_NAME:-idp_keycloak}
     volumes:
       - ../../../ssl:/ssl/
-      - ../../../KeyCloak/realm-and-users.json:/opt/keycloak/data/import/realm-and-users.json.json
+      - ../../../KeyCloak/realm-and-users.json:/opt/keycloak/data/import/realm-and-users.json
     container_name: ed-fi-idp-keycloak
 
   admin-console:

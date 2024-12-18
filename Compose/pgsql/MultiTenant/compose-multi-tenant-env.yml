@@ -97,7 +97,7 @@ services:
       ODS_VIRTUAL_NAME: ${ODS_VIRTUAL_NAME:-api}
       ADMIN_API_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
       ADMIN_CONSOLE_VIRTUAL_NAME: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
-      KEYCLOAK_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-auth}
+      KEYCLOAK_VIRTUAL_NAME: ${KEYCLOAK_VIRTUAL_NAME:-auth}
     ports:
       - '443:443'
     container_name: ed-fi-gateway
@@ -220,8 +220,8 @@ services:
       KC_HOSTNAME_STRICT: true
       KC_HOSTNAME_STRICT_HTTPS: true
       KC_HEALTH_ENABLED: ${KEYCLOAK_HEALTH_ENABLED:-true}
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://db-idp-keycloak/${KEYCLOAK_POSTGRES_DB:-keycloak_db}
       KC_PROXY: passthrough
