@@ -8,7 +8,7 @@ param(
     [string] $engineFolder = 'pgsql'
 )
 
-$composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-env.yml')
+$composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-dev-env.yml')
 $composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-env.override.yml')
 $envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
 
@@ -17,8 +17,8 @@ $params = @(
     "-f", $composeFilePath,
     "--env-file", $envFilePath,
     "-p", "multi-tenant-ods",
-    "down",
-    "-v",
+    "up",
+    "-d",
     "--remove-orphans"
 )
 
@@ -26,9 +26,5 @@ $params = @(
 if (Test-Path $composeOverrideFilePath) {
     $params = $params[0..1] + "-f" + $composeOverrideFilePath + $params[2..8]
 }
-
+write-output $params
 & docker compose $params
-
-# Remove downloaded images
-docker rmi $(docker images --filter=reference="edfialliance/ods-*" -q)
-docker rmi $(docker images --filter=reference="bitnami/pgbouncer:*" -q)
