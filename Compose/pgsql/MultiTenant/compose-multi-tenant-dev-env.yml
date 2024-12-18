@@ -96,6 +96,7 @@ services:
       ADMIN_API_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
       ADMIN_CONSOLE_VIRTUAL_NAME: ${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
       KEYCLOAK_VIRTUAL_NAME: ${ADMIN_API_VIRTUAL_NAME:-auth}
+      ADMIN_CONSOLE_BASE_PATH: ${ADMIN_CONSOLE_BASE_PATH:-edficonsole/v2.3/v7.2/ds4/saas/tx}
     ports:
       - '443:443'
     container_name: ed-fi-gateway

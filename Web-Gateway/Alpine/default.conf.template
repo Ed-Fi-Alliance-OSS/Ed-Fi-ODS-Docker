@@ -25,6 +25,12 @@ server {
     large_client_header_buffers 4 32k;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     
+    set $admin_console_assets '
+        alias /usr/share/nginx/html/adminconsole/dist/assets/;
+        try_files $uri =404;
+        access_log off;
+        expires max;
+    ';
 
     # Sourced from https://enable-cors.org/server_nginx.html with modifications
     location /${ODS_VIRTUAL_NAME} {
@@ -46,25 +52,10 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
-
     location /${ADMIN_CONSOLE_VIRTUAL_NAME} {
         set $path admin-console:8598;
         resolver 127.0.0.11;
-        proxy_pass http://$path/edficonsole/v2.3/v7.2/ds4/saas/tx/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;    
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-
-    location /edficonsole/v2.3/v7.2/ds4/saas/tx/ {
-        set $path admin-console:8598;
-        resolver 127.0.0.11;
-        proxy_pass http://$path/edficonsole/v2.3/v7.2/ds4/saas/tx/;
+        proxy_pass http://$path/${ADMIN_CONSOLE_VIRTUAL_NAME}/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -76,7 +67,7 @@ server {
 
     }
 
-    location /edficonsole/v2.3/v7.2/ds4/saas/tx/assets {
+    location /${ADMIN_CONSOLE_VIRTUAL_NAME}/assets {
         alias /usr/share/nginx/html/adminconsole/dist/assets/;
         try_files $uri =404;
         access_log off;
@@ -90,10 +81,10 @@ server {
         expires max;
     }
 
-    location /edficonsole/v2.3/v7.2/ds4/saas/tx/config.json {
+    location /${ADMIN_CONSOLE_VIRTUAL_NAME}/config.json {
         set $path admin-console:8598;
         resolver 127.0.0.11;
-        proxy_pass http://$path/edficonsole/v2.3/v7.2/ds4/saas/tx/config.json;
+        proxy_pass http://$path/${ADMIN_CONSOLE_VIRTUAL_NAME}/config.json;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
