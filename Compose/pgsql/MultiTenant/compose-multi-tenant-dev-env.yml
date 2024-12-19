@@ -213,18 +213,12 @@ services:
     profiles: ["default"]
     environment:
       KC_HOSTNAME: "https://${KEYCLOAK_HOSTNAME:-localhost}/${KEYCLOAK_RELATIVE_PATH:-auth}/"
-      KC_HOSTNAME_PORT: ${KEYCLOAK_HOSTNAME_PORT:-28080}
-      KC_HOSTNAME_STRICT_BACKCHANNEL: true
       KC_HTTP_ENABLED: true
       KC_HTTPS_ENABLED: true
       KC_HOSTNAME_STRICT: true
-      KC_HOSTNAME_STRICT_HTTPS: true
       KC_HEALTH_ENABLED: ${KEYCLOAK_HEALTH_ENABLED:-true}
-      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
-      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://db-idp-keycloak/${KEYCLOAK_POSTGRES_DB:-keycloak_db}
-      KC_PROXY: passthrough
       KC_PROXY_HEADERS: forwarded
       PROXY_ADDRESS_FORWARDING: true
       KC_DB_USERNAME: ${KEYCLOAK_POSTGRES_USER:-edfi}
@@ -235,7 +229,6 @@ services:
       KC_LOG: console
       KC_HTTPS_CERTIFICATE_FILE: /ssl/server.crt
       KC_HTTPS_CERTIFICATE_KEY_FILE: /ssl/server.key
-      KC_DIR: /opt/keycloak/data/import
     ports:
       - ${KEYCLOAK_PORT:-28080}:8080
     restart: always
