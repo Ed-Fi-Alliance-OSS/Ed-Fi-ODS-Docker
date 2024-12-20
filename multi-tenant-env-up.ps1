@@ -13,6 +13,7 @@ $composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineF
 $envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
 
 $params = @(
+    "--profile", "default",    
     "-f", $composeFilePath,
     "--env-file", $envFilePath,
     "-p", "multi-tenant-ods",

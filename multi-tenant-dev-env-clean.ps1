@@ -8,7 +8,7 @@ param(
     [string] $engineFolder = 'pgsql'
 )
 
-$composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-env.yml')
+$composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-dev-env.yml')
 $composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-env.override.yml')
 $envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
 

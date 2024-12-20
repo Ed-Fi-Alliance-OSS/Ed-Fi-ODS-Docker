@@ -5,9 +5,8 @@
 
 server {
     listen 80 default_server;
-
+    
     server_name _;
-
     return 301 https://$host$request_uri;
 }
 
@@ -15,12 +14,17 @@ server {
     listen       443 ssl;
     listen       [::]:443 ssl;
     server_name  localhost;
-    include /etc/nginx/mime.types;
     ssl_certificate /ssl/server.crt;
     ssl_certificate_key /ssl/server.key;
     large_client_header_buffers 4 32k;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     
+    set $admin_console_assets '
+        alias /usr/share/nginx/html/adminconsole/dist/assets/;
+        try_files $uri =404;
+        access_log off;
+        expires max;
+    ';
 
     # Sourced from https://enable-cors.org/server_nginx.html with modifications
     location /${ODS_VIRTUAL_NAME} {
@@ -42,32 +46,47 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
-
-    location /adminconsole {
-        set $path adminconsole:8598;
+    location /${ADMIN_CONSOLE_VIRTUAL_NAME} {
+        set $path admin-console:8598;
         resolver 127.0.0.11;
-        proxy_pass http://$path/;
-        proxy_http_version 1.1;
+        proxy_pass http://$path/${ADMIN_CONSOLE_VIRTUAL_NAME}/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;    
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+
+    }
+
+    location /${ADMIN_CONSOLE_VIRTUAL_NAME}/assets {
+        alias /usr/share/nginx/html/adminconsole/dist/assets/;
+        try_files $uri =404;
+        access_log off;
+        expires max;
+    }
+
+    location /assets {
+        alias /usr/share/nginx/html/adminconsole/dist/assets/;
+        try_files $uri =404;
+        access_log off;
+        expires max;
+    }
+
+    location /${ADMIN_CONSOLE_VIRTUAL_NAME}/config.json {
+        set $path admin-console:8598;
+        resolver 127.0.0.11;
+        proxy_pass http://$path/${ADMIN_CONSOLE_VIRTUAL_NAME}/config.json;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Server $host;
-        proxy_set_header X-Forwarded-Port $server_port;
-        proxy_set_header Accept-Encoding "";
-        add_header Access-Control-Allow-Origin *;
-        sub_filter 'href="/' 'href="/adminconsole/';
-        sub_filter 'src="/' 'src="/adminconsole/';
-        sub_filter 'href="./' 'href="/adminconsole/';
-        sub_filter 'src="./' 'src="/adminconsole/';
-        sub_filter_once off;
-        add_header X-Content-Type-Options nosniff;
     }
-
-
-    location /keycloak {
-        proxy_pass http://keycloak:8080/;
+     
+    location /auth {
+        proxy_pass http://keycloak:8080/auth;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -81,24 +100,12 @@ server {
         proxy_connect_timeout 60s;
         proxy_read_timeout 60s;
         proxy_send_timeout 60s;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization';
+        add_header Content-Security-Policy "frame-src 'self' https://locahost";
     }
-
-    location /keycloak/admin {
-        proxy_pass http://keycloak:8080/admin;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Server $host;
-        proxy_set_header X-Forwarded-Port $server_port;
-        proxy_set_header Accept-Encoding "";
-        # Increase proxy timeouts
-        proxy_connect_timeout 60s;
-        proxy_read_timeout 60s;
-        proxy_send_timeout 60s;
-    }
-
 }
 

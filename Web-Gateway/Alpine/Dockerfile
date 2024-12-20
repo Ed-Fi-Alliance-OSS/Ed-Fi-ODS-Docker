@@ -4,7 +4,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 # Base image
-FROM nginxinc/nginx-unprivileged:1.25.3-alpine3.18@sha256:fa82525b9e33387b17d560ea9a40b1bdcb1816df55af7a7597ebfb55f2a8c56b
+FROM nginxinc/nginx-unprivileged:1.27-alpine3.20@sha256:6097fa6666257aa3e991a2d4b48df07468ea3adb58acba3ab9c6de34c664d714
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV ODS_VIRTUAL_NAME=api
