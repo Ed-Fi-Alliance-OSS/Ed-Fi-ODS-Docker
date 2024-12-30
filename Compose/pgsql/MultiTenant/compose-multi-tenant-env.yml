@@ -177,6 +177,9 @@ services:
       AppSettings__EnableAdminConsoleAPI: ${ENABLE_ADMINCONSOLE:-true}
       AdminConsoleSettings__CorsSettings__EnableCors: ${ADMINCONSOLE_ENABLE_CORS:-true}
       AdminConsoleSettings__CorsSettings__AllowedOrigins: ${ADMINCONSOLE_ALLOWED_ORIGINS:-"[https://localhost/adminconsole]"}
+      Authentication__OIDC__Authority: https://${KEYCLOAK_HOSTNAME:-localhost}/${KEYCLOAK_RELATIVE_PATH:-auth}/realms/${KEYCLOAK_ADMIN_CONSOLE_REALM:-myrealm}/
+      Authentication__OIDC__RequireHttpsMetadata: 'false'
+      Authentication__OIDC__EnableServerCertificateCustomValidationCallback: 'true'
     volumes:
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
     entrypoint:
@@ -245,7 +248,7 @@ services:
     image: edfialliance/admin-console-web:${ADMINCONSOLE_TAG:-pre}
     profiles: ["default"]
     environment:
-      EG_auth__authority: ${ADMIN_CONSOLE_AUTH:-https://localhost/auth/realms/myrealm/}
+      EG_auth__authority: https://${KEYCLOAK_HOSTNAME:-localhost}/${KEYCLOAK_RELATIVE_PATH:-auth}/realms/${KEYCLOAK_ADMIN_CONSOLE_REALM:-myrealm}/
       EG_app__basePath: /${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}
       EG_auth__redirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/callback
       EG_auth__silentRedirectUri: https://localhost/${ADMIN_CONSOLE_VIRTUAL_NAME:-adminconsole}/silent-renew
