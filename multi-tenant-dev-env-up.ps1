@@ -9,7 +9,7 @@ param(
 )
 
 $composeFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-dev-env.yml')
-$composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-env.override.yml')
+$composeOverrideFilePath = [IO.Path]::Combine($PSScriptRoot, 'Compose', $engineFolder, 'MultiTenant', 'compose-multi-tenant-dev-env.override.yml')
 $envFilePath = [IO.Path]::Combine($PSScriptRoot, '.env')
 
 $params = @(
