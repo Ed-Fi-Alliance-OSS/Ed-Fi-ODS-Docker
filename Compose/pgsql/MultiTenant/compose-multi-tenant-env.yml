@@ -112,7 +112,7 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
-    entrypoint: ["/bin/sh"] 
+    entrypoint: ["/bin/sh"]
     command: ["-c","envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.docker.json && /app/run.sh"]
     depends_on:
       - pb-ods-tenant1
