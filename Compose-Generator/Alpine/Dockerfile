@@ -4,11 +4,11 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 # Use updated golang environment to build the mustache tool
-FROM golang:1.20.12-alpine3.18@sha256:b482fd8d206e426a31db436ef9d0026b599571a6c4345d9e6c11d0742cd01589 as builder
+FROM golang:1.23.4-alpine3.21@sha256:6c5c9590f169f77c8046e45c611d3b28fe477789acd8d3762d23d4744de69812 as builder
 RUN go install github.com/cbroglie/mustache/...@v1.4.0
 
-# Tag alpine:3.18.5
-FROM alpine:3.18.5@sha256:34871e7290500828b39e22294660bee86d966bc0017544e848dd9a255cdf59e0
+# Tag alpine:3.21.0
+FROM alpine:3.21.0@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 COPY templates/pgsql/compose-override-template.mustache /app/compose-override-template.mustache
