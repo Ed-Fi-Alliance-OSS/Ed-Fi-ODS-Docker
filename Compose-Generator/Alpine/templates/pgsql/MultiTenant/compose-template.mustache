@@ -135,7 +135,7 @@ services:
 
   {{#tenants}}
   pb-admin-{{tenantId}}:
-    image: bitnami/pgbouncer:1.23.4
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -153,7 +153,7 @@ services:
   {{/tenants}}
   {{#tenants}}
   pb-ods-{{tenantId}}:
-    image: bitnami/pgbouncer:1.23.4
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
