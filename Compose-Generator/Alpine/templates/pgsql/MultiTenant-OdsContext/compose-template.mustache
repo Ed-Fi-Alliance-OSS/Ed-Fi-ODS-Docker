@@ -24,7 +24,7 @@ services:
       retries: 3
 
   pb-ods-{{tenantId}}-{{token}}:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.4
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -62,7 +62,7 @@ services:
       retries: 3
 
   pb-admin-{{tenantId}}:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.4
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"

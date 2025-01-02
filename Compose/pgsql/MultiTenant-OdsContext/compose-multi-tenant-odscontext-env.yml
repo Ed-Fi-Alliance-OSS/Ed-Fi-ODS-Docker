@@ -22,7 +22,7 @@ services:
       retries: 3
 
   pb-ods-tenant1-2022:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.4
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -53,7 +53,7 @@ services:
       retries: 3
 
   pb-ods-tenant1-2023:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.4
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -90,7 +90,7 @@ services:
       retries: 3
 
   pb-admin-tenant1:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.4
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -121,7 +121,7 @@ services:
       retries: 3
 
   pb-ods-tenant2-2022:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.4
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -152,7 +152,7 @@ services:
       retries: 3
 
   pb-ods-tenant2-2023:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.4
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -189,7 +189,7 @@ services:
       retries: 3
 
   pb-admin-tenant2:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.4
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
