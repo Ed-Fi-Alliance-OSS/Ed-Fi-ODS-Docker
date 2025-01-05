@@ -81,7 +81,7 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
-    entrypoint: ["/bin/sh"] 
+    entrypoint: ["/bin/sh"]
     command: ["-c","envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.docker.json && /app/run.sh"]
     depends_on:
       {{#tenants}}
@@ -124,7 +124,7 @@ services:
     depends_on:
       {{#tenants}}
       - pb-admin-{{tenantId}}
-      {{/tenants}} 
+      {{/tenants}}
     restart: always
     hostname: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
     container_name: ed-fi-adminapi
@@ -135,7 +135,7 @@ services:
 
   {{#tenants}}
   pb-admin-{{tenantId}}:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -153,7 +153,7 @@ services:
   {{/tenants}}
   {{#tenants}}
   pb-ods-{{tenantId}}:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"

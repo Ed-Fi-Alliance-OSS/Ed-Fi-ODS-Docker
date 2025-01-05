@@ -81,7 +81,7 @@ services:
       POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      DATABASEENGINE: "PostgreSql"      
+      DATABASEENGINE: "PostgreSql"
       AUTHORITY: ${AUTHORITY}
       ISSUER_URL: ${ISSUER_URL}
       SIGNING_KEY: ${SIGNING_KEY}
@@ -118,7 +118,7 @@ services:
       retries: 3
 
   pb_ods_{{token}}:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -132,10 +132,10 @@ services:
     container_name: ed-fi-pb-ods-{{token}}
     depends_on:
       - db-ods-{{token}}
-  
+
   {{/tokens}}
   pb-admin:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"

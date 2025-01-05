@@ -112,7 +112,7 @@ services:
     volumes:
       - ${LOGS_FOLDER}:/app/logs
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
-    entrypoint: ["/bin/sh"] 
+    entrypoint: ["/bin/sh"]
     command: ["-c","envsubst < /app/appsettings.dockertemplate.json > /app/appsettings.docker.json && /app/run.sh"]
     depends_on:
       - pb-ods-tenant1
@@ -162,7 +162,7 @@ services:
       retries: 3
 
   pb-admin-tenant1:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -178,7 +178,7 @@ services:
       - db-admin-tenant1
 
   pb-admin-tenant2:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -194,7 +194,7 @@ services:
       - db-admin-tenant2
 
   pb-ods-tenant1:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -210,7 +210,7 @@ services:
       - db-ods-tenant1
 
   pb-ods-tenant2:
-    image: bitnami/pgbouncer:1.20.0
+    image: bitnami/pgbouncer:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
