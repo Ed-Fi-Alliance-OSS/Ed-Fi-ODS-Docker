@@ -1,10 +1,7 @@
 .idea
 .vscode
-*.pem
-*.key
-*.crt
 *.orig
-ssl/
+ssl/*
 .env
 *.7z
 Compose/**/compose.yml
