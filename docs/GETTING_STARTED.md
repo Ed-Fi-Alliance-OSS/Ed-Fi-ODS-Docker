@@ -1,6 +1,6 @@
 # Getting Started with Docker Containers for Ed-Fi ODS
 
-This guide provides basic instructions for creating and tearing down Docker containers for the Ed-Fi ODS API sandbox installation using the files in this repository. For more detailed information, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
+This guide provides basic instructions for creating and tearing down Docker containers for the Ed-Fi ODS API sandbox installation using the files in this repository. For more detailed information, please refer to the [Docker Deployment document](https://docs.ed-fi.org/reference/docker/) in Tech Docs.
 
 ## Prerequisites
 
@@ -63,7 +63,7 @@ SANDBOX_HEALTHCHECK_TEST="curl -f http://localhost/health"
 SWAGGER_HEALTHCHECK_TEST="curl -f http://localhost/health"
 ```
 
-*For detailed information on configuring environment variables, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.*
+*For detailed information on configuring environment variables, please refer to the [Docker Deployment document](https://docs.ed-fi.org/reference/docker/) in Tech Docs.*
 
 
 ### Step 4: Generate an SSL certificate
@@ -118,7 +118,7 @@ Run the following PowerShell script to remove the Ed-Fi ODS Sandbox Docker conta
 
 - **Creating Custom Compose Files**:
 
-In addition to the example compose files in the `Compose` folder,  the `Compose-Generator` folder in this repository contains a Docker file and a Mustache template for generating customized compose files. Instructions for using this tool can be found in the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in Tech Docs.
+In addition to the example compose files in the `Compose` folder,  the `Compose-Generator` folder in this repository contains a Docker file and a Mustache template for generating customized compose files. Instructions for using this tool can be found in the [Docker Deployment document](https://docs.ed-fi.org/reference/docker/) in Tech Docs.
 
 
 ## Troubleshooting

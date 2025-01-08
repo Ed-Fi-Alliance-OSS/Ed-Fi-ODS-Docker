@@ -94,7 +94,7 @@ development.
 
 As mentioned, a solution on Docker was built in 2018. Funded by the Dell
 Foundation, it was shared with the community on the [Ed-Fi
-Exchange](https://techdocs.ed-fi.org/display/EXCHANGE/Deploying+Ed-Fi+with+Docker+Containers).
+Exchange](https://docs.ed-fi.org/reference/docker/v2/).
 With this solution, any Licensee could run ODS/API 2.3.1, 2.4.0, or 2.5.0.1 in
 Docker on Windows in Sandbox mode. Because of licensing concerns, the Docker
 images were not pushed to the [Docker Hub](https://hub.docker.com/); individual
