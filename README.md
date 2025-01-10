@@ -70,8 +70,7 @@ To remove PGBouncer, make the following changes:
 The Ed-Fi Alliance welcomes code contributions from the community. For more information, see:
 
 * [Ed-Fi Contribution Guidelines](https://docs.ed-fi.org/community/sdlc/code-contribution-guidelines/).
-* [How to get Technical Help or Provide Feedback](https://edfi.atlassian.net/wiki/spaces/ETKB/pages/20874815/How+To+Get+Technical+Help+or+Provide+Feedback).
-* [How Submit a Feature Request](https://edfi.atlassian.net/wiki/spaces/ETKB/pages/20874701/How+To+Submit+a+Feature+Request).
+* [How to get Technical Help or Provide Feedback](https://community.ed-fi.org/s/).
 
 ## Legal Information
 
