@@ -7,8 +7,8 @@ This repository provides sample Docker Compose configuration files to demonstrat
 
 |       Ed-Fi ODS / API              |                          Ed-Fi ODS Docker Tag                                                         |
 |------------------------------------|-------------------------------------------------------------------------------------------------------|
-| Ed-Fi ODS / API Suite3 v6.2        | [Ed-Fi ODS Docker v2.3.3 ](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.3.3)|
-| Ed-Fi ODS / API Suite3 v5.4        | [Ed-Fi ODS Docker v2.1.7](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.1.7) |
+| Ed-Fi ODS / API Suite3 v6.2        | [Ed-Fi ODS Docker v2.3.5 ](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.3.5)|
+| Ed-Fi ODS / API Suite3 v5.4        | [Ed-Fi ODS Docker v2.1.8](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.1.8) |
 
 ### Exposed Ports
 
