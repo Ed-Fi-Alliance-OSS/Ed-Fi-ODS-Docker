@@ -2,13 +2,13 @@
 
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker)
 
-This repository provides sample Docker Compose configuration files to demonstrate using Ed-Fi in containers. The Docker files for Ed-Fi applications can be found in the respective application repositories. Basic startup instructions are available in the [Getting Started](docs/GETTING_STARTED.md) document. For detailed information on using this repository, please refer to the [Docker Deployment document](https://techdocs.ed-fi.org/display/EDFITOOLS/Docker+Deployment) in the Tech Docs. Previous versions of this repository also included the Docker files for ODS/API and Admin App. The table below contains links to the docker releases for ODS API v6.2 and older.
+This repository provides sample Docker Compose configuration files to demonstrate using Ed-Fi in containers. The Docker files for Ed-Fi applications can be found in the respective application repositories. Basic startup instructions are available in the [Getting Started](docs/GETTING_STARTED.md) document. For detailed information on using this repository, please refer to the [Docker Deployment document](https://docs.ed-fi.org/reference/docker/) in the Tech Docs. Previous versions of this repository also included the Docker files for ODS/API and Admin App. The table below contains links to the docker releases for ODS API v6.2 and older.
 
 
 |       Ed-Fi ODS / API              |                          Ed-Fi ODS Docker Tag                                                         |
 |------------------------------------|-------------------------------------------------------------------------------------------------------|
-| Ed-Fi ODS / API Suite3 v6.2        | [Ed-Fi ODS Docker v2.3.3 ](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.3.3)|
-| Ed-Fi ODS / API Suite3 v5.4        | [Ed-Fi ODS Docker v2.1.7](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.1.7) |
+| Ed-Fi ODS / API Suite3 v6.2        | [Ed-Fi ODS Docker v2.3.5 ](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.3.5)|
+| Ed-Fi ODS / API Suite3 v5.4        | [Ed-Fi ODS Docker v2.1.8](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker/releases/tag/v2.1.8) |
 
 ### Exposed Ports
 
@@ -69,9 +69,8 @@ To remove PGBouncer, make the following changes:
 ## Contributing
 The Ed-Fi Alliance welcomes code contributions from the community. For more information, see:
 
-* [Ed-Fi Contribution Guidelines](https://techdocs.ed-fi.org/display/ETKB/Code+Contribution+Guidelines).
-* [How to get Technical Help or Provide Feedback](https://techdocs.ed-fi.org/display/ETKB/How+To%3A+Get+Technical+Help+or+Provide+Feedback).
-* [How Submit a Feature Request](https://techdocs.ed-fi.org/display/ETKB/How+To%3A+Submit+a+Feature+Request).
+* [Ed-Fi Contribution Guidelines](https://docs.ed-fi.org/community/sdlc/code-contribution-guidelines/).
+* [How to get Technical Help or Provide Feedback](https://community.ed-fi.org/s/).
 
 ## Legal Information
 

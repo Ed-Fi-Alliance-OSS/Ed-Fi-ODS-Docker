@@ -9,7 +9,7 @@ Includes the following web applications:
 * Ed-Fi Sandbox Admin
 * SwaggerUI
 
-See [Ed-Fi Docker Compose Architecture](https://techdocs.ed-fi.org/display/EDFITOOLS/Ed-Fi+Docker+Compose+Architecture) for more information.
+See [Ed-Fi Docker Compose Architecture](https://docs.ed-fi.org/reference/docker/ed-fi-docker-compose-architecture) for more information.
 
 ## [SingleTenant Configuration](SingleTenant/README.md)
 
