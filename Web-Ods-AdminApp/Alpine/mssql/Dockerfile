@@ -4,7 +4,7 @@
 # See the LICENSE and NOTICES files in the project root for more information.
 
 # Tag aspnet:6.0-alpine
-FROM mcr.microsoft.com/dotnet/aspnet@sha256:4e32cb869308e781e518f721b25bd26b3a91fb3e2100c6d29e72176f75417472
+FROM mcr.microsoft.com/dotnet/aspnet:8.0.21-alpine3.21@sha256:d40af50f6a927c552ba686105c56a9986c9ab7f549047151a8eb68c115cc5665
 LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV VERSION="3.1.0"
