@@ -2,7 +2,7 @@ name: Deploy ods-compose-generator image
 
 on:
   push:
-    branches: [main-6x]
+    branches: [main-6x, 'v*-patch*','feature-*']
   release:
     types: [published]
   workflow_dispatch:
