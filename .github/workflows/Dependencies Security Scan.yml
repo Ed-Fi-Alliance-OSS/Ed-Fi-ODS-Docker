@@ -7,7 +7,7 @@ name: Dependency Review Pull request
 
 on:
   pull_request:
-    branches: [main, main-6x, 'b-v*-patch*','feature-*']
+    branches: [main, main-6x, 'v*-patch*','feature-*']
 
 permissions: read-all
 

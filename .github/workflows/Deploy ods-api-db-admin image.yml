@@ -2,7 +2,7 @@ name: Deploy ods-api-db-admin image
 
 on:
   push:
-    branches: [main-6x, 'b-v*-patch*','feature-*']
+    branches: [main-6x, 'v*-patch*','feature-*']
   release:
     types: [published]
   workflow_dispatch:
