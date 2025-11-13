@@ -140,7 +140,9 @@ services:
       retries: 3
 
   pb-admin:
-    image: bitnami/pgbouncer:1.23.1
+    build:
+      context: ../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -156,7 +158,9 @@ services:
       - db-admin
 
   pb-ods:
-    image: bitnami/pgbouncer:1.23.1
+    build:
+      context: ../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
