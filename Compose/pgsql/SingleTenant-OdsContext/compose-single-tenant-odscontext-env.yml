@@ -116,7 +116,9 @@ services:
       retries: 3
 
   pb_ods_2022:
-    image: bitnami/pgbouncer:1.23.1
+    build:
+      context: ../../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -147,7 +149,9 @@ services:
       retries: 3
 
   pb_ods_2023:
-    image: bitnami/pgbouncer:1.23.1
+    build:
+      context: ../../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -163,7 +167,9 @@ services:
       - db-ods-2023
 
   pb-admin:
-    image: bitnami/pgbouncer:1.23.1
+    build:
+      context: ../../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"

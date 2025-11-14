@@ -24,7 +24,9 @@ services:
       retries: 3
 
   pb-ods-{{tenantId}}-{{token}}:
-    image: bitnami/pgbouncer:1.23.1
+    build:
+      context: ../../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -62,7 +64,9 @@ services:
       retries: 3
 
   pb-admin-{{tenantId}}:
-    image: bitnami/pgbouncer:1.23.1
+    build:
+      context: ../../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"

@@ -30,4 +30,4 @@ if (Test-Path $composeOverrideFilePath) {
 
 # Remove downloaded images
 docker rmi $(docker images --filter=reference="edfialliance/ods-*" -q)
-docker rmi $(docker images --filter=reference="bitnami/pgbouncer:*" -q)
+docker rmi $(docker images --filter=reference="*ods-pb*" -q)
