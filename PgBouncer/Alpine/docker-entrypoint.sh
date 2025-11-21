@@ -4,16 +4,6 @@ set -euo pipefail
 # Minimal PgBouncer entrypoint: use compose-provided env vars ONLY.
 log() { echo "[pgbouncer-entrypoint] $*"; }
 
-# Default assignments (colon style). Only set if unset/null.
-: "${PGBOUNCER_PORT:=6432}"
-: "${PGBOUNCER_DATABASE:=*}"
-: "${PGBOUNCER_EXTRA_FLAGS:=}"
-: "${POSTGRESQL_PORT:=5432}"
-: "${POSTGRESQL_HOST:=postgres}"
-: "${PGBOUNCER_SET_DATABASE_USER:=yes}"
-: "${PGBOUNCER_SET_DATABASE_PASSWORD:=yes}"
-
-
 CONFIG_DIR="/etc/pgbouncer"
 INI_FILE="$CONFIG_DIR/pgbouncer.ini"
 USERLIST_FILE="$CONFIG_DIR/userlist.txt"

@@ -20,12 +20,12 @@ EXPOSE 6432
 
 # PgBouncer configuration environment variables
 ENV PGBOUNCER_PORT=6432 \
-    PGBOUNCER_DATABASE="*" \
-    PGBOUNCER_EXTRA_FLAGS="" \
-    PGBOUNCER_SET_DATABASE_USER="yes" \
-    PGBOUNCER_SET_DATABASE_PASSWORD="yes" \
-    POSTGRESQL_HOST=postgres \
-    POSTGRESQL_PORT=5432
+  PGBOUNCER_DATABASE="*" \
+  PGBOUNCER_EXTRA_FLAGS="" \
+  POSTGRESQL_PORT=5432 \
+  POSTGRESQL_HOST=postgres \
+  PGBOUNCER_SET_DATABASE_USER="yes" \
+  PGBOUNCER_SET_DATABASE_PASSWORD="yes"
 
 # Health check: ensure PgBouncer is listening on port 6432
 HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
