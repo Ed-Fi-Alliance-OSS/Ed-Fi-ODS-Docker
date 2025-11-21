@@ -15,7 +15,7 @@ This directory defines a PgBouncer image used within Ed-Fi ODS Docker environmen
 |----------|---------|---------|
 | `PGBOUNCER_PORT` | Port PgBouncer listens on | `6432` |
 | `PGBOUNCER_DATABASE` | `*` (wildcard) or specific database name | `*` |
-| `PGBOUNCER_EXTRA_FLAGS` | Additional config lines (space/semicolon separated) | (empty) |
+| `PGBOUNCER_EXTRA_FLAGS` | Used to pass --quiet or --verbose flags | (empty) |
 | `PGBOUNCER_SET_DATABASE_USER` | If `yes`, include user in `userlist.txt` | `yes` |
 | `PGBOUNCER_SET_DATABASE_PASSWORD` | If `yes`, include password in `userlist.txt` | `yes` |
 | `POSTGRESQL_USER` | Upstream Postgres username | (required if flags above are `yes`) |

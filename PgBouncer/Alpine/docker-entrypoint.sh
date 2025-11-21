@@ -57,12 +57,10 @@ server_idle_timeout = ${SERVER_IDLE_TIMEOUT:-0}
 ignore_startup_parameters = ${IGNORE_STARTUP_PARAMETERS:-extra_float_digits}
 EOF
 
-if [[ -n "${PGBOUNCER_EXTRA_FLAGS}" ]]; then
-  log "Applying extra flags"
-  while IFS=$'\n' read -r line; do
-    [[ -z "$line" ]] && continue
-    echo "$line" >> "$INI_FILE"
-  done < <(echo -e "${PGBOUNCER_EXTRA_FLAGS//;/\n}" | tr ' ' '\n')
+if [[ -z "${PGBOUNCER_EXTRA_FLAGS}" ]]; then
+  exec "$@"
+else
+  log "Starting pgbouncer with extra flags: ${PGBOUNCER_EXTRA_FLAGS}"
+  read -r -a extra_flags <<<"${PGBOUNCER_EXTRA_FLAGS}"
+  exec pgbouncer "${extra_flags[@]}" "$INI_FILE"
 fi
-
-exec "$@"
