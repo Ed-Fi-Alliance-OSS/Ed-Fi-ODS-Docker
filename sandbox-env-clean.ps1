@@ -58,3 +58,12 @@ docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env
         docker rmi $_ -f
     }
 }
+<<<<<<< HEAD
+=======
+
+& docker compose $params
+
+# Remove downloaded images
+docker rmi $(docker images --filter=reference="edfialliance/ods-*" -q)
+docker rmi $(docker images --filter=reference="*ods-pb-*" -q)
+>>>>>>> e19a70a ([ODS-6720] Replace bitmap/pgbouncer image (#208))

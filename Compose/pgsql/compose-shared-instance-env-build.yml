@@ -125,8 +125,29 @@ services:
       start_period: "60s"
       retries: 3
 
+  pb_ods_{{token}}:
+    build:
+      context: ../../../PgBouncer/Alpine
+      dockerfile: Dockerfile
+    environment:
+      PGBOUNCER_DATABASE: "*"
+      PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      PGBOUNCER_EXTRA_FLAGS: ${PGBOUNCER_EXTRA_FLAGS}
+      POSTGRESQL_USER: "${POSTGRES_USER}"
+      POSTGRESQL_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRESQL_HOST: db-ods-{{token}}
+      PGBOUNCER_SET_DATABASE_USER: "yes"
+      PGBOUNCER_SET_DATABASE_PASSWORD: "yes"
+    restart: always
+    container_name: ed-fi-pb-ods-{{token}}
+    depends_on:
+      - db-ods-{{token}}
+
+  {{/tokens}}
   pb-admin:
-    image: bitnami/pgbouncer
+    build:
+      context: ../../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
