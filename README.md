@@ -17,7 +17,7 @@ The compose files expose the databases outside of the Docker network (through Pg
 pb-ods:
   build:
       context: ../../PgBouncer/Alpine
-      dockerfile: Dockerfile:1.23.1
+      dockerfile: Dockerfile
   environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -41,7 +41,7 @@ would be changed to:
 pb-ods:
   build:
       context: ../../PgBouncer/Alpine
-      dockerfile: Dockerfile:1.23.1
+      dockerfile: Dockerfile
   environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
