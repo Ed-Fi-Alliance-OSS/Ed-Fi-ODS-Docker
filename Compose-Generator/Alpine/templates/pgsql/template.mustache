@@ -118,7 +118,9 @@ services:
       retries: 3
 
   edfi_ods_{{token}}:
-    image: bitnami/pgbouncer
+    build:
+      context: ../../PgBouncer/Alpine
+      dockerfile: Dockerfile:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -178,7 +180,9 @@ services:
       retries: 3
 
   pb-admin:
-    image: bitnami/pgbouncer
+    build:
+      context: ../../PgBouncer/Alpine
+      dockerfile: Dockerfile:1.23.1
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
