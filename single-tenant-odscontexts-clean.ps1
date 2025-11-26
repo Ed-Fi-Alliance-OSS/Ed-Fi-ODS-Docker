@@ -29,5 +29,12 @@ if (Test-Path $composeOverrideFilePath) {
 & docker compose $params
 
 # Remove downloaded images
-docker rmi $(docker images --filter=reference="edfialliance/ods-*" -q)
-docker rmi $(docker images --filter=reference="*odscontexts-pb*" -q)
+@(
+    "edfialliance/ods-*",
+    "*odscontexts-pb*"
+) | ForEach-Object {
+    $imgs = docker images --filter=reference=$_ -q
+    if ($imgs) {
+        docker rmi $imgs -f
+    }
+}

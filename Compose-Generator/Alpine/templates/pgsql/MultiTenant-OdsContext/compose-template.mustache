@@ -25,7 +25,7 @@ services:
 
   pb-ods-{{tenantId}}-{{token}}:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
@@ -65,7 +65,7 @@ services:
 
   pb-admin-{{tenantId}}:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"

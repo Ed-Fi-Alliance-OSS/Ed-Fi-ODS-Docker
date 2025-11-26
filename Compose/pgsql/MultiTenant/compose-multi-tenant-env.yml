@@ -163,7 +163,7 @@ services:
 
   pb-admin-tenant1:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
@@ -181,7 +181,7 @@ services:
 
   pb-admin-tenant2:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
@@ -199,7 +199,7 @@ services:
 
   pb-ods-tenant1:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
@@ -217,7 +217,7 @@ services:
 
   pb-ods-tenant2:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"

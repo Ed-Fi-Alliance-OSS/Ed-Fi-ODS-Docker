@@ -89,7 +89,7 @@ services:
 
   pb_ods_2022:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
@@ -125,7 +125,7 @@ services:
 
   pb_ods_2023:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
@@ -181,7 +181,7 @@ services:
 
   pb-admin:
     build:
-      context: ../../../PgBouncer/Alpine
+      context: ../../PgBouncer/Alpine
       dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
