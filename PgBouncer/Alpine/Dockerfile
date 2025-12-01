@@ -5,7 +5,7 @@
 
 FROM alpine:3.22
 
-RUN apk add --no-cache bash~=5.2 pgbouncer~=1.23 && \
+RUN apk add --no-cache bash~=5.2 pgbouncer~=1 && \
     adduser -D -H -s /sbin/nologin pgbouncer && \
     mkdir -p /etc/pgbouncer /var/log/pgbouncer && \
     chown -R pgbouncer:pgbouncer /etc/pgbouncer /var/log/pgbouncer
