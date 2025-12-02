@@ -58,3 +58,14 @@ docker-compose -f (Join-Path -Path $composeFolder -ChildPath $composeFile) --env
         docker rmi $_ -f
     }
 }
+
+# Remove downloaded images
+@(
+    "edfialliance/ods-*",
+    "*ods-pb-*"
+) | ForEach-Object {
+    $imgs = docker images --filter=reference=$_ -q
+    if ($imgs) {
+        docker rmi $imgs -f
+    }
+}

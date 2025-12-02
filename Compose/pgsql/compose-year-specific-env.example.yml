@@ -87,8 +87,10 @@ services:
       start_period: "60s"
       retries: 3
 
-  edfi_ods_2022:
-    image: bitnami/pgbouncer
+  pb_ods_2022:
+    build:
+      context: ../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -121,8 +123,10 @@ services:
       start_period: "60s"
       retries: 3
 
-  edfi_ods_2023:
-    image: bitnami/pgbouncer
+  pb_ods_2023:
+    build:
+      context: ../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
@@ -176,7 +180,9 @@ services:
       retries: 3
 
   pb-admin:
-    image: bitnami/pgbouncer
+    build:
+      context: ../../PgBouncer/Alpine
+      dockerfile: Dockerfile
     environment:
       PGBOUNCER_DATABASE: "*"
       PGBOUNCER_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
