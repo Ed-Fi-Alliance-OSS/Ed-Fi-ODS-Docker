@@ -8,6 +8,7 @@ LABEL maintainer="Ed-Fi Alliance, LLC and Contributors <techsupport@ed-fi.org>"
 
 ENV ODS_VIRTUAL_NAME=api
 ENV ADMINAPP_VIRTUAL_NAME=adminapp
+ENV ADMINAPI_VIRTUAL_NAME=adminapi
 
 COPY ./default.conf.template /etc/nginx/templates/
 
