@@ -76,8 +76,8 @@ services:
   adminapi:
     image: edfialliance/ods-admin-api:${ADMINAPI_TAG}
     environment:
-      ADMIN_POSTGRES_HOST: db-admin
-      ADMIN_WAIT_POSTGRES_HOSTS: "db-admin "
+      ADMIN_POSTGRES_HOST: pb-admin
+      ADMIN_WAIT_POSTGRES_HOSTS: "pb-admin "
       AdminConsoleSettings__CorsSettings__AllowedOrigins: "${ALLOWED_ORIGINS:-https://localhost}"
       AdminConsoleSettings__CorsSettings__EnableCors: "${ENABLE_CORS:-false}"
       AppSettings__AdminApiMode: ${ADMINAPI_MODE:-V2}
@@ -91,8 +91,8 @@ services:
       Authentication__AllowRegistration: true
       Authentication__IssuerUrl: ${ISSUER_URL}
       Authentication__SigningKey: ${SIGNING_KEY}
-      ConnectionStrings__EdFi_Admin: "host=db-admin;port=${POSTGRES_PORT:-5432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Admin;pooling=true"
-      ConnectionStrings__EdFi_Security: "host=db-admin;port=${POSTGRES_PORT:-5432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Security;pooling=true"
+      ConnectionStrings__EdFi_Admin: "host=pb-admin;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Admin;pooling=true"
+      ConnectionStrings__EdFi_Security: "host=pb-admin;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Security;pooling=true"
       EnableDockerEnvironment: true
       IpRateLimiting__EnableEndpointRateLimiting: ${IPRATELIMITING__ENABLEENDPOINTRATELIMITING:-false}
       IpRateLimiting__StackBlockedRequests: ${IPRATELIMITING__STACKBLOCKEDREQUESTS:-false}
@@ -103,7 +103,7 @@ services:
       IpRateLimiting__EndpointWhitelist: ${IPRATELIMITING__ENDPOINTWHITELIST:-[]}
       Log4NetCore__Log4NetConfigFileName: "./log4net.config"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_PORT: "${POSTGRES_PORT:-5432}"
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       POSTGRES_USER: "${POSTGRES_USER}"
     depends_on:
       - pb-admin
