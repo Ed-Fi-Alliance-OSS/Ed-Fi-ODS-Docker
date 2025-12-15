@@ -7,7 +7,7 @@ version: "3.8"
 
 services:
   db-admin:
-    image: edfialliance/ods-api-db-admin:${TAG}
+    image: edfialliance/ods-admin-api-db:${ADMINAPI_DB_TAG:-v1.4}
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -69,7 +69,6 @@ services:
       test: $$API_HEALTHCHECK_TEST
       start_period: "60s"
       retries: 3
-
 
   db-ods-255901:
     image: edfialliance/ods-api-db-ods:${TAG}
@@ -178,6 +177,50 @@ services:
       test: $$ADMINAPP_HEALTHCHECK_TEST
       start_period: "60s"
       retries: 3
+
+  adminapi:
+    image: edfialliance/ods-admin-api:${ADMINAPI_TAG}
+    environment:
+      ADMIN_POSTGRES_HOST: pb-admin
+      POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      ASPNETCORE_ENVIRONMENT: docker
+      AppSettings__DatabaseEngine: 'PostgreSql'
+      AppSettings__ApiStartupType: DistrictSpecific
+      AppSettings__ProductionApiUrl: ${API_INTERNAL_URL:-http://api}
+      AppSettings__PathBase: '${ADMINAPI_VIRTUAL_NAME}'
+      Authentication__Authority: https://localhost/${ADMINAPI_VIRTUAL_NAME}
+      Authentication__IssuerUrl: https://localhost/${ADMINAPI_VIRTUAL_NAME}
+      Authentication__SigningKey: ${SIGNING_KEY}
+      Authentication__AllowRegistration: true
+      AppSettings__DefaultPageSizeOffset: ${PAGING_OFFSET:-0}
+      AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
+      AppSettings__MultiTenancy: false
+      AppSettings__EnableApplicationResetEndpoint: ${ENABLE_APPLICATION_RESET_ENDPOINT:-true}
+      AppSettings__adminApiMode: v1
+      AppSettings__EncryptionKey: ${ODS_CONNECTION_STRING_ENCRYPTION_KEY}
+      AppSettings__EnableAdminConsoleAPI: false
+      Log4NetCore__Log4NetConfigFileName: ./log4net/log4net.config
+      SwaggerSettings__EnableSwagger: true
+      AppSettings__AllowedOrigins: ${ALLOWED_ORIGINS:-https://localhost}
+      EdFiApiDiscoveryUrl: ${ODS_API_62_DISCOVERY}
+      Tenants: null
+      ConnectionStrings__EdFi_Admin: 'host=pb-admin;port=${PGBOUNCER_LISTEN_PORT:-6432};database=EdFi_Admin;username=${POSTGRES_USER};password=${POSTGRES_PASSWORD}'
+      ConnectionStrings__EdFi_Security: 'host=pb-admin;port=${PGBOUNCER_LISTEN_PORT:-6432};database=EdFi_Security;username=${POSTGRES_USER};password=${POSTGRES_PASSWORD}'
+    volumes:
+      - ../../eng/adminapi/log4net.config:/app/log4net/log4net.config
+    depends_on:
+      - pb-admin
+      - db-admin
+    restart: always
+    hostname: adminapi
+    container_name: ed-fi-ods-adminapi
+    healthcheck:
+      test: ${ADMINAPI_HEALTHCHECK_TEST}
+      start_period: 30s
+      retries: 30
+      interval: 30s
 
   pb-admin:
     build:
