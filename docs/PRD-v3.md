@@ -201,7 +201,8 @@ Internet / Client Browser
 
 - **NFR-SEC-1:** Database ports SHALL NOT be exposed to external networks by default. *(FR-NET-2)*
 - **NFR-SEC-2:** PgBouncer configuration files containing database credentials SHALL NOT appear in logs by default. *(FR-POOL-3)*
-- **NFR-SEC-3:** ODS connection strings SHALL be encrypted at rest using AES-256. *(FR-ENV-2)*
+- **NFR-SEC-3:** ODS connection strings SHALL be encrypted at rest using AES-256. *(FR-ENV-2)*
+
 - **NFR-SEC-4:** Admin API authentication SHALL use signed JWTs with configurable issuer and authority. *(FR-ENV-3)*
 - **NFR-SEC-5:** The repository SHALL maintain an OpenSSF Scorecard badge and comply with Ed-Fi Alliance security contribution guidelines.
 - **NFR-SEC-6:** Default credentials in `.env.example` SHALL be clearly labeled as insecure placeholders requiring replacement before any non-local deployment.
@@ -279,7 +280,7 @@ ssl/                              # Mounted SSL certificate (git-ignored)
 - **ODS/API v6.x and earlier:** This PRD covers v7.x only. Prior versions are documented separately at the v2.x Docker page and are not maintained in this PRD.
 - **Microsoft SQL Server:** SQL Server is explicitly out of scope. Microsoft's license terms prohibit redistribution of SQL Server in a pre-configured container image, so the Alliance cannot provide MSSQL database images. SQL Server compose files present in the repository are experimental artifacts. Operators requiring SQL Server must provision databases themselves, and the Alliance provides no support or guarantees for that path.
 - **Production hardening:** The Alliance explicitly does not provide production deployment guidance. Operators must review and adapt configurations for their environment.
-- **NGINX load balancing and traffic logging:** Described as "potential" features requiring manual reconfiguration of the gateway container; not enabled out of the box.
+- **Admin App:** This set of files does not include setup of either the legacy ODS Admin App (for ODS/API 5-6) or the newer Ed-Fi Admin App.
 - **Admin App:** This set of files does include setup of either the legacy ODS Admin App (for ODS/API 5-6) or the newer Ed-Fi Admin App.
 - **Data Import:** The `data-import` image exists but is not included in any out-of-the-box compose configuration. Must be deployed separately.
 - **Analytics Middle Tier:** Same as Data Import — maintained separately, not included.
