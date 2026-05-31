@@ -244,7 +244,7 @@ Internet / Client Browser
 | ODS DB (populated)    | `ods-api-db-sandbox`          | PostgreSQL        | ODS with Grand Bend sample data                    |
 | Admin DB              | `ods-api-db-admin`            | PostgreSQL        | EdFi_Admin + EdFi_Security databases               |
 | Admin API DB          | `ods-admin-api-db`            | PostgreSQL        | EdFi_Admin (with Admin API tables) + EdFi_Security |
-| PgBouncer             | `bitnami/pgbouncer`           | Alpine            | Server-side PostgreSQL connection pooler           |
+| PgBouncer             | Local build (`PgBouncer/Alpine/Dockerfile`) | Alpine | Server-side PostgreSQL connection pooler (local image; Bitnami image withdrawn) |
 | Compose Generator     | `ods-compose-generator`       | Alpine (Mustache) | Generates customized compose files from parameters |
 
 ### 6.1 Data Ownership
