@@ -24,7 +24,7 @@ The repository does **not** contain the application source code for those servic
 - **Mission fit:** The Ed-Fi Alliance's mission is to accelerate K-12 education data exchange. Lowering the barrier to deploy and evaluate the ODS/API broadens adoption among SEAs, LEAs, and software vendors.
 - **Developer experience:** API client developers need a rapid, realistic sandbox to build against before connecting to production.
 - **Operational flexibility:** Platform hosts need deployment options ranging from single-district to multi-tenant SEA-scale, with explicit data segmentation by school year.
-- **Cloud-readiness:** Containers allow deployment on any OCI-compatible runtime — Docker Desktop, Podman, AWS ECS, GKE, Azure Container Instances. *(Source: readme.mdx Step 5 note)
+- **Cloud-readiness:** Containers allow deployment on any OCI-compatible runtime — Docker Desktop, Podman, AWS ECS, GKE, Azure Container Instances.
 
 ## 1.3. Target Users and Personas
 
@@ -192,7 +192,7 @@ Internet / Client Browser
 ### 4.7 Operational Scripts
 
 - **FR-OPS-1:** The system SHALL provide PowerShell scripts for each deployment configuration to bring up (`*-up.ps1`) and tear down (`*-clean.ps1`) environments.
-- **FR-OPS-2:** The `-Engine` parameter on `*-up.ps1` and `*-clean.ps1` scripts SHALL select between PostgreSQL (default) and SQL Server.
+- **FR-OPS-2:** The `-Engine` parameter on `sandbox-*` and `single-tenant-*` `*-up.ps1` / `*-clean.ps1` scripts SHALL select between PostgreSQL (default) and SQL Server; multi-tenant and OdsContext scripts are PostgreSQL-only.
 - **FR-OPS-3:** Application log files SHALL be written to a host-mounted volume path configured via `LOGS_FOLDER`.
 
 ## 5. Non-Functional Requirements
