@@ -239,7 +239,7 @@ Internet / Client Browser
 | ODS Web API (MSSQL)   | `ods-api-web-api:<TAG>-mssql` | .NET on Alpine    | Core Ed-Fi REST API (SQL Server)                   |
 | Admin API             | `ods-admin-api`               | .NET on Alpine    | Management API for API clients / ODS instances     |
 | Sandbox Admin         | `ods-api-web-sandbox-admin`   | .NET on Alpine    | Web UI for creating/managing sandbox environments  |
-| Swagger UI            | `ods-api-web-swaggerui`       | Node on Alpine    | Interactive API documentation                      |
+| Swagger UI            | `ods-api-swaggerui`           | Node on Alpine    | Interactive API documentation                      |
 | ODS DB (minimal)      | `ods-api-db-ods`              | PostgreSQL        | ODS with minimal template + TPDM                   |
 | ODS DB (populated)    | `ods-api-db-sandbox`          | PostgreSQL        | ODS with Grand Bend sample data                    |
 | Admin DB              | `ods-api-db-admin`            | PostgreSQL        | EdFi_Admin + EdFi_Security databases               |
@@ -280,7 +280,8 @@ ssl/                              # Mounted SSL certificate (git-ignored)
 - **ODS/API v6.x and earlier:** This PRD covers v7.x only. Prior versions are documented separately at the v2.x Docker page and are not maintained in this PRD.
 - **Microsoft SQL Server:** SQL Server is explicitly out of scope. Microsoft's license terms prohibit redistribution of SQL Server in a pre-configured container image, so the Alliance cannot provide MSSQL database images. SQL Server compose files present in the repository are experimental artifacts. Operators requiring SQL Server must provision databases themselves, and the Alliance provides no support or guarantees for that path.
 - **Production hardening:** The Alliance explicitly does not provide production deployment guidance. Operators must review and adapt configurations for their environment.
-- **Admin App:** This set of files does not include setup of either the legacy ODS Admin App (for ODS/API 5-6) or the newer Ed-Fi Admin App.
+- **Admin App:** This set of files does not include setup of either the legacy ODS Admin App (for ODS/API 5-6) or the newer Ed-Fi Admin App.
+
 - **Admin App:** This set of files does include setup of either the legacy ODS Admin App (for ODS/API 5-6) or the newer Ed-Fi Admin App.
 - **Data Import:** The `data-import` image exists but is not included in any out-of-the-box compose configuration. Must be deployed separately.
 - **Analytics Middle Tier:** Same as Data Import — maintained separately, not included.
