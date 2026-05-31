@@ -201,7 +201,7 @@ Internet / Client Browser
 
 - **NFR-SEC-1:** Database ports SHALL NOT be exposed to external networks by default. *(FR-NET-2)*
 - **NFR-SEC-2:** PgBouncer configuration files containing database credentials SHALL NOT appear in logs by default. *(FR-POOL-3)*
-- **NFR-SEC-3:** ODS connection strings SHALL be encrypted at rest using AES-254. *(FR-ENV-2)*
+- **NFR-SEC-3:** ODS connection strings SHALL be encrypted at rest using AES-256. *(FR-ENV-2)*
 - **NFR-SEC-4:** Admin API authentication SHALL use signed JWTs with configurable issuer and authority. *(FR-ENV-3)*
 - **NFR-SEC-5:** The repository SHALL maintain an OpenSSF Scorecard badge and comply with Ed-Fi Alliance security contribution guidelines.
 - **NFR-SEC-6:** Default credentials in `.env.example` SHALL be clearly labeled as insecure placeholders requiring replacement before any non-local deployment.
