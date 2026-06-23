@@ -171,6 +171,9 @@ Internet / Client Browser
 - **FR-POOL-4:** The system SHALL support optional npgsql client-side connection pooling as an alternative to PgBouncer, configurable via `NPG_POOLING_ENABLED` and per-pool-size environment variables. Client-side pooling SHALL be disabled by default.
 - **FR-POOL-5:** Documentation SHALL describe the steps required to remove PgBouncer and replace it with direct database connections.
 
+> [!NOTE]
+> This repository includes a Dockerfile for creating a PGBouncer instance, because the Bitnami PGBouncer image was withdrawn from Docker Hub. The Alliance does not maintain a separate PGBouncer image; the Dockerfile is provided for operators to build their own local image.
+
 ### 4.5 Configuration and Environment Variables
 
 - **FR-ENV-1:** All configurable parameters SHALL be set via environment variables in a `.env` file. An `.env.example` file SHALL document all supported variables with descriptions.
