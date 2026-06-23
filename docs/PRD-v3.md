@@ -152,14 +152,14 @@ Internet / Client Browser
 ### 4.2 Container Images
 
 - **FR-IMG-1:** The system SHALL provide NGINX-based reverse-proxy images (`ods-api-web-gateway`, `ods-api-web-gateway-sandbox`) built on Alpine Linux, distributed via Docker Hub under `edfialliance`.
-- **FR-IMG-2:** The Compose files SHALL reference PostgreSQL 13.12 database images pre-initialized with the Ed-Fi minimal template (`ods-api-db-ods`), populated template (`ods-api-db-sandbox`), and Admin/Security databases (`ods-api-db-admin`). These images are built and published from other Ed-Fi repositories; this repository does not contain Dockerfiles for database images.
+- **FR-IMG-2:** The Compose files SHALL reference PostgreSQL 13.12 database images pre-initialized with the Ed-Fi minimal template (`ods-api-db-ods-minimal`), populated template (`ods-api-db-ods-sandbox`), and Admin/Security databases (`ods-admin-api-db`). These images are built and published from other Ed-Fi repositories; this repository does not contain Dockerfiles for database images.
 - **FR-IMG-3:** The ODS database images SHALL include both TPDM (Teacher Preparation Data Model) and core Ed-Fi data model, with TPDM controllable via the `TPDM_ENABLED` environment variable.
 - **FR-IMG-4 (OUT OF SCOPE):** ~~SQL Server database images~~ — See Section 9. The Alliance does not and SHALL NOT distribute SQL Server ODS or Admin database container images due to Microsoft's license restrictions on redistribution. SQL Server Web API image variants (tagged `-mssql`) are a legacy artifact; no new SQL Server image work is in scope for v7.x.
 
 ### 4.3 Networking and SSL
 
 - **FR-NET-1:** The system SHALL terminate HTTPS traffic at the NGINX gateway container on port 443.
-- **FR-NET-2:** The system SHALL NOT expose database ports outside the Docker network by default. An `.override.yml.example` file SHALL be provided for each configuration to enable optional database port exposure.
+- **FR-NET-2:** The system SHALL NOT expose database ports outside the Docker network by default. An `.override.yml.example` file SHALL be provided for each PostgreSQL-backed configuration to enable optional database port exposure.
 - **FR-NET-3:** The system SHALL require a valid SSL certificate mounted at the `ssl/` directory. A `generate-cert.sh` helper script SHALL be provided to create a self-signed certificate suitable for non-production use.
 - **FR-NET-4:** Virtual path routing for API, Sandbox Admin, Admin API, and Swagger SHALL be configurable via environment variables (`ODS_VIRTUAL_NAME`, `SANDBOX_ADMIN_VIRTUAL_NAME`, `ADMIN_API_VIRTUAL_NAME`, `DOCS_VIRTUAL_NAME`).
 
@@ -178,12 +178,12 @@ Internet / Client Browser
 
 - **FR-ENV-1:** All configurable parameters SHALL be set via environment variables in a `.env` file. An `.env.example` file SHALL document all supported variables with descriptions.
 - **FR-ENV-2:** The ODS connection string encryption key (`ODS_CONNECTION_STRING_ENCRYPTION_KEY`) SHALL be a Base64-encoded 256-bit AES key, required at startup.
-- **FR-ENV-3:** Admin API authentication SHALL require `AUTHORITY`, `ISSUER_URL`, and `SIGNING_KEY` environment variables.
+- **FR-ENV-3:** Admin API authentication SHALL require `AUTHORITY`, `ISSUER_URL`, `SIGNING_KEY`, `ADMIN_API_MODE`, and `ADMIN_API_VIRTUAL_NAME` environment variables. These variables apply only to SingleTenant and MultiTenant configurations; the Sandbox configuration uses a dedicated Sandbox Admin web UI instead.
 - **FR-ENV-4:** Health check endpoints SHALL be configurable per service (`API_HEALTHCHECK_TEST`, `SANDBOX_HEALTHCHECK_TEST`, `SWAGGER_HEALTHCHECK_TEST`, `ADMIN_API_HEALTHCHECK_TEST`). Defaults SHALL point to `http://localhost/health`.
 
 ### 4.6 Compose Generator
 
-- **FR-GEN-1:** The system SHALL provide a Mustache-based Docker Compose generator (`edfialliance/ods-compose-generator`) capable of producing customized compose files for:
+- **FR-GEN-1:** The system SHALL provide a Mustache-based Docker Compose generator (built locally from `Compose-Generator/Alpine/Dockerfile`) capable of producing customized compose files for:
   - SingleTenant with arbitrary school year ODS contexts
   - MultiTenant with arbitrary tenants
   - MultiTenant with arbitrary tenants and school year ODS contexts
@@ -230,21 +230,20 @@ Internet / Client Browser
 
 ## 6. System Architecture
 
-| Component             | Image                         | Runtime           | Purpose                                            |
-| --------------------- | ----------------------------- | ------------------| -------------------------------------------------- |
-| Web Gateway           | `ods-api-web-gateway`         | NGINX on Alpine   | Reverse proxy, SSL termination, route dispatch     |
-| Web Gateway (Sandbox) | `ods-api-web-gateway-sandbox` | NGINX on Alpine   | Same as above + SwaggerUI + Sandbox Admin routes   |
-| ODS Web API           | `ods-api-web-api`             | .NET on Alpine    | Core Ed-Fi REST API (PostgreSQL)                   |
-| ODS Web API (MSSQL)   | `ods-api-web-api:<TAG>-mssql` | .NET on Alpine    | Core Ed-Fi REST API (SQL Server)                   |
-| Admin API             | `ods-admin-api`               | .NET on Alpine    | Management API for API clients / ODS instances     |
-| Sandbox Admin         | `ods-api-web-sandbox-admin`   | .NET on Alpine    | Web UI for creating/managing sandbox environments  |
-| Swagger UI            | `ods-api-swaggerui`           | Node on Alpine    | Interactive API documentation                      |
-| ODS DB (minimal)      | `ods-api-db-ods`              | PostgreSQL        | ODS with minimal template + TPDM                   |
-| ODS DB (populated)    | `ods-api-db-sandbox`          | PostgreSQL        | ODS with Grand Bend sample data                    |
-| Admin DB              | `ods-api-db-admin`            | PostgreSQL        | EdFi_Admin + EdFi_Security databases               |
-| Admin API DB          | `ods-admin-api-db`            | PostgreSQL        | EdFi_Admin (with Admin API tables) + EdFi_Security |
-| PgBouncer             | Local build (`PgBouncer/Alpine/Dockerfile`) | Alpine | Server-side PostgreSQL connection pooler (local image; Bitnami image withdrawn) |
-| Compose Generator     | `ods-compose-generator`       | Alpine (Mustache) | Generates customized compose files from parameters |
+| Component             | Image                                               | Runtime           | Purpose                                                                          |
+| --------------------- | --------------------------------------------------- | ----------------- | -------------------------------------------------------------------------------- |
+| Web Gateway           | `ods-api-web-gateway`                               | NGINX on Alpine   | Reverse proxy, SSL termination, route dispatch                                   |
+| Web Gateway (Sandbox) | `ods-api-web-gateway-sandbox`                       | NGINX on Alpine   | Same as above + SwaggerUI + Sandbox Admin routes                                 |
+| ODS Web API           | `ods-api-web-api`                                   | .NET on Alpine    | Core Ed-Fi REST API (PostgreSQL)                                                 |
+| ODS Web API (MSSQL)   | `ods-api-web-api:<TAG>-mssql`                       | .NET on Alpine    | Core Ed-Fi REST API (SQL Server)                                                 |
+| Admin API             | `ods-admin-api`                                     | .NET on Alpine    | Management API for API clients / ODS instances                                   |
+| Sandbox Admin         | `ods-api-web-sandbox-admin`                         | .NET on Alpine    | Web UI for creating/managing sandbox environments                                |
+| Swagger UI            | `ods-api-swaggerui`                                 | Node on Alpine    | Interactive API documentation                                                    |
+| ODS DB (minimal)      | `ods-api-db-ods-minimal`                            | PostgreSQL        | ODS with minimal template + TPDM                                                 |
+| ODS DB (populated)    | `ods-api-db-ods-sandbox`                            | PostgreSQL        | ODS with Grand Bend sample data                                                  |
+| Admin API DB          | `ods-admin-api-db`                                  | PostgreSQL        | EdFi_Admin (with Admin API tables) + EdFi_Security                               |
+| PgBouncer             | Local build (`PgBouncer/Alpine/Dockerfile`)         | Alpine            | Server-side PostgreSQL connection pooler (local image; Bitnami image withdrawn)  |
+| Compose Generator     | Local build (`Compose-Generator/Alpine/Dockerfile`) | Alpine (Mustache) | Generates customized compose files from parameters                               |
 
 ### 6.1 Data Ownership
 
@@ -277,11 +276,9 @@ ssl/                              # Mounted SSL certificate (git-ignored)
 ## 7. Out of Scope and Known Limitations
 
 - **ODS/API v6.x and earlier:** This PRD covers v7.x only. Prior versions are documented separately at the v2.x Docker page and are not maintained in this PRD.
-- **Microsoft SQL Server:** SQL Server is explicitly out of scope. Microsoft's license terms prohibit redistribution of SQL Server in a pre-configured container image, so the Alliance cannot provide MSSQL database images. SQL Server compose files present in the repository are experimental artifacts. Operators requiring SQL Server must provision databases themselves, and the Alliance provides no support or guarantees for that path.
+- **Microsoft SQL Server:** SQL Server is explicitly out of scope for new v7.x feature work. Microsoft's license terms prohibit redistribution of SQL Server in a pre-configured container image, so the Alliance cannot provide MSSQL database images. Legacy compose files exist only for Sandbox and SingleTenant configurations; MultiTenant and ODS Context variants are PostgreSQL-only. Operators requiring SQL Server must provision databases themselves, and the Alliance provides no support or guarantees for that path.
 - **Production hardening:** The Alliance explicitly does not provide production deployment guidance. Operators must review and adapt configurations for their environment.
-- **Admin App:** This set of files does not include setup of either the legacy ODS Admin App (for ODS/API 5-6) or the newer Ed-Fi Admin App.
-
-- **Admin App:** This set of files does include setup of either the legacy ODS Admin App (for ODS/API 5-6) or the newer Ed-Fi Admin App.
+- **Admin App (legacy web UI):** These compose files do not include the legacy ODS Admin App (for ODS/API v5–6) or the newer Ed-Fi Admin App web UI. The **Admin API** (REST service, `ods-admin-api`) is included and replaces the Admin App for managing API clients and ODS instances.
 - **Data Import:** The `data-import` image exists but is not included in any out-of-the-box compose configuration. Must be deployed separately.
 - **Analytics Middle Tier:** Same as Data Import — maintained separately, not included.
 - **Multi-cloud orchestration:** Kubernetes, Helm charts, ECS task definitions, and other cloud-native orchestration formats are not provided. Containers can be deployed there but the compose files are not designed for it.
