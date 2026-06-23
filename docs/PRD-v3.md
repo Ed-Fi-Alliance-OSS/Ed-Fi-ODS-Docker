@@ -1,6 +1,5 @@
 # PRD: Ed-Fi ODS Docker Deployment
 
-- **Status**: done
 - **Owner**: Stephen Fuqua, Product Manager
 - **ODS/API Version Scope**: v7.x only
 - **Repository**: [Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker)
@@ -150,14 +149,13 @@ Internet / Client Browser
 - **FR-CFG-3:** The system SHALL support a **SingleTenant with ODS Context** deployment mode that routes API traffic to year-specific ODS databases based on a school year path segment.
 - **FR-CFG-4:** The system SHALL support a **MultiTenant** deployment mode with isolated Admin, Security, and ODS databases per tenant.
 - **FR-CFG-5:** The system SHALL support a **MultiTenant with ODS Context** deployment mode combining per-tenant isolation and year-specific ODS routing.
-- **FR-CFG-6 (REMOVED):** ~~SQL Server support~~ — See Section 9 (Out of Scope). SQL Server compose files present in the repository are not a supported configuration for v7.x and are explicitly out of scope for new feature work.
+- **FR-CFG-6 (REMOVED):** ~~SQL Server support~~ — See Section 7 (Out of Scope). SQL Server compose files present in the repository are not a supported configuration for v7.x and are explicitly out of scope for new feature work.
 
 ### 4.2 Container Images
 
 - **FR-IMG-1:** The system SHALL provide NGINX-based reverse-proxy images (`ods-api-web-gateway`, `ods-api-web-gateway-sandbox`) built on Alpine Linux, distributed via Docker Hub under `edfialliance`.
 - **FR-IMG-2:** The Compose files SHALL reference PostgreSQL 13.12 database images pre-initialized with the Ed-Fi minimal template (`ods-api-db-ods-minimal`), populated template (`ods-api-db-ods-sandbox`), and Admin/Security databases (`ods-admin-api-db`). These images are built and published from other Ed-Fi repositories; this repository does not contain Dockerfiles for database images.
-- **FR-IMG-3:** The ODS database images SHALL include both TPDM (Teacher Preparation Data Model) and core Ed-Fi data model, with TPDM controllable via the `TPDM_ENABLED` environment variable.
-- **FR-IMG-4 (OUT OF SCOPE):** ~~SQL Server database images~~ — See Section 9. The Alliance does not and SHALL NOT distribute SQL Server ODS or Admin database container images due to Microsoft's license restrictions on redistribution. SQL Server Web API image variants (tagged `-mssql`) are a legacy artifact; no new SQL Server image work is in scope for v7.x.
+- **FR-IMG-4 (OUT OF SCOPE):** ~~SQL Server database images~~ — See Section 7. The Alliance does not and SHALL NOT distribute SQL Server ODS or Admin database container images due to Microsoft's license restrictions on redistribution. SQL Server Web API image variants (tagged `-mssql`) are a legacy artifact; no new SQL Server image work is in scope for v7.x.
 
 ### 4.3 Networking and SSL
 
@@ -179,9 +177,9 @@ Internet / Client Browser
 
 ### 4.5 Configuration and Environment Variables
 
-- **FR-ENV-1:** All configurable parameters SHALL be set via environment variables in a `.env` file. An `.env.example` file SHALL document all supported variables with descriptions. Multi-tenant deployments with SwaggerUI SHALL support the `SWAGGER_DEFAULT_TENANT` variable to specify which tenant is pre-selected in the Swagger UI.
-- **FR-ENV-2:** The ODS connection string encryption key (`ODS_CONNECTION_STRING_ENCRYPTION_KEY`) SHALL be a Base64-encoded 256-bit AES key, required at startup.
-- **FR-ENV-3:** Admin API authentication SHALL require `AUTHORITY`, `ISSUER_URL`, `SIGNING_KEY`, `ADMIN_API_MODE`, and `ADMIN_API_VIRTUAL_NAME` environment variables. These variables apply only to SingleTenant and MultiTenant configurations; the Sandbox configuration uses a dedicated Sandbox Admin web UI instead.
+- **FR-ENV-1:** The system SHALL provide configuration options for all environment variables supported by the referenced Ed-Fi Alliance containers.
+- **FR-ENV-2:** All configurable parameters SHALL be set via environment variables in a `.env` file. An `.env.example` file SHALL document all supported variables with descriptions.
+- **FR-ENV-3:** Multi-tenant deployments with SwaggerUI SHALL support the `SWAGGER_DEFAULT_TENANT` variable to specify which tenant is pre-selected in the Swagger UI.
 - **FR-ENV-4:** Health check endpoints SHALL be configurable per service (`API_HEALTHCHECK_TEST`, `SANDBOX_HEALTHCHECK_TEST`, `SWAGGER_HEALTHCHECK_TEST`, `ADMIN_API_HEALTHCHECK_TEST`). Defaults SHALL point to `http://localhost/health`.
 
 ### 4.6 Compose Generator
@@ -212,9 +210,10 @@ Internet / Client Browser
 ### 5.2 Compatibility
 
 - **NFR-COMPAT-1:** All container images SHALL be built on Alpine Linux to minimize image size and attack surface.
-- **NFR-COMPAT-2:** Compose files SHALL be compatible with Docker Compose v2 CLI syntax and SHALL be generally transferable to other OCI-compatible runtimes (e.g., Podman).
+- **NFR-COMPAT-2:** Compose files SHALL be compatible with Docker Desktop.
 - **NFR-COMPAT-3:** Each major release of this repository SHALL correspond to a supported ODS/API version. The README SHALL include a version compatibility matrix.
-- **NFR-COMPAT-4 (OUT OF SCOPE):** SQL Server support is out of scope. See Section 9.
+- **NFR-COMPAT-4 (OUT OF SCOPE):** SQL Server support is out of scope. See Section 7.
+- **NFR-COMPAT-5 (OUT OF SCOPE):** Support for Podman and other applications with partial support for the Docker Compose specification. See Section 7.
 
 ### 5.3 Observability
 
@@ -288,6 +287,7 @@ ssl/                              # Mounted SSL certificate (git-ignored)
 - **Horizontal scaling / HA:** The gateway notes "potential load balancing" but no multi-replica API configuration is provided out of the box.
 - **Automated certificate renewal (Let's Encrypt / ACME):** Not included; operators manage certificates manually.
 - **Monitoring / alerting integration:** No Prometheus exporters, Grafana dashboards, or alerting configurations are included.
+- **Support for Podman:** Podman and other solutions provide a degree of compatibility with the Docker Compose specification, but not full compatibility. Because the Ed-Fi Alliance development teams rely on Docker Desktop and some Compose features that are not supported by other companies, the files in this repository are not guaranteed to work in other Compose-compatible software, and the Alliance cannot provide support for platforms other than Docker Desktop.
 
 ## 8. Glossary
 
