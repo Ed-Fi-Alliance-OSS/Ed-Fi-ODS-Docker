@@ -7,17 +7,14 @@
 - **Images**: [hub.docker.com/u/edfialliance](https://hub.docker.com/u/edfialliance)
 - **Tech Docs**: [docs.ed-fi.org/reference/docker](https://docs.ed-fi.org/reference/docker/)
 
-> [!NOTE]
-> This PRD reflects *current shipped behavior* inferred from source files,
-> documentation, and compose configuration. Claims are tagged with their source.
-> Future requirements and open questions are distinguished from current
-> functionality.
-
 ## 1. Product Overview
 
 Ed-Fi ODS Docker is a set of Docker Compose files, helper PowerShell scripts, a Mustache-based compose generator, and pre-built container images that enable platform operators to deploy the Ed-Fi ODS/API stack — including Web API, Admin API, Sandbox Admin, SwaggerUI, and supporting databases — on Linux containers without requiring manual configuration of each component.
 
 The repository does **not** contain the application source code for those services; Docker images are built in their respective application repositories and distributed via the `edfialliance` account on Docker Hub. This repository provides the *orchestration layer*: compose files, environment templates, a reverse-proxy configuration, and a connection-pooling setup.
+
+> [!WARNING]
+> The Ed-Fi Alliance does not provide comprehensive production deployment guidance. Operators must review and adapt configurations for their environment. These Compose files are for testing, demonstration, and evaluation purposes.
 
 ## 1.2. Strategic Alignment
 
@@ -35,7 +32,7 @@ The repository does **not** contain the application source code for those servic
 - **Pain point:** Manual database setup and IIS configuration are time-consuming and error-prone.
 - **Success:** Swagger UI, Sandbox Admin, and ODS/API are accessible within minutes of cloning the repo.
 
-### 1.3.2 Platform Host / SEA/LEA IT Operator
+### 1.3.2 Platform Host / Agency IT Operator
 
 - **Goal:** Deploy a production-grade (or production-adjacent) ODS/API for one or more school districts or tenants.
 - **Technical depth:** High — manages infrastructure, certificates, database credentials.
@@ -54,7 +51,7 @@ The repository does **not** contain the application source code for those servic
 
 **Personas**: API Client Developer
 
-When I want to evaluate the Ed-Fi ODS/API, I want to spin up a sandbox with populated sample data and SwaggerUI, so that I can explore API capabilities without production data.
+When I am evaluating an Ed-Fi ODS/API release, I want to spin up a sandbox with populated sample data and SwaggerUI, so that I can explore API capabilities without production data.
 
 **How this repo helps**: It provides a sandbox compose configuration and scripts that launch Web API, Sandbox Admin, SwaggerUI, and a pre-populated PostgreSQL database.
 
@@ -68,15 +65,15 @@ When I am building an API client application, I want to create isolated sandbox 
 
 ### 2.3 JTBD 3: Run a single-tenant district deployment
 
-**Personas**: Platform Host / SEA/LEA IT Operator
+**Personas**: Platform Host / Agency IT Operator
 
-When I am a platform host deploying for one district, I want to bring up a single-tenant ODS/API with Admin API, so that I can manage API clients and review data via a supported interface.
+When I am deploying for one district, I want to bring up a single-tenant ODS/API with Admin API, so that I can manage API clients and review data via a supported interface.
 
 **How this repo helps**: It includes SingleTenant compose files and helper scripts for standing up Web API, Admin API, and supporting databases.
 
 ### 2.4 JTBD 4: Segment data by school year
 
-**Personas**: Platform Host / SEA/LEA IT Operator
+**Personas**: Platform Host / Agency IT Operator
 
 When I need year-over-year data segmentation, I want to route API traffic by school year to separate ODS databases, so that data from different school years does not mix.
 
@@ -84,15 +81,15 @@ When I need year-over-year data segmentation, I want to route API traffic by sch
 
 ### 2.5 JTBD 5: Isolate districts in multi-tenant hosting
 
-**Personas**: Platform Host / SEA/LEA IT Operator
+**Personas**: Platform Host / Agency IT Operator
 
-When I host data for multiple districts (SEA), I want to deploy a multi-tenant environment with per-tenant databases, so that each district's data is isolated and independently manageable.
+When I host data for multiple districts, I want to deploy a multi-tenant environment with per-tenant databases, so that each district's data is isolated and independently manageable.
 
 **How this repo helps**: It includes MultiTenant compose configurations that separate tenant-level Admin/Security/ODS resources.
 
 ### 2.6 JTBD 6: Combine tenant and year routing
 
-**Personas**: Platform Host / SEA/LEA IT Operator
+**Personas**: Platform Host / Agency IT Operator
 
 When I need multi-tenant plus year-specific routing, I want to combine tenant and ODS context routing, so that each tenant's each school year maps to its own ODS.
 
@@ -100,7 +97,7 @@ When I need multi-tenant plus year-specific routing, I want to combine tenant an
 
 ### 2.7 JTBD 7: Generate custom compose configurations
 
-**Personas**: Platform Host / SEA/LEA IT Operator, Ed-Fi Alliance / Open-Source Contributor
+**Personas**: Platform Host / Agency IT Operator, Ed-Fi Alliance / Open-Source Contributor
 
 When I need to customize beyond the examples, I want to generate a compose file for my exact tenant and year combination, so that I am not constrained to the two-tenant, two-year example.
 
@@ -108,7 +105,7 @@ When I need to customize beyond the examples, I want to generate a compose file 
 
 ### 2.8 JTBD 8: Use SQL Server with external provisioning
 
-**Personas**: Platform Host / SEA/LEA IT Operator
+**Personas**: Platform Host / Agency IT Operator
 
 When I run SQL Server instead of PostgreSQL, I want to deploy the Web API and Sandbox Admin against an external MSSQL instance, so that I can use my organization's licensed SQL Server infrastructure.
 
@@ -116,7 +113,7 @@ When I run SQL Server instead of PostgreSQL, I want to deploy the Web API and Sa
 
 ## 3. Enterprise / System Context
 
-```
+```plaintext
 Internet / Client Browser
         │  HTTPS :443
         ▼
@@ -125,16 +122,16 @@ Internet / Client Browser
 │  (ods-api-web-gateway)     │  route dispatch, potential load balancing
 └────────────┬───────────────┘
              │ Internal Docker network
-   ┌─────────┼──────────────────────────────────┐
-   ▼         ▼                                  ▼
-[Web API] [Admin API]            [Sandbox Admin] [SwaggerUI]
-   │         │                        │
-   ▼         ▼                        ▼
-[PgBouncer] [PgBouncer-Admin]   [PgBouncer-Sandbox]
-   │         │                        │
-   ▼         ▼                        ▼
-[db-ods]  [db-admin (EdFi_Admin    [db-sandbox (populated
-           + EdFi_Security)]        template)]
+   ┌─────────┼─────────────────────────┌─────────────┐
+   ▼         ▼                         ▼             ▼
+[Web API] [Admin API]           [Sandbox Admin]   [SwaggerUI]
+   │         │                         │
+   ▼         ▼                         ▼
+[PgBouncer] [PgBouncer-Admin]    [PgBouncer-Sandbox]
+   │         │                         │
+   ▼         ▼                         ▼
+[db-ods]  [db-admin (EdFi_Admin     [db-sandbox (populated
+           + EdFi_Security)]         template)]
 ```
 
 - All containers share an internal Docker bridge network; only the NGINX gateway exposes port 443 externally by default.
@@ -239,7 +236,8 @@ Internet / Client Browser
 | ODS Web API (MSSQL)   | `ods-api-web-api:<TAG>-mssql` | .NET on Alpine    | Core Ed-Fi REST API (SQL Server)                   |
 | Admin API             | `ods-admin-api`               | .NET on Alpine    | Management API for API clients / ODS instances     |
 | Sandbox Admin         | `ods-api-web-sandbox-admin`   | .NET on Alpine    | Web UI for creating/managing sandbox environments  |
-| Swagger UI            | `ods-api-swaggerui`           | Node on Alpine    | Interactive API documentation                      |
+| Swagger UI            | `ods-api-swaggerui`           | Node on Alpine    | Interactive API documentation                      |
+
 | ODS DB (minimal)      | `ods-api-db-ods`              | PostgreSQL        | ODS with minimal template + TPDM                   |
 | ODS DB (populated)    | `ods-api-db-sandbox`          | PostgreSQL        | ODS with Grand Bend sample data                    |
 | Admin DB              | `ods-api-db-admin`            | PostgreSQL        | EdFi_Admin + EdFi_Security databases               |
