@@ -6,6 +6,7 @@
 - **Repository**: [Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Docker)
 - **Images**: [hub.docker.com/u/edfialliance](https://hub.docker.com/u/edfialliance)
 - **Tech Docs**: [docs.ed-fi.org/reference/docker](https://docs.ed-fi.org/reference/docker/)
+- **Version Compatibility**: See [README version matrix](../README.md) for release-to-ODS/API mapping
 
 ## 1. Product Overview
 
@@ -134,7 +135,9 @@ Internet / Client Browser
            + EdFi_Security)]         template)]
 ```
 
+**Notes:**
 - All containers share an internal Docker bridge network; only the NGINX gateway exposes port 443 externally by default.
+- **PgBouncer** provides server-side connection pooling between application containers and PostgreSQL databases, preventing connection exhaustion in multi-process deployments and scaling scenarios.
 - Database volumes should be mapped outside the Docker network for data permanency.
 - SSL certificates live in the `ssl/` directory and are mounted into the gateway container.
 
@@ -168,7 +171,7 @@ Internet / Client Browser
 - **FR-POOL-1:** The system SHALL include PgBouncer as the default server-side connection pooler for all PostgreSQL-backed configurations.
 - **FR-POOL-2:** PgBouncer SHALL be configured with auth_file security using credentials provided via environment variables (`POSTGRES_USER`, `POSTGRES_PASSWORD`).
 - **FR-POOL-3:** PgBouncer log verbosity SHALL default to quiet mode (`PGBOUNCER_EXTRA_FLAGS="--quiet"`) to prevent sensitive credentials from appearing in logs.
-- **FR-POOL-4:** The system SHALL support optional npgsql client-side connection pooling as an alternative to PgBouncer, configurable via `NPG_POOLING_ENABLED` and per-pool-size environment variables. Client-side pooling SHALL be disabled by default.
+- **FR-POOL-4:** The system SHALL support optional npgsql client-side connection pooling as an alternative to PgBouncer, configurable via `NPG_POOLING_ENABLED` and per-pool-size environment variables (`NPG_API_MAX_POOL_SIZE_ODS`, `NPG_API_MAX_POOL_SIZE_ADMIN`, `NPG_API_MAX_POOL_SIZE_SECURITY`, `NPG_SANDBOX_MAX_POOL_SIZE_ODS`, `NPG_SANDBOX_MAX_POOL_SIZE_ADMIN`, `NPG_SANDBOX_MAX_POOL_SIZE_SECURITY`). Client-side pooling SHALL be disabled by default.
 - **FR-POOL-5:** Documentation SHALL describe the steps required to remove PgBouncer and replace it with direct database connections.
 
 > [!NOTE]
@@ -176,7 +179,7 @@ Internet / Client Browser
 
 ### 4.5 Configuration and Environment Variables
 
-- **FR-ENV-1:** All configurable parameters SHALL be set via environment variables in a `.env` file. An `.env.example` file SHALL document all supported variables with descriptions.
+- **FR-ENV-1:** All configurable parameters SHALL be set via environment variables in a `.env` file. An `.env.example` file SHALL document all supported variables with descriptions. Multi-tenant deployments with SwaggerUI SHALL support the `SWAGGER_DEFAULT_TENANT` variable to specify which tenant is pre-selected in the Swagger UI.
 - **FR-ENV-2:** The ODS connection string encryption key (`ODS_CONNECTION_STRING_ENCRYPTION_KEY`) SHALL be a Base64-encoded 256-bit AES key, required at startup.
 - **FR-ENV-3:** Admin API authentication SHALL require `AUTHORITY`, `ISSUER_URL`, `SIGNING_KEY`, `ADMIN_API_MODE`, and `ADMIN_API_VIRTUAL_NAME` environment variables. These variables apply only to SingleTenant and MultiTenant configurations; the Sandbox configuration uses a dedicated Sandbox Admin web UI instead.
 - **FR-ENV-4:** Health check endpoints SHALL be configurable per service (`API_HEALTHCHECK_TEST`, `SANDBOX_HEALTHCHECK_TEST`, `SWAGGER_HEALTHCHECK_TEST`, `ADMIN_API_HEALTHCHECK_TEST`). Defaults SHALL point to `http://localhost/health`.
@@ -276,7 +279,7 @@ ssl/                              # Mounted SSL certificate (git-ignored)
 ## 7. Out of Scope and Known Limitations
 
 - **ODS/API v6.x and earlier:** This PRD covers v7.x only. Prior versions are documented separately at the v2.x Docker page and are not maintained in this PRD.
-- **Microsoft SQL Server:** SQL Server is explicitly out of scope for new v7.x feature work. Microsoft's license terms prohibit redistribution of SQL Server in a pre-configured container image, so the Alliance cannot provide MSSQL database images. Legacy compose files exist only for Sandbox and SingleTenant configurations; MultiTenant and ODS Context variants are PostgreSQL-only. Operators requiring SQL Server must provision databases themselves, and the Alliance provides no support or guarantees for that path.
+- **Microsoft SQL Server:** SQL Server is explicitly out of scope for new v7.x feature work. Microsoft's license terms prohibit redistribution of SQL Server in a pre-configured container image, so the Alliance cannot provide MSSQL database images. **Legacy MSSQL compose files remain in the repository for Sandbox and SingleTenant configurations only and are not supported.** MultiTenant and ODS Context variants are PostgreSQL-only. Operators requiring SQL Server must provision databases independently; the Alliance provides no support, testing, or guarantees for that path.
 - **Production hardening:** The Alliance explicitly does not provide production deployment guidance. Operators must review and adapt configurations for their environment.
 - **Admin App (legacy web UI):** These compose files do not include the legacy ODS Admin App (for ODS/API v5–6) or the newer Ed-Fi Admin App web UI. The **Admin API** (REST service, `ods-admin-api`) is included and replaces the Admin App for managing API clients and ODS instances.
 - **Data Import:** The `data-import` image exists but is not included in any out-of-the-box compose configuration. Must be deployed separately.
