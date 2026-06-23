@@ -152,9 +152,9 @@ Internet / Client Browser
 ### 4.2 Container Images
 
 - **FR-IMG-1:** The system SHALL provide NGINX-based reverse-proxy images (`ods-api-web-gateway`, `ods-api-web-gateway-sandbox`) built on Alpine Linux, distributed via Docker Hub under `edfialliance`.
-- **FR-IMG-2:** The system SHALL provide PostgreSQL 13.12 database images pre-initialized with the Ed-Fi minimal template (`ods-api-db-ods`), populated template (`ods-api-db-sandbox`), and Admin/Security databases (`ods-api-db-admin`).
-- **FR-IMG-3:** The system SHALL include both TPDM (Teacher Preparation Data Model) and core Ed-Fi data model in the ODS database images, with TPDM controllable via the `TPDM_ENABLED` environment variable.
-- **FR-IMG-4 (OUT OF SCOPE):** ~~SQL Server-compatible Web API images~~ — See Section 9. The Alliance does not and SHALL NOT distribute SQL Server database container images due to Microsoft's license restrictions on redistribution. SQL Server Web API image variants (tagged `-mssql`) are a legacy artifact; no new SQL Server image work is in scope for v7.x.
+- **FR-IMG-2:** The Compose files SHALL reference PostgreSQL 13.12 database images pre-initialized with the Ed-Fi minimal template (`ods-api-db-ods`), populated template (`ods-api-db-sandbox`), and Admin/Security databases (`ods-api-db-admin`). These images are built and published from other Ed-Fi repositories; this repository does not contain Dockerfiles for database images.
+- **FR-IMG-3:** The ODS database images SHALL include both TPDM (Teacher Preparation Data Model) and core Ed-Fi data model, with TPDM controllable via the `TPDM_ENABLED` environment variable.
+- **FR-IMG-4 (OUT OF SCOPE):** ~~SQL Server database images~~ — See Section 9. The Alliance does not and SHALL NOT distribute SQL Server ODS or Admin database container images due to Microsoft's license restrictions on redistribution. SQL Server Web API image variants (tagged `-mssql`) are a legacy artifact; no new SQL Server image work is in scope for v7.x.
 
 ### 4.3 Networking and SSL
 
@@ -199,7 +199,6 @@ Internet / Client Browser
 - **NFR-SEC-1:** Database ports SHALL NOT be exposed to external networks by default. *(FR-NET-2)*
 - **NFR-SEC-2:** PgBouncer configuration files containing database credentials SHALL NOT appear in logs by default. *(FR-POOL-3)*
 - **NFR-SEC-3:** ODS connection strings SHALL be encrypted at rest using AES-256. *(FR-ENV-2)*
-
 - **NFR-SEC-4:** Admin API authentication SHALL use signed JWTs with configurable issuer and authority. *(FR-ENV-3)*
 - **NFR-SEC-5:** The repository SHALL maintain an OpenSSF Scorecard badge and comply with Ed-Fi Alliance security contribution guidelines.
 - **NFR-SEC-6:** Default credentials in `.env.example` SHALL be clearly labeled as insecure placeholders requiring replacement before any non-local deployment.
@@ -237,7 +236,6 @@ Internet / Client Browser
 | Admin API             | `ods-admin-api`               | .NET on Alpine    | Management API for API clients / ODS instances     |
 | Sandbox Admin         | `ods-api-web-sandbox-admin`   | .NET on Alpine    | Web UI for creating/managing sandbox environments  |
 | Swagger UI            | `ods-api-swaggerui`           | Node on Alpine    | Interactive API documentation                      |
-
 | ODS DB (minimal)      | `ods-api-db-ods`              | PostgreSQL        | ODS with minimal template + TPDM                   |
 | ODS DB (populated)    | `ods-api-db-sandbox`          | PostgreSQL        | ODS with Grand Bend sample data                    |
 | Admin DB              | `ods-api-db-admin`            | PostgreSQL        | EdFi_Admin + EdFi_Security databases               |
