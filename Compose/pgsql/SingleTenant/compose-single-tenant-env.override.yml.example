@@ -11,3 +11,11 @@ services:
   pb-ods:
     ports:
       - "5402:${PGBOUNCER_LISTEN_PORT:-6432}"
+
+  # Uncomment to supply the SQL dump files that let db-ods create the Ods_Minimal_Template/
+  # Ods_Populated_Template databases used by Admin API's Instance Management feature
+  # (AppSettings__EnableDataStoreManagement). Point SQL_BACKUPS_FOLDER at a host folder
+  # containing EdFi.Ods.Minimal.Template.sql and/or EdFi.Ods.Populated.Template.sql.
+  # db-ods:
+  #   volumes:
+  #     - ${SQL_BACKUPS_FOLDER}:/var/opt/pgsql/data/sql-backups/:ro
