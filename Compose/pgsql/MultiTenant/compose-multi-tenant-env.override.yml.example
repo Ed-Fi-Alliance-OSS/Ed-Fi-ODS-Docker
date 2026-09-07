@@ -18,3 +18,15 @@ services:
   pb-ods-tenant2:
     ports:
       - "5404:${PGBOUNCER_LISTEN_PORT:-6432}"
+
+  # Uncomment to supply the SQL dump files that let each tenant's db-ods-tenantN create the
+  # Ods_Minimal_Template/Ods_Populated_Template databases used by Admin API's Instance
+  # Management feature (AppSettings__EnableDataStoreManagement). Point SQL_BACKUPS_FOLDER_TENANT1/
+  # SQL_BACKUPS_FOLDER_TENANT2 at host folders containing EdFi.Ods.Minimal.Template.sql and/or
+  # EdFi.Ods.Populated.Template.sql.
+  # db-ods-tenant1:
+  #   volumes:
+  #     - ${SQL_BACKUPS_FOLDER_TENANT1}:/var/opt/pgsql/data/sql-backups/:ro
+  # db-ods-tenant2:
+  #   volumes:
+  #     - ${SQL_BACKUPS_FOLDER_TENANT2}:/var/opt/pgsql/data/sql-backups/:ro

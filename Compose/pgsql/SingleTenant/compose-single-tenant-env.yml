@@ -12,8 +12,14 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       TPDM_ENABLED: "${TPDM_ENABLED:-true}"
+      MINIMAL_SQL_PATH: "${MINIMAL_SQL_PATH:-/var/opt/pgsql/data/sql-backups/EdFi.Ods.Minimal.Template.sql}"
+      POPULATED_SQL_PATH: "${POPULATED_SQL_PATH:-/var/opt/pgsql/data/sql-backups/EdFi.Ods.Populated.Template.sql}"
     volumes:
       - vol-db-ods:/var/lib/postgresql/data
+      # Creates Ods_Minimal_Template/Ods_Populated_Template for Admin API's Instance Management
+      # feature. Runs only if the two SQL files exist - see the SQL_BACKUPS_FOLDER example in
+      # compose-single-tenant-env.override.yml.example to supply them.
+      - ./ods-template-databases.sh:/docker-entrypoint-initdb.d/9-ods-template-databases.sh
     restart: always
     container_name: ed-fi-db-ods
     healthcheck:
@@ -92,19 +98,23 @@ services:
       ADMIN_WAIT_POSTGRES_HOSTS: "pb-admin "
       AdminConsoleSettings__CorsSettings__AllowedOrigins: "${ALLOWED_ORIGINS:-https://localhost}"
       AdminConsoleSettings__CorsSettings__EnableCors: "${ENABLE_CORS:-false}"
-      AppSettings__AdminApiMode: ${ADMINAPI_MODE:-V2}
+      AppSettings__AdminApiMode: ${ADMINAPI_MODE:-V3}
       AppSettings__DatabaseEngine: "PostgreSql"
       AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
       AppSettings__DefaultPageSizeOffset: ${PAGING_OFFSET:-0}
-      AppSettings__EnableApplicationResetEndpoint: ${ENABLE_APPLICATION_RESET_ENDPOINT:-true} 
+      AppSettings__EnableApplicationResetEndpoint: ${ENABLE_APPLICATION_RESET_ENDPOINT:-true}
+      AppSettings__EnableDataStoreManagement: ${ENABLE_DATA_STORE_MANAGEMENT:-false}
       AppSettings__EncryptionKey: "TDMyNH0lJmo7aDRnNXYoSmAwSXQpV09nbitHSWJTKn0="
       AppSettings__MultiTenancy: "${MULTITENANCY_ENABLED:-false}"
       AppSettings__PathBase: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
+      AppSettings__PreventDuplicateApplications: "${PREVENT_DUPLICATE_APPLICATIONS:-false}"
       Authentication__AllowRegistration: true
       Authentication__IssuerUrl: ${ISSUER_URL}
       Authentication__SigningKey: ${SIGNING_KEY}
       ConnectionStrings__EdFi_Admin: "host=pb-admin;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Admin;pooling=true"
       ConnectionStrings__EdFi_Security: "host=pb-admin;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Security;pooling=true"
+      ConnectionStrings__EdFi_Ods: "host=pb-ods;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Ods;pooling=true"
+      ConnectionStrings__EdFi_Master: "host=pb-ods;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=postgres;pooling=true"
       EnableDockerEnvironment: true
       IpRateLimiting__EnableEndpointRateLimiting: ${IPRATELIMITING__ENABLEENDPOINTRATELIMITING:-false}
       IpRateLimiting__StackBlockedRequests: ${IPRATELIMITING__STACKBLOCKEDREQUESTS:-false}
@@ -117,6 +127,7 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_PORT: "${PGBOUNCER_LISTEN_PORT:-6432}"
       POSTGRES_USER: "${POSTGRES_USER}"
+      SwaggerSettings__EnableSwagger: "true"
     depends_on:
       - pb-admin
     restart: always

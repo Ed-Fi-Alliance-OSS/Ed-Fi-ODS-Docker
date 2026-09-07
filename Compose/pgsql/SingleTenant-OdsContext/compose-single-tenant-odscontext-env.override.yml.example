@@ -15,3 +15,15 @@ services:
   pb_ods_2023:
     ports:
       - "5403:${PGBOUNCER_LISTEN_PORT:-6432}"
+
+  # Uncomment to supply the SQL dump files that let each per-school-year db-ods-YYYY create the
+  # Ods_Minimal_Template/Ods_Populated_Template databases (pre-building them ahead of a future
+  # Admin API Instance Management wiring for this OdsContext topology). Point each
+  # SQL_BACKUPS_FOLDER_<year> at a host folder containing EdFi.Ods.Minimal.Template.sql and/or
+  # EdFi.Ods.Populated.Template.sql.
+  # db-ods-2022:
+  #   volumes:
+  #     - ${SQL_BACKUPS_FOLDER_2022}:/var/opt/pgsql/data/sql-backups/:ro
+  # db-ods-2023:
+  #   volumes:
+  #     - ${SQL_BACKUPS_FOLDER_2023}:/var/opt/pgsql/data/sql-backups/:ro
