@@ -312,12 +312,12 @@ services:
       AppSettings__AdminApiMode: ${ADMINAPI_MODE:-V3}
       AppSettings__DatabaseEngine: "PostgreSql"
       AppSettings__EnableApplicationResetEndpoint: ${ENABLE_APPLICATION_RESET_ENDPOINT:-true}
-      # NOTE: AppSettings__EnableDataStoreManagement is intentionally not wired to
-      # Tenants__<tenant>__ConnectionStrings__EdFi_Ods/EdFi_Master here: this OdsContext
-      # topology runs a separate ODS database (and PgBouncer) per school year per tenant
-      # (pb-ods-tenant1-2022, pb-ods-tenant1-2023, ...), so there is no single ODS host per
-      # tenant the Instance Management feature could target. Leave disabled unless/until a
-      # per-context wiring is designed.
+      # NOTE: This OdsContext topology runs a separate ODS database (and PgBouncer) per school
+      # year per tenant (pb-ods-tenant1-2022, pb-ods-tenant1-2023, ...), but
+      # Tenants__<tenant>__ConnectionStrings__EdFi_Ods/EdFi_Master is a single pair per tenant,
+      # so Instance Management is pointed at each tenant's pb-ods-tenantN-2023 (the latest year)
+      # below. New databases created via the API land on that host only - it cannot provision a
+      # new per-year host, since a static compose file can't spin up a new container dynamically.
       AppSettings__EnableDataStoreManagement: ${ENABLE_DATA_STORE_MANAGEMENT:-false}
       AppSettings__EncryptionKey: "TDMyNH0lJmo7aDRnNXYoSmAwSXQpV09nbitHSWJTKn0="
       AppSettings__PathBase: ${ADMIN_API_VIRTUAL_NAME:-adminapi}
@@ -337,8 +337,12 @@ services:
       Log4NetCore__Log4NetConfigFileName: "./log4net.config"
       Tenants__tenant1__ConnectionStrings__EdFi_Admin: "host=pb-admin-tenant1;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Admin"
       Tenants__tenant1__ConnectionStrings__EdFi_Security: "host=pb-admin-tenant1;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Security"
+      Tenants__tenant1__ConnectionStrings__EdFi_Ods: "host=pb-ods-tenant1-2023;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Ods"
+      Tenants__tenant1__ConnectionStrings__EdFi_Master: "host=pb-ods-tenant1-2023;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=postgres"
       Tenants__tenant2__ConnectionStrings__EdFi_Admin: "host=pb-admin-tenant2;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Admin"
       Tenants__tenant2__ConnectionStrings__EdFi_Security: "host=pb-admin-tenant2;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Security"
+      Tenants__tenant2__ConnectionStrings__EdFi_Ods: "host=pb-ods-tenant2-2023;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Ods"
+      Tenants__tenant2__ConnectionStrings__EdFi_Master: "host=pb-ods-tenant2-2023;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=postgres"
     volumes:
       - ./appsettings.dockertemplate.json:/app/appsettings.dockertemplate.json
     entrypoint: ["/bin/sh"]

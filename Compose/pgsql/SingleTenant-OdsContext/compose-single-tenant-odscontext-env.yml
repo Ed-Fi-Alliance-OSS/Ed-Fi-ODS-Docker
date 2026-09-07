@@ -85,11 +85,11 @@ services:
       AppSettings__DefaultPageSizeLimit: ${PAGING_LIMIT:-25}
       AppSettings__DefaultPageSizeOffset: ${PAGING_OFFSET:-0}
       AppSettings__EnableApplicationResetEndpoint: ${ENABLE_APPLICATION_RESET_ENDPOINT:-true}
-      # NOTE: AppSettings__EnableDataStoreManagement is intentionally not wired to a single
-      # ConnectionStrings__EdFi_Ods/EdFi_Master pair here: this OdsContext topology runs a
-      # separate ODS database (and PgBouncer) per school year (pb_ods_2022, pb_ods_2023, ...),
-      # so there is no single ODS host the Instance Management feature could target. Leave
-      # disabled unless/until a per-context wiring is designed.
+      # NOTE: This OdsContext topology runs a separate ODS database (and PgBouncer) per school
+      # year (pb_ods_2022, pb_ods_2023, ...), but ConnectionStrings__EdFi_Ods/EdFi_Master is a
+      # single pair, so Instance Management is pointed at pb_ods_2023 (the latest year) below.
+      # New databases created via the API land on that host only - it cannot provision a new
+      # per-year host, since a static compose file can't spin up a new container dynamically.
       AppSettings__EnableDataStoreManagement: ${ENABLE_DATA_STORE_MANAGEMENT:-false}
       AppSettings__EncryptionKey: "TDMyNH0lJmo7aDRnNXYoSmAwSXQpV09nbitHSWJTKn0="
       AppSettings__MultiTenancy: "${MULTITENANCY_ENABLED:-false}"
@@ -100,6 +100,8 @@ services:
       Authentication__SigningKey: ${SIGNING_KEY}
       ConnectionStrings__EdFi_Admin: "host=pb-admin;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Admin;pooling=true"
       ConnectionStrings__EdFi_Security: "host=pb-admin;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Security;pooling=true"
+      ConnectionStrings__EdFi_Ods: "host=pb_ods_2023;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=EdFi_Ods;pooling=true"
+      ConnectionStrings__EdFi_Master: "host=pb_ods_2023;port=${POSTGRES_PORT:-6432};username=${POSTGRES_USER};password=${POSTGRES_PASSWORD};database=postgres;pooling=true"
       EnableDockerEnvironment: true
       IpRateLimiting__EnableEndpointRateLimiting: ${IPRATELIMITING__ENABLEENDPOINTRATELIMITING:-false}
       IpRateLimiting__StackBlockedRequests: ${IPRATELIMITING__STACKBLOCKEDREQUESTS:-false}
